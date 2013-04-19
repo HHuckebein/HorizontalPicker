@@ -19,6 +19,8 @@
 //  Copyright 2011-2013 RABE_IT Services. All rights reserved.
 //
 
+#ifndef __HorizontalPicker
+#define __HorizontalPicker
 
 #define DEBUG_HP             0   // forces some views to draw a 1 pixel border
 
@@ -28,3 +30,5 @@
 #define kCornerRadius        9.  // defines the boundaries of the inner frame
 #define kScrollViewPadding   1.  // the scrollview is a bit smaller so that the black background shines through
 #define kMaxLabelWidthFactor 0.6 // a label will be cropped and filled with 3 dots at the end if it exceeds bounds.size.width * Factor
+
+#endif

@@ -19,6 +19,7 @@
 //  Copyright 2011-2013 RABE_IT Services. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "HPickerDefinitions.h"
 #import "HPickerView.h"
 #import "HPLabel.h"

@@ -21,6 +21,7 @@
 //
 
 #import "HPLabel.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation HPLabel
 

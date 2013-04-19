@@ -21,7 +21,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
 #import <HorizontalPicker/HPickerView.h>
 
 @interface HorizontalPicker : NSObject
