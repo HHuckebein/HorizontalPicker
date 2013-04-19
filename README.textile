@@ -1,0 +1,48 @@
+h2. HorizontalPicker
+
+HorizontalPicker is a lean variant of UIPickerView and meant to be used for small data sets and where picker space is limited.
+Though you can modify the width of the picker without restrictions the height should stay near 44px.
+
+h3. Usage
+
+HorizontalPicker follows the UIPicker's delegate and dataSource protocols.
+Create a HorizontalPicker programmatically using
+
+<pre><code>
+	HPickerView *pView = [HPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+	pView.dataSource   = self;
+	pView.delegate     = self;
+</code></pre>
+
+or include a normal UIView in your Storyboard file, go to the identity inspector
+and change the Class to HPickerView. Make sure you connect the dataSource and delegate
+outlets.
+
+NOTE: If you are using HorizontalPicker only in your Storybord you might experience 
+linker errors. In that case include the following code somewhere inside your code.
+<pre><code>
+	[HPickerView class];
+</code></pre>
+This makes sure the linker doesn't optimise the HorizontalPicker away.
+
+Included in the HorizontalPicker workspace is the HorizontalPicker framework project
+and the HPDemo project.
+The HPDemo project is just for demonstration purposes to show the usage. Its a universal
+project and shows how to deal with different dataSource objects.
+
+h3. Installation
+
+Include the HorizontalPicker.framework into your project and make sure you include the header file
+<pre><code>
+#include <HorizontalPicker/HorizontalPicker.h>
+</code></pre>
+
+NOTE: Make sure you have the QuartzCore framework added to your project!
+
+h3. Versioning
+
+Versioning for HorizontalPicker follows the Semantic Version Specification found on http://semver.org.
+
+h3. License
+
+Usage is provided under the [MIT licence](http://opensource.org/licences/mit-licence.php). See LICENCE for the full details.
