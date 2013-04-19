@@ -61,7 +61,7 @@
 		7323B3B0171FC56B00E882C8 /* HorizontalPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HorizontalPicker.h; sourceTree = "<group>"; };
 		7323B3B9171FC5CA00E882C8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPickerDefinitions.h; sourceTree = "<group>"; };
-		7323B3BF171FC71100E882C8 /* LICENCE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE.txt; sourceTree = "<group>"; };
+		7323B3BF171FC71100E882C8 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7323B3C0171FC71100E882C8 /* README.textile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.textile; sourceTree = "<group>"; };
 		735F7DB0172004BD00E563BF /* HPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPickerView.h; sourceTree = "<group>"; };
 		735F7DB1172004BD00E563BF /* HPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPickerView.m; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 		7323B39F171FC56B00E882C8 = {
 			isa = PBXGroup;
 			children = (
-				7323B3BF171FC71100E882C8 /* LICENCE.txt */,
+				7323B3BF171FC71100E882C8 /* LICENSE.txt */,
 				7323B3C0171FC71100E882C8 /* README.textile */,
 				7323B3AD171FC56B00E882C8 /* HorizontalPicker */,
 				7323B3AA171FC56B00E882C8 /* Frameworks */,
