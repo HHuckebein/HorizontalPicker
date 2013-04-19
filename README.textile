@@ -45,4 +45,4 @@ Versioning for HorizontalPicker follows the Semantic Version Specification found
 
 h3. License
 
-Usage is provided under the [MIT licence](http://opensource.org/licences/mit-licence.php). See LICENCE for the full details.
+Usage is provided under the [MIT licence](http://http://opensource.org/licenses/MIT). See LICENCE for the full details.
