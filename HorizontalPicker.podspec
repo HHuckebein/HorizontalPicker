@@ -8,6 +8,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/HHuckebein/HorizontalPicker.git", :tag => "1.0.0" }
   s.platform     = :ios, '5.1'
   s.source_files = 'HorizontalPicker/*.{h,m}'
-  s.framework    = 'QuartzCore'
+  spec.framework = 'QuartzCore'
   s.requires_arc = true
 end
