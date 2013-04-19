@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT', :file => 'LICENSE.txt' }
   s.author       = { "RABE_IT Services" => "info@berndrabe.de" }
   s.source       = { :git => "https://github.com/HHuckebein/HorizontalPicker.git", :tag => "1.0.0" }
-  s.platform     = :ios, '5.1'
+  s.platform     = :ios, '6.0'
   s.source_files = 'HorizontalPicker/**/*.{h,m}'
   s.frameworks   =  'Foundation', 'QuartzCore'
   s.requires_arc = true
