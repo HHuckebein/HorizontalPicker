@@ -21,6 +21,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface HPLabel : UILabel
 /** Creates a normal UILabel object with a gradient on the right side

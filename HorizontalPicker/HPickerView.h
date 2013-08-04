@@ -24,12 +24,21 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, HPStyle) {
+    HPStyleNormal,
+    HPStyle_iOS7
+};
+
 @protocol HPickerViewDataSource, HPickerViewDelegate;
 
 @interface HPickerView : UIView
 
 @property(nonatomic, weak) IBOutlet id <HPickerViewDataSource> dataSource;
 @property(nonatomic, weak) IBOutlet id <HPickerViewDelegate>   delegate;
+
+/** The used style.
+ */
+@property (assign, nonatomic) HPStyle   style;
 
 /** The color of the selected element.
  */

@@ -20,18 +20,20 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "HPickerDefinitions.h"
 #import "HPickerView.h"
+#import "HPickerDefinitions.h"
 #import "HPLabel.h"
+#import "HPCollectionVC.h"
+#import "HPCollectionViewFlowLayout.h"
+#import "HPCollectionViewCell.h"
 
 #ifndef DefineContext
 #define DefineContext(_X_) static NSString * _X_ = @#_X_
 #endif
 
-DefineContext(KeyPath_1Changed);
+DefineContext(TintColorChanged);
 
-#define KeyPath_1  @"tintColor"
-
+#define kTintColorKeyPath  @"tintColor"
 
 @interface HPBlackGradientView : UIView
 @end
@@ -45,13 +47,16 @@ DefineContext(KeyPath_1Changed);
 - (UIBezierPath *)maskPath;
 @end
 
-@interface HPickerView() <UIScrollViewDelegate> 
+@interface HPickerView() <UIScrollViewDelegate, HPCollectionViewProvider>
 
 @property (strong, nonatomic) UIScrollView   *hpScrollView;
 @property (strong, nonatomic) NSMutableArray *tables;
 @property (strong, nonatomic) HPLabel        *centerLabel;
 @property (strong, nonatomic) HPTopFrameView *topFrameView;
 @property (assign, nonatomic) BOOL           configured;
+@property (assign, nonatomic) BOOL           is_iOS7;
+@property (nonatomic, strong) CAShapeLayer   *shapeLayer;
+@property (nonatomic, strong) HPCollectionVC *collectionController;
 
 @end
 
@@ -61,26 +66,41 @@ DefineContext(KeyPath_1Changed);
 
 - (void)setup
 {
-    self.layer.masksToBounds = YES;
-    self.opaque              = YES;
-    self.backgroundColor     = [UIColor blackColor];
-    self.autoresizingMask    = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 
-    self.tintColor           = [UIColor blueColor];
+    _tintColor = [UIColor blueColor];
 
-    [self addObserver:self forKeyPath:KeyPath_1 options:NSKeyValueObservingOptionNew context:(__bridge void *)(KeyPath_1Changed)];
+    [self addObserver:self forKeyPath:kTintColorKeyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
 }
 
 - (void)prepareForAppearance
 {
     // make the whiteGradient's height a bit smallerso that the background shines through
     CGRect gradientRect = CGRectInset(self.bounds, kTopFrameXOffset, kTopFrameYOffset + kScrollViewPadding);
-    
-    [self addSubview:[[HPWhiteGradientView alloc] initWithFrame:gradientRect]];
-    [self addSubview:self.hpScrollView];
-    [self addSubview:[[HPBlackGradientView alloc] initWithFrame:gradientRect]];
-    
-    [self addSubview:self.topFrameView];
+
+    if (_style == HPStyle_iOS7) {
+        [self.layer addSublayer:self.shapeLayer];
+        HPCollectionViewFlowLayout *layout = [[HPCollectionViewFlowLayout alloc] init];
+        _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout];
+        _collectionController.collectionViewProvider = self;
+        _collectionController.font = [UIFont boldSystemFontOfSize:14];
+        _collectionController.maxWidth = floorf(CGRectGetWidth(self.bounds) * 0.6);
+        
+        [_collectionController.collectionView registerClass:[HPCollectionViewCell class] forCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle];
+        _collectionController.collectionView.backgroundColor = [UIColor clearColor];
+        
+        CGRect frame = _collectionController.collectionView.frame;
+        frame.size.height = CGRectGetHeight(self.bounds);
+        _collectionController.collectionView.frame = frame;
+
+        [self addSubview:_collectionController.collectionView];
+    }
+    else {
+        [self addSubview:[[HPWhiteGradientView alloc] initWithFrame:gradientRect]];
+        [self addSubview:[[HPBlackGradientView alloc] initWithFrame:gradientRect]];
+        
+        [self addSubview:self.topFrameView];
+    }
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -107,18 +127,44 @@ DefineContext(KeyPath_1Changed);
         _configured = TRUE;
 
         [self prepareForAppearance];
-        [self configureHorizontalPickerWith:[_dataSource numberOfRowsInPickerView:self]];
+//        [self configureHorizontalPickerWith:[_dataSource numberOfRowsInPickerView:self]];
     }
     
-    self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
-    
-    HPLabel *label = _centerLabel ? self.centerLabel : [self findCenterLabel:self.hpScrollView];
-    [self centerLabel:label animated:YES];
+//    self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
+//    
+//    HPLabel *label = _centerLabel ? self.centerLabel : [self findCenterLabel:self.hpScrollView];
+//    [self centerLabel:label animated:YES];
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:KeyPath_1 context:(__bridge void *)(KeyPath_1Changed)];
+    [self removeObserver:self forKeyPath:kTintColorKeyPath context:(__bridge void *)(TintColorChanged)];
+}
+
+- (void)setStyle:(HPStyle)style
+{
+    if (_style != style) {
+        _style = style;
+        
+        if (_style == HPStyle_iOS7) {
+            self.tintColor = [UIColor colorWithRed:142/255. green:142/255. blue:147/255. alpha:1.];
+        }
+        self.backgroundColor = style == HPStyle_iOS7 ? [UIColor clearColor] : [UIColor blackColor];
+    }
+}
+
+- (CAShapeLayer *)shapeLayer
+{
+    if (nil == _shapeLayer) {
+        _shapeLayer = [CAShapeLayer layer];
+        _shapeLayer.frame = CGRectInset(self.bounds, 0, 0);
+        _shapeLayer.contentsScale = [[UIScreen mainScreen] scale];
+        _shapeLayer.path = [UIBezierPath bezierPathWithRoundedRect:_shapeLayer.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(0, 0)].CGPath;
+        _shapeLayer.strokeColor = [UIColor colorWithRed:142/255. green:142/255. blue:147/255. alpha:1.].CGColor;
+        _shapeLayer.lineWidth = .5;
+        _shapeLayer.fillColor = nil;
+    }
+    return _shapeLayer;
 }
 
 #pragma mark -  Setter
@@ -126,6 +172,23 @@ DefineContext(KeyPath_1Changed);
 - (void)setEnabled:(BOOL)enabled
 {
     self.userInteractionEnabled = enabled;
+}
+
+#pragma mark - HPCollectionViewProvider
+
+- (NSInteger)numberOfRowsInCollectionViewController:(HPCollectionVC *)collectionVC
+{
+    return [_dataSource numberOfRowsInPickerView:self];
+}
+
+- (NSString *)collectionViewController:(HPCollectionVC *)collectionVC titleForRow:(NSInteger)row
+{
+    return [_delegate pickerView:self titleForRow:row];
+}
+
+- (void)collectionViewController:(HPCollectionVC *)collectionVC didSelectRow:(NSInteger)row
+{
+    NSLog(@"%d", row);
 }
 
 #pragma mark - External affairs
@@ -383,7 +446,7 @@ DefineContext(KeyPath_1Changed);
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (context == (__bridge void *)(KeyPath_1Changed)) {
+    if (context == (__bridge void *)(TintColorChanged)) {
         [[self findCenterLabel:_hpScrollView] setTextColor:self.tintColor];
     }
     else {

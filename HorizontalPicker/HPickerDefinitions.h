@@ -24,11 +24,15 @@
 
 #define DEBUG_HP             0   // forces some views to draw a 1 pixel border
 
+#define PICKER_HEIGHT        44
+
 #define kLabelPadding        10. // to have some space between the UILabel object
 #define kTopFrameXOffset     10. // defines the boundaries of the inner frame
 #define kTopFrameYOffset     5.  // defines the boundaries of the inner frame
 #define kCornerRadius        9.  // defines the boundaries of the inner frame
 #define kScrollViewPadding   1.  // the scrollview is a bit smaller so that the black background shines through
 #define kMaxLabelWidthFactor 0.6 // a label will be cropped and filled with 3 dots at the end if it exceeds bounds.size.width * Factor
+
+#define kTVReuseID_HPCollectionViewStyle    @"HorizontalPickerStyle"
 
 #endif

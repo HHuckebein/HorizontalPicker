@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import <HorizontalPicker/HPickerView.h>
 
 @interface FirstViewController ()
 @property (strong, nonatomic) NSArray *dataSource;
@@ -17,6 +18,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.horizontalPicker.style = HPStyle_iOS7;
+    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -51,7 +54,7 @@
 - (NSArray *)dataSource
 {
     if (nil == _dataSource) {
-        _dataSource = @[@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10];
+        _dataSource = @[@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20];
     }
     return _dataSource;
 }
