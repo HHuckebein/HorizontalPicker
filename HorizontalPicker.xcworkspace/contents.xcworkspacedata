@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:HorizontalPicker.xcodeproj">
+      location = "group:HorizontalPickerView.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:HPDemo/HPDemo.xcodeproj">

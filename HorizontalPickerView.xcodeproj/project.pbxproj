@@ -27,9 +27,10 @@
 		733C615717ABE26E002B67B8 /* HPCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 733C615617ABE26E002B67B8 /* HPCollectionVC.m */; };
 		733C615A17ABE293002B67B8 /* HPCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 733C615917ABE293002B67B8 /* HPCollectionViewCell.m */; };
 		733C616817AC0787002B67B8 /* HPCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 733C616717AC0787002B67B8 /* HPCollectionViewFlowLayout.m */; };
-		735F7DB2172004BD00E563BF /* HPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F7DB1172004BD00E563BF /* HPickerView.m */; };
-		735F7DB31720050300E563BF /* HPickerView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 735F7DB0172004BD00E563BF /* HPickerView.h */; };
+		735F7DB2172004BD00E563BF /* HorizontalPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F7DB1172004BD00E563BF /* HorizontalPickerView.m */; };
+		735F7DB31720050300E563BF /* HorizontalPickerView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 735F7DB0172004BD00E563BF /* HorizontalPickerView.h */; };
 		735F7DB6172005F700E563BF /* HPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F7DB5172005F700E563BF /* HPLabel.m */; };
+		7360886817AFFD1A00F07F45 /* MathAdditions.c in Sources */ = {isa = PBXBuildFile; fileRef = 7360886617AFFD1A00F07F45 /* MathAdditions.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,16 +50,16 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				735F7DB31720050300E563BF /* HPickerView.h in CopyFiles */,
+				735F7DB31720050300E563BF /* HorizontalPickerView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7323B3A8171FC56B00E882C8 /* libHorizontalPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHorizontalPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7323B3A8171FC56B00E882C8 /* libHorizontalPickerView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHorizontalPickerView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7323B3AB171FC56B00E882C8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		7323B3AF171FC56B00E882C8 /* HorizontalPicker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HorizontalPicker-Prefix.pch"; sourceTree = "<group>"; };
+		7323B3AF171FC56B00E882C8 /* HorizontalPickerView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HorizontalPickerView-Prefix.pch"; sourceTree = "<group>"; };
 		7323B3B9171FC5CA00E882C8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPickerDefinitions.h; sourceTree = "<group>"; };
 		7323B3BF171FC71100E882C8 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -70,10 +71,12 @@
 		733C616617AC0787002B67B8 /* HPCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		733C616717AC0787002B67B8 /* HPCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		733D7E1C17AC23FE00D80A63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		735F7DB0172004BD00E563BF /* HPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPickerView.h; sourceTree = "<group>"; };
-		735F7DB1172004BD00E563BF /* HPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPickerView.m; sourceTree = "<group>"; };
+		735F7DB0172004BD00E563BF /* HorizontalPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalPickerView.h; sourceTree = "<group>"; };
+		735F7DB1172004BD00E563BF /* HorizontalPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalPickerView.m; sourceTree = "<group>"; };
 		735F7DB4172005F700E563BF /* HPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPLabel.h; sourceTree = "<group>"; };
 		735F7DB5172005F700E563BF /* HPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPLabel.m; sourceTree = "<group>"; };
+		7360886617AFFD1A00F07F45 /* MathAdditions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MathAdditions.c; path = ../../../Helper/MathAdditions/MathAdditions/MathAdditions.c; sourceTree = "<group>"; };
+		7360886717AFFD1A00F07F45 /* MathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathAdditions.h; path = ../../../Helper/MathAdditions/MathAdditions/MathAdditions.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +106,7 @@
 		7323B3A9171FC56B00E882C8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7323B3A8171FC56B00E882C8 /* libHorizontalPicker.a */,
+				7323B3A8171FC56B00E882C8 /* libHorizontalPickerView.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,12 +124,14 @@
 		7323B3AD171FC56B00E882C8 /* HorizontalPicker */ = {
 			isa = PBXGroup;
 			children = (
+				7360886617AFFD1A00F07F45 /* MathAdditions.c */,
+				7360886717AFFD1A00F07F45 /* MathAdditions.h */,
 				733C615417ABE1FC002B67B8 /* CollectionView */,
 				7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */,
 				735F7DB4172005F700E563BF /* HPLabel.h */,
 				735F7DB5172005F700E563BF /* HPLabel.m */,
-				735F7DB0172004BD00E563BF /* HPickerView.h */,
-				735F7DB1172004BD00E563BF /* HPickerView.m */,
+				735F7DB0172004BD00E563BF /* HorizontalPickerView.h */,
+				735F7DB1172004BD00E563BF /* HorizontalPickerView.m */,
 				7323B3AE171FC56B00E882C8 /* Supporting Files */,
 			);
 			path = HorizontalPicker;
@@ -135,7 +140,7 @@
 		7323B3AE171FC56B00E882C8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7323B3AF171FC56B00E882C8 /* HorizontalPicker-Prefix.pch */,
+				7323B3AF171FC56B00E882C8 /* HorizontalPickerView-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -156,9 +161,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7323B3A7171FC56B00E882C8 /* HorizontalPicker */ = {
+		7323B3A7171FC56B00E882C8 /* HorizontalPickerView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7323B3B6171FC56B00E882C8 /* Build configuration list for PBXNativeTarget "HorizontalPicker" */;
+			buildConfigurationList = 7323B3B6171FC56B00E882C8 /* Build configuration list for PBXNativeTarget "HorizontalPickerView" */;
 			buildPhases = (
 				7323B3A4171FC56B00E882C8 /* Sources */,
 				7323B3A5171FC56B00E882C8 /* Frameworks */,
@@ -169,9 +174,9 @@
 			);
 			dependencies = (
 			);
-			name = HorizontalPicker;
+			name = HorizontalPickerView;
 			productName = HorizontalPicker;
-			productReference = 7323B3A8171FC56B00E882C8 /* libHorizontalPicker.a */;
+			productReference = 7323B3A8171FC56B00E882C8 /* libHorizontalPickerView.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -184,7 +189,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "RABE_IT Services";
 			};
-			buildConfigurationList = 7323B3A3171FC56B00E882C8 /* Build configuration list for PBXProject "HorizontalPicker" */;
+			buildConfigurationList = 7323B3A3171FC56B00E882C8 /* Build configuration list for PBXProject "HorizontalPickerView" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -196,7 +201,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7323B3A7171FC56B00E882C8 /* HorizontalPicker */,
+				7323B3A7171FC56B00E882C8 /* HorizontalPickerView */,
 				735703A9171FD47B00F2BB7B /* Framework */,
 			);
 		};
@@ -238,10 +243,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				733C615A17ABE293002B67B8 /* HPCollectionViewCell.m in Sources */,
-				735F7DB2172004BD00E563BF /* HPickerView.m in Sources */,
+				735F7DB2172004BD00E563BF /* HorizontalPickerView.m in Sources */,
 				733C616817AC0787002B67B8 /* HPCollectionViewFlowLayout.m in Sources */,
 				735F7DB6172005F700E563BF /* HPLabel.m in Sources */,
 				733C615717ABE26E002B67B8 /* HPCollectionVC.m in Sources */,
+				7360886817AFFD1A00F07F45 /* MathAdditions.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +256,7 @@
 /* Begin PBXTargetDependency section */
 		735703AE171FD48300F2BB7B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7323B3A7171FC56B00E882C8 /* HorizontalPicker */;
+			target = 7323B3A7171FC56B00E882C8 /* HorizontalPickerView */;
 			targetProxy = 735703AD171FD48300F2BB7B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -316,9 +322,9 @@
 				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/HorizontalPicker.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HorizontalPicker/HorizontalPicker-Prefix.pch";
+				GCC_PREFIX_HEADER = "HorizontalPicker/HorizontalPickerView-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = HorizontalPickerView;
 				PUBLIC_HEADERS_FOLDER_PATH = "include/${PRODUCT_NAME}";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -332,9 +338,9 @@
 				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/HorizontalPicker.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HorizontalPicker/HorizontalPicker-Prefix.pch";
+				GCC_PREFIX_HEADER = "HorizontalPicker/HorizontalPickerView-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = HorizontalPickerView;
 				PUBLIC_HEADERS_FOLDER_PATH = "include/${PRODUCT_NAME}";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -358,7 +364,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7323B3A3171FC56B00E882C8 /* Build configuration list for PBXProject "HorizontalPicker" */ = {
+		7323B3A3171FC56B00E882C8 /* Build configuration list for PBXProject "HorizontalPickerView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7323B3B4171FC56B00E882C8 /* Debug */,
@@ -367,7 +373,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7323B3B6171FC56B00E882C8 /* Build configuration list for PBXNativeTarget "HorizontalPicker" */ = {
+		7323B3B6171FC56B00E882C8 /* Build configuration list for PBXNativeTarget "HorizontalPickerView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7323B3B7171FC56B00E882C8 /* Debug */,

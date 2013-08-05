@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class HorizontalPickerView;
+
 @interface SecondViewController : UIViewController
+@property (weak, nonatomic) IBOutlet HorizontalPickerView *horizontalPicker;
 
 @end

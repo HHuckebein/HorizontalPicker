@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7360880F17AF8CB300F07F45 /* HorizontalPickerView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7360880E17AF8CB300F07F45 /* HorizontalPickerView.framework */; };
 		73CDE7781721138D00404A09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7771721138D00404A09 /* UIKit.framework */; };
 		73CDE77A1721138D00404A09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7791721138D00404A09 /* Foundation.framework */; };
 		73CDE77C1721138D00404A09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE77B1721138D00404A09 /* CoreGraphics.framework */; };
@@ -24,11 +25,11 @@
 		73CDE79E1721138D00404A09 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CDE79D1721138D00404A09 /* SecondViewController.m */; };
 		73CDE7A01721138D00404A09 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 73CDE79F1721138D00404A09 /* second.png */; };
 		73CDE7A21721138D00404A09 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 73CDE7A11721138D00404A09 /* second@2x.png */; };
-		73CDE7AF1721140C00404A09 /* HorizontalPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7AE1721140C00404A09 /* HorizontalPicker.framework */; };
 		73CDE7B1172118C400404A09 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7B0172118C400404A09 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7360880E17AF8CB300F07F45 /* HorizontalPickerView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HorizontalPickerView.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos/HorizontalPickerView.framework"; sourceTree = "<group>"; };
 		73CDE7741721138D00404A09 /* HPDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HPDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73CDE7771721138D00404A09 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		73CDE7791721138D00404A09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -52,7 +53,6 @@
 		73CDE79D1721138D00404A09 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		73CDE79F1721138D00404A09 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		73CDE7A11721138D00404A09 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		73CDE7AE1721140C00404A09 /* HorizontalPicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HorizontalPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73CDE7B0172118C400404A09 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -62,10 +62,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				73CDE7B1172118C400404A09 /* QuartzCore.framework in Frameworks */,
-				73CDE7AF1721140C00404A09 /* HorizontalPicker.framework in Frameworks */,
 				73CDE7781721138D00404A09 /* UIKit.framework in Frameworks */,
 				73CDE77A1721138D00404A09 /* Foundation.framework in Frameworks */,
 				73CDE77C1721138D00404A09 /* CoreGraphics.framework in Frameworks */,
+				7360880F17AF8CB300F07F45 /* HorizontalPickerView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,8 +92,8 @@
 		73CDE7761721138D00404A09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7360880E17AF8CB300F07F45 /* HorizontalPickerView.framework */,
 				73CDE7B0172118C400404A09 /* QuartzCore.framework */,
-				73CDE7AE1721140C00404A09 /* HorizontalPicker.framework */,
 				73CDE7771721138D00404A09 /* UIKit.framework */,
 				73CDE7791721138D00404A09 /* Foundation.framework */,
 				73CDE77B1721138D00404A09 /* CoreGraphics.framework */,

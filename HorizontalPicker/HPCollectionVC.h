@@ -14,6 +14,8 @@
 @property (nonatomic, weak) id <HPCollectionViewProvider> collectionViewProvider;
 @property (nonatomic, strong) UIFont *font;
 @property (nonatomic, assign) CGFloat maxWidth;
+
+- (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated;
 @end
 
 @protocol HPCollectionViewProvider <NSObject>

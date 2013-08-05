@@ -31,7 +31,7 @@
 #define kTopFrameYOffset     5.  // defines the boundaries of the inner frame
 #define kCornerRadius        9.  // defines the boundaries of the inner frame
 #define kScrollViewPadding   1.  // the scrollview is a bit smaller so that the black background shines through
-#define kMaxLabelWidthFactor 0.6 // a label will be cropped and filled with 3 dots at the end if it exceeds bounds.size.width * Factor
+#define kMaxLabelWidthFactor 0.5 // a label will be cropped and filled with 3 dots at the end if it exceeds bounds.size.width * Factor
 
 #define kTVReuseID_HPCollectionViewStyle    @"HorizontalPickerStyle"
 

@@ -12,5 +12,5 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <QuartzCore/QuartzCore.h>
-    #import <HorizontalPicker/HorizontalPicker.h>
+    #import <HorizontalPickerView/HorizontalPickerView.h>
 #endif

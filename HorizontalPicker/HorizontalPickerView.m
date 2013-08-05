@@ -20,7 +20,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "HPickerView.h"
+#import "HorizontalPickerView.h"
 #import "HPickerDefinitions.h"
 #import "HPLabel.h"
 #import "HPCollectionVC.h"
@@ -35,6 +35,12 @@ DefineContext(TintColorChanged);
 
 #define kTintColorKeyPath  @"tintColor"
 
+typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
+    AdjustEdgeInsetLeft,
+    AdjustEdgeInsetRight
+};
+
+
 @interface HPBlackGradientView : UIView
 @end
 
@@ -42,12 +48,12 @@ DefineContext(TintColorChanged);
 @end
 
 @interface HPTopFrameView : UIView
-@property(strong, nonatomic) CAShapeLayer   *maskLayer;
+@property(strong, nonatomic) CAShapeLayer                   *maskLayer;
 
 - (UIBezierPath *)maskPath;
 @end
 
-@interface HPickerView() <UIScrollViewDelegate, HPCollectionViewProvider>
+@interface HorizontalPickerView() <UIScrollViewDelegate, HPCollectionViewProvider>
 
 @property (strong, nonatomic) UIScrollView   *hpScrollView;
 @property (strong, nonatomic) NSMutableArray *tables;
@@ -60,16 +66,16 @@ DefineContext(TintColorChanged);
 
 @end
 
-@implementation HPickerView
+@implementation HorizontalPickerView
 
 #pragma mark - system init
 
 - (void)setup
 {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-
+    
     _tintColor = [UIColor blueColor];
-
+    
     [self addObserver:self forKeyPath:kTintColorKeyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
 }
 
@@ -77,23 +83,12 @@ DefineContext(TintColorChanged);
 {
     // make the whiteGradient's height a bit smallerso that the background shines through
     CGRect gradientRect = CGRectInset(self.bounds, kTopFrameXOffset, kTopFrameYOffset + kScrollViewPadding);
-
+    
     if (_style == HPStyle_iOS7) {
         [self.layer addSublayer:self.shapeLayer];
-        HPCollectionViewFlowLayout *layout = [[HPCollectionViewFlowLayout alloc] init];
-        _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout];
-        _collectionController.collectionViewProvider = self;
-        _collectionController.font = [UIFont boldSystemFontOfSize:14];
-        _collectionController.maxWidth = floorf(CGRectGetWidth(self.bounds) * 0.6);
-        
-        [_collectionController.collectionView registerClass:[HPCollectionViewCell class] forCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle];
-        _collectionController.collectionView.backgroundColor = [UIColor clearColor];
-        
-        CGRect frame = _collectionController.collectionView.frame;
-        frame.size.height = CGRectGetHeight(self.bounds);
-        _collectionController.collectionView.frame = frame;
-
-        [self addSubview:_collectionController.collectionView];
+        [self addSubview:self.collectionController.collectionView];
+        [self performSelector:@selector(adjustContentInsetsForCollectionView:) withObject:self.collectionController.collectionView afterDelay:0.2];
+        [self performSelector:@selector(scrollToBase) withObject:nil afterDelay:0.1];
     }
     else {
         [self addSubview:[[HPWhiteGradientView alloc] initWithFrame:gradientRect]];
@@ -125,15 +120,15 @@ DefineContext(TintColorChanged);
     [super layoutSubviews];
     if (_configured == FALSE) {
         _configured = TRUE;
-
+        
         [self prepareForAppearance];
-//        [self configureHorizontalPickerWith:[_dataSource numberOfRowsInPickerView:self]];
+        //        [self configureHorizontalPickerWith:[_dataSource numberOfRowsInPickerView:self]];
     }
     
-//    self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
-//    
-//    HPLabel *label = _centerLabel ? self.centerLabel : [self findCenterLabel:self.hpScrollView];
-//    [self centerLabel:label animated:YES];
+    //    self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
+    //
+    //    HPLabel *label = _centerLabel ? self.centerLabel : [self findCenterLabel:self.hpScrollView];
+    //    [self centerLabel:label animated:YES];
 }
 
 - (void)dealloc
@@ -165,6 +160,68 @@ DefineContext(TintColorChanged);
         _shapeLayer.fillColor = nil;
     }
     return _shapeLayer;
+}
+
+- (HPCollectionVC *)collectionController
+{
+    if (nil == _collectionController) {
+        HPCollectionViewFlowLayout *layout = [[HPCollectionViewFlowLayout alloc] init];
+        _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout];
+        _collectionController.collectionViewProvider = self;
+        _collectionController.font = [UIFont boldSystemFontOfSize:14];
+        _collectionController.maxWidth = floorf(CGRectGetWidth(self.bounds) * kMaxLabelWidthFactor);
+        _collectionController.collectionView.showsHorizontalScrollIndicator = NO;
+        
+        [_collectionController.collectionView registerClass:[HPCollectionViewCell class] forCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle];
+        _collectionController.collectionView.backgroundColor = [UIColor clearColor];
+        
+        CGRect frame = _collectionController.collectionView.frame;
+        frame.size.height = CGRectGetHeight(self.bounds);
+        _collectionController.collectionView.frame = frame;
+    }
+    return _collectionController;
+}
+
+- (void)adjustContentInsetsForCollectionView:(UICollectionView *)collectionView
+{
+    NSIndexPath *indexPath = nil;
+    UICollectionViewLayoutAttributes *attributes = nil;
+
+    // first cell
+    indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    attributes = [self.collectionController.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    [self adjustEdgeInsetForScrollView:collectionView forFrame:attributes.frame edgeInset:AdjustEdgeInsetLeft];
+    
+    // last cell
+    indexPath = [NSIndexPath indexPathForItem:[_dataSource numberOfRowsInPickerView:self] - 1 inSection:0];
+    attributes = [self.collectionController.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    [self adjustEdgeInsetForScrollView:collectionView forFrame:attributes.frame edgeInset:AdjustEdgeInsetRight];
+}
+
+- (void)adjustEdgeInsetForScrollView:(UIScrollView *)scrollView forFrame:(CGRect)frame edgeInset:(AdjustEdgeInset)edgeInset
+{
+    CGFloat centerX = scrollView.center.x;
+    UIEdgeInsets insets = scrollView.contentInset;
+    
+    switch (edgeInset) {
+        case AdjustEdgeInsetLeft:
+            insets.left = lroundf(centerX - CGRectGetWidth(frame)/2);
+            break;
+            
+        case AdjustEdgeInsetRight:
+            insets.right = lroundf(centerX - CGRectGetWidth(frame)/2);
+            break;
+            
+        default:
+            break;
+    }
+    scrollView.contentInset = insets;
+}
+
+
+- (void)scrollToBase
+{
+    [self selectRow:0 animated:NO];
 }
 
 #pragma mark -  Setter
@@ -216,7 +273,12 @@ DefineContext(TintColorChanged);
 
 - (void)selectRow:(NSInteger)row animated:(BOOL)animated;
 {
-    [self centerLabel:(HPLabel *)[self.hpScrollView viewWithTag:row + 1] animated:animated];
+    if (_style == HPStyle_iOS7) {
+        [self.collectionController scrollToIndex:row animated:animated];
+    }
+    else {
+        [self centerLabel:(HPLabel *)[self.hpScrollView viewWithTag:row + 1] animated:animated];
+    }
 }
 
 - (NSInteger)selectedRow;
@@ -235,7 +297,7 @@ DefineContext(TintColorChanged);
     BOOL needsCut = NO;
     
     CGSize size = [newText sizeWithFont:font];
-
+    
     while (size.width > maxWidth) {
         range.location -= 1;
         [newText deleteCharactersInRange:range];
@@ -251,7 +313,7 @@ DefineContext(TintColorChanged);
     return [newText copy];
 }
 
-#pragma mark - Init Picker 
+#pragma mark - Init Picker
 
 - (void)configureHorizontalPickerWith:(NSInteger)numberOfRows
 {
@@ -261,29 +323,29 @@ DefineContext(TintColorChanged);
     if (numberOfRows) {
         CGFloat maxWidth = floorf(self.bounds.size.width * kMaxLabelWidthFactor);
         CGRect frame = CGRectMake(0, 0, 0, self.frame.size.height - 2*(kTopFrameYOffset + kScrollViewPadding));
-
+        
         for (int i = 0; i < numberOfRows; i++) {
             
             title = [_delegate pickerView:self titleForRow:i];
             [self.tables addObject:title ? title : @"??"];
-
+            
             CGFloat width = [title sizeWithFont:font].width;
             frame.size.width = MIN(maxWidth, width) + kLabelPadding;
-
+            
             if (width > maxWidth) {
                 title = [self cropStringFromString:title width:maxWidth font:font];
             }
-
+            
             [self.hpScrollView addSubview:[HPLabel labelWithFrame:frame title:title font:font tag:i + 1]];
         }
     }
     else {
         CGFloat width = [title sizeWithFont:font].width + kLabelPadding;
         CGRect frame = CGRectMake(0, 0, width, self.frame.size.height - 2*(kTopFrameYOffset + kScrollViewPadding));
-
+        
         [self.hpScrollView addSubview:[HPLabel labelWithFrame:frame title:title font:font tag:1]];
     }
-
+    
     [self layoutLabels];
 }
 
@@ -390,7 +452,7 @@ DefineContext(TintColorChanged);
     label.tag             = tag;
     label.textColor       = [UIColor blackColor];
     label.textAlignment   = NSTextAlignmentCenter;
-
+    
     return label;
 }
 
@@ -479,10 +541,10 @@ DefineContext(TintColorChanged);
         
         gradientLayer.colors =
 		@[(id)[UIColor colorWithRed: 50/255. green: 50/255. blue: 50/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed: 20/255. green: 20/255. blue: 20/255. alpha:0.1].CGColor,
-            (id)[UIColor colorWithRed: 10/255. green: 10/255. blue: 10/255. alpha:0.0].CGColor,
-            (id)[UIColor colorWithRed: 20/255. green: 20/255. blue: 20/255. alpha:0.1].CGColor,
-            (id)[UIColor colorWithRed: 50/255. green: 50/255. blue: 50/255. alpha:1.0].CGColor];
+    (id)[UIColor colorWithRed: 20/255. green: 20/255. blue: 20/255. alpha:0.1].CGColor,
+    (id)[UIColor colorWithRed: 10/255. green: 10/255. blue: 10/255. alpha:0.0].CGColor,
+    (id)[UIColor colorWithRed: 20/255. green: 20/255. blue: 20/255. alpha:0.1].CGColor,
+    (id)[UIColor colorWithRed: 50/255. green: 50/255. blue: 50/255. alpha:1.0].CGColor];
         
 		self.backgroundColor = [UIColor clearColor];
     }
@@ -516,15 +578,15 @@ DefineContext(TintColorChanged);
         
         gradientLayer.colors =
 		@[(id)[UIColor colorWithRed:143/255. green:143/255. blue:155/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:143/255. green:143/255. blue:155/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:252/255. green:252/255. blue:252/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:252/255. green:252/255. blue:252/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:143/255. green:143/255. blue:155/255. alpha:1.0].CGColor,
-            (id)[UIColor colorWithRed:143/255. green:143/255. blue:155/255. alpha:1.0].CGColor];
+    (id)[UIColor colorWithRed:143/255. green:143/255. blue:155/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:252/255. green:252/255. blue:252/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:252/255. green:252/255. blue:252/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:136/255. green:136/255. blue:162/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:143/255. green:143/255. blue:155/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:143/255. green:143/255. blue:155/255. alpha:1.0].CGColor];
         
  		gradientLayer.startPoint = CGPointMake(0.5, 0.0);
 		gradientLayer.endPoint = CGPointMake( 0.5, 1.0);
@@ -556,11 +618,11 @@ DefineContext(TintColorChanged);
         
         gradientLayer.colors =
 		@[(id)[UIColor colorWithRed: 48/255. green: 57/255. blue: 69/255. alpha:1.0].CGColor,
-          (id)[UIColor colorWithRed:217/255. green:217/255. blue:220/255. alpha:1.0].CGColor,
-          (id)[UIColor colorWithRed:162/255. green:163/255. blue:170/255. alpha:1.0].CGColor,
-          (id)[UIColor colorWithRed: 72/255. green: 75/255. blue: 86/255. alpha:1.0].CGColor,
-          (id)[UIColor colorWithRed: 40/255. green: 40/255. blue: 54/255. alpha:1.0].CGColor,
-          (id)[UIColor colorWithRed: 40/255. green: 43/255. blue: 58/255. alpha:1.0].CGColor];
+    (id)[UIColor colorWithRed:217/255. green:217/255. blue:220/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed:162/255. green:163/255. blue:170/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed: 72/255. green: 75/255. blue: 86/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed: 40/255. green: 40/255. blue: 54/255. alpha:1.0].CGColor,
+    (id)[UIColor colorWithRed: 40/255. green: 43/255. blue: 58/255. alpha:1.0].CGColor];
         
  		gradientLayer.startPoint = CGPointMake(0.5, 0.0);
 		gradientLayer.endPoint = CGPointMake( 0.5, 1.0);
@@ -584,7 +646,7 @@ DefineContext(TintColorChanged);
         
         _maskLayer.path = [self maskPath].CGPath;
     }
-
+    
     return _maskLayer;
 }
 

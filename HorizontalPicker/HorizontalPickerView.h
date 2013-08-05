@@ -24,14 +24,18 @@
 
 #import <UIKit/UIKit.h>
 
+#ifndef __HorizontalPickerStyle
+#define __HorizontalPickerStyle
+
 typedef NS_ENUM(NSUInteger, HPStyle) {
     HPStyleNormal,
     HPStyle_iOS7
 };
 
+#endif
 @protocol HPickerViewDataSource, HPickerViewDelegate;
 
-@interface HPickerView : UIView
+@interface HorizontalPickerView : UIView
 
 @property(nonatomic, weak) IBOutlet id <HPickerViewDataSource> dataSource;
 @property(nonatomic, weak) IBOutlet id <HPickerViewDelegate>   delegate;
@@ -59,12 +63,12 @@ typedef NS_ENUM(NSUInteger, HPStyle) {
 
 @protocol HPickerViewDataSource <NSObject>
 @required
-- (NSInteger)numberOfRowsInPickerView:(HPickerView *)pickerView;
+- (NSInteger)numberOfRowsInPickerView:(HorizontalPickerView *)pickerView;
 @end
 
 
 @protocol HPickerViewDelegate <NSObject>
 @optional
-- (NSString *)pickerView:(HPickerView *)pickerView titleForRow:(NSInteger)row;
-- (void)pickerView:(HPickerView *)pickerView didSelectRow:(NSInteger)row;
+- (NSString *)pickerView:(HorizontalPickerView *)pickerView titleForRow:(NSInteger)row;
+- (void)pickerView:(HorizontalPickerView *)pickerView didSelectRow:(NSInteger)row;
 @end

@@ -17,7 +17,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [HPickerView class];
+    self.horizontalPicker.style = HPStyle_iOS7;
+    
+    [HorizontalPickerView class];
 }
 
 - (void)didReceiveMemoryWarning
@@ -28,19 +30,19 @@
 
 #pragma mark -  HPickerViewDataSource
 
-- (NSInteger)numberOfRowsInPickerView:(HPickerView *)pickerView
+- (NSInteger)numberOfRowsInPickerView:(HorizontalPickerView *)pickerView
 {
     return self.dataSource.count;
 }
 
 #pragma mark -  HPickerViewDelegate
 
-- (NSString *)pickerView:(HPickerView *)pickerView titleForRow:(NSInteger)row
+- (NSString *)pickerView:(HorizontalPickerView *)pickerView titleForRow:(NSInteger)row
 {
     return self.dataSource[row];
 }
 
-- (void)pickerView:(HPickerView *)pickerView didSelectRow:(NSInteger)row
+- (void)pickerView:(HorizontalPickerView *)pickerView didSelectRow:(NSInteger)row
 {
     NSLog(@"Row %d", row);
 }
@@ -51,7 +53,7 @@
 - (NSArray *)dataSource
 {
     if (nil == _dataSource) {
-        _dataSource = @[@"Zero", @"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine", @"Ten"];
+        _dataSource = @[@"Zero", @"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine", @"Ten", @"One Billion Billion", @"Five Hundred"];
     }
     return _dataSource;
 }
