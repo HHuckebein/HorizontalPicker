@@ -163,3 +163,7 @@ xcuserdata
 ####
 # Cocoapods
 Pods
+
+####
+# XCCheckout
+*.xccheckout
