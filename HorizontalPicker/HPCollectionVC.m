@@ -12,7 +12,7 @@
 
 @interface HPCollectionVC() <HPCollectionViewCellDelegate>
 @property (nonatomic, weak) id <HPCollectionVCProvider> provider;
-@property (nonatomic, weak) NSIndexPath  *selectedCellIndexPath;
+@property (nonatomic, strong) NSIndexPath  *selectedCellIndexPath;
 @end
 
 @implementation HPCollectionVC
@@ -159,6 +159,13 @@
     [_provider collectionViewController:self didSelectRow:indexPath.row];
 }
 
+#pragma mark - Selected Cell Index
+
+- (NSInteger)selectedRow
+{
+    return self.selectedCellIndexPath.row;
+}
+
 #pragma mark - Change Cell Selection
 
 - (void)changeSelectionInCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath
@@ -168,6 +175,9 @@
         
         self.selectedCellIndexPath = indexPath;
         [self performSelector:@selector(selectItemAtIndexPath:) withObject:self.selectedCellIndexPath afterDelay:0.25];
+    }
+    else {
+        self.selectedCellIndexPath = indexPath;
     }
 }
 

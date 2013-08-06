@@ -1,3 +1,5 @@
+!https://dl.dropboxusercontent.com/u/9611843/HorizontalPickerView_ShowCase.png!
+
 h2. HorizontalPicker
 
 HorizontalPickerView is a lean variant of UIPickerView and meant to be used for small data sets and where picker space is limited.

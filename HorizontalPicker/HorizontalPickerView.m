@@ -86,8 +86,6 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
         [self addSubview:self.collectionController.collectionView];
         [self addSubview:self.topFrameView];
     }
-    
-    [self performSelector:@selector(makeBaseAdjustmentsForCollectionView:) withObject:self.collectionController.collectionView afterDelay:0];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -115,6 +113,9 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
         _isInitialized = TRUE;
         [self prepareForAppearance];
     }
+    self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
+    self.shapeLayer.path = [self shapePathForFrame:self.bounds].CGPath;
+    [self makeBaseAdjustmentsForCollectionView:self.collectionController.collectionView];
 }
 
 - (void)dealloc
@@ -137,7 +138,7 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
         _shapeLayer                 = [CAShapeLayer layer];
         _shapeLayer.frame           = CGRectInset(self.bounds, 0, 0);
         _shapeLayer.contentsScale   = [[UIScreen mainScreen] scale];
-        _shapeLayer.path            = [UIBezierPath bezierPathWithRoundedRect:_shapeLayer.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(0, 0)].CGPath;
+        _shapeLayer.path            = [self shapePathForFrame:_shapeLayer.bounds].CGPath;
         _shapeLayer.strokeColor     = [STROKE_COLOR_iOS7 CGColor];
         _shapeLayer.lineWidth       = .5;
         _shapeLayer.fillColor       = nil;
@@ -178,13 +179,18 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 
 #pragma mark - Helper
 
+- (UIBezierPath *)shapePathForFrame:(CGRect)frame
+{
+    return [UIBezierPath bezierPathWithRoundedRect:frame byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(0, 0)];
+}
+
 - (void)makeBaseAdjustmentsForCollectionView:(UICollectionView *)collectionView
 {
     NSIndexPath *indexPath = nil;
     UICollectionViewLayoutAttributes *attributes = nil;
 
     // first cell
-    indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    indexPath = [NSIndexPath indexPathForItem:[self selectedRow] inSection:0];
     attributes = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
     [self adjustEdgeInsetForScrollView:collectionView forFrame:attributes.frame edgeInset:AdjustEdgeInsetLeft];
 
@@ -265,7 +271,7 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 
 - (NSInteger)selectedRow;
 {
-    return [self.collectionController indexForCenterCellFromCollectionView:self.collectionController.collectionView];
+    return [self.collectionController selectedRow];
 }
 
 #pragma mark - KeyValue Observer

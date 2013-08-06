@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7360880F17AF8CB300F07F45 /* HorizontalPickerView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7360880E17AF8CB300F07F45 /* HorizontalPickerView.framework */; };
+		73B0463717B10AA3003F27A0 /* HorizontalPickerView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B0463617B10AA3003F27A0 /* HorizontalPickerView.framework */; };
 		73CDE7781721138D00404A09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7771721138D00404A09 /* UIKit.framework */; };
 		73CDE77A1721138D00404A09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7791721138D00404A09 /* Foundation.framework */; };
 		73CDE77C1721138D00404A09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE77B1721138D00404A09 /* CoreGraphics.framework */; };
@@ -29,7 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7360880E17AF8CB300F07F45 /* HorizontalPickerView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HorizontalPickerView.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos/HorizontalPickerView.framework"; sourceTree = "<group>"; };
+		73B0463617B10AA3003F27A0 /* HorizontalPickerView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HorizontalPickerView.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos/HorizontalPickerView.framework"; sourceTree = "<group>"; };
 		73CDE7741721138D00404A09 /* HPDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HPDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73CDE7771721138D00404A09 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		73CDE7791721138D00404A09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -65,7 +65,7 @@
 				73CDE7781721138D00404A09 /* UIKit.framework in Frameworks */,
 				73CDE77A1721138D00404A09 /* Foundation.framework in Frameworks */,
 				73CDE77C1721138D00404A09 /* CoreGraphics.framework in Frameworks */,
-				7360880F17AF8CB300F07F45 /* HorizontalPickerView.framework in Frameworks */,
+				73B0463717B10AA3003F27A0 /* HorizontalPickerView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +92,7 @@
 		73CDE7761721138D00404A09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7360880E17AF8CB300F07F45 /* HorizontalPickerView.framework */,
+				73B0463617B10AA3003F27A0 /* HorizontalPickerView.framework */,
 				73CDE7B0172118C400404A09 /* QuartzCore.framework */,
 				73CDE7771721138D00404A09 /* UIKit.framework */,
 				73CDE7791721138D00404A09 /* Foundation.framework */,

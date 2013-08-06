@@ -23,6 +23,7 @@
 - (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated;
 - (NSInteger)indexForCenterCellFromCollectionView:(UICollectionView *)collectionView;
 - (void)changeSelectionInCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath;
+- (NSInteger)selectedRow;
 @end
 
 @protocol HPCollectionVCProvider <NSObject>

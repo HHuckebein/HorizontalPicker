@@ -36,25 +36,17 @@
         
         for (UICollectionViewLayoutAttributes *attributes in array)
         {
-            if (CGRectContainsRect(visibleRect, attributes.frame)) {
-                CGFloat distance = midX - CGRectGetMidX(attributes.frame);
-                attributes.alpha = (activeDistance - ABS(distance))/activeDistance;
-                
-                CGFloat value = -distance/activeDistance;
-                value *= baseAngle;
-                attributes.transform3D = CATransform3DMakeRotation(value, 0, 1, 0);
-                
-                attributes.zIndex = ABS(distance)/activeDistance * 200;
-                if (DEBUG_HP == 1) {
-                    NSLog(@"%d (%@) alpha = %2.2f, zIndex = %d", attributes.indexPath.row, NSStringFromCGRect(attributes.frame), attributes.alpha, attributes.zIndex);
-                }
-            }
-            else {
-                attributes.alpha = 0.1;
-                attributes.zIndex = 200;
-                if (DEBUG_HP == 1) {
-                    NSLog(@"%d (%@) alpha = %2.2f, zIndex = %d", attributes.indexPath.row, NSStringFromCGRect(attributes.frame), attributes.alpha, attributes.zIndex);
-                }
+            CGFloat distance = midX - CGRectGetMidX(attributes.frame);
+            attributes.alpha = (activeDistance - ABS(distance))/activeDistance;
+            
+            CGFloat value = -distance/activeDistance;
+            value *= baseAngle;
+            attributes.transform3D = CATransform3DMakeRotation(value, 0, 1, 0);
+            
+            attributes.zIndex = ABS(distance)/activeDistance * 200;
+            
+            if (DEBUG_HP == 1) {
+                NSLog(@"%d (%@) alpha = %2.2f, zIndex = %d", attributes.indexPath.row, NSStringFromCGRect(attributes.frame), attributes.alpha, attributes.zIndex);
             }
         }
     }

@@ -30,12 +30,10 @@
 {
     [super viewDidAppear:animated];
     
-    self.selectedRowLabel.text = [NSString stringWithFormat:@"%d", self.horizontalPicker.selectedRow];
-
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.horizontalPicker selectRow:10 animated:YES];
+        self.horizontalPicker.tintColor = [UIColor colorWithRed:253/255. green:154/255. blue:9/255. alpha:1.];
     });
 }
 #pragma mark -  HPickerViewDataSource
