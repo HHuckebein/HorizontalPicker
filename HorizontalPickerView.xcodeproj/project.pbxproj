@@ -28,7 +28,6 @@
 		733C615A17ABE293002B67B8 /* HPCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 733C615917ABE293002B67B8 /* HPCollectionViewCell.m */; };
 		735F7DB2172004BD00E563BF /* HorizontalPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F7DB1172004BD00E563BF /* HorizontalPickerView.m */; };
 		735F7DB31720050300E563BF /* HorizontalPickerView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 735F7DB0172004BD00E563BF /* HorizontalPickerView.h */; };
-		7360886817AFFD1A00F07F45 /* MathAdditions.c in Sources */ = {isa = PBXBuildFile; fileRef = 7360886617AFFD1A00F07F45 /* MathAdditions.c */; };
 		73CB2CDB17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CB2CDA17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m */; };
 		73CB2CDE17B0C7E600DA1A93 /* HorizontalPickerGlobal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73CB2CDD17B0C40200DA1A93 /* HorizontalPickerGlobal.h */; };
 /* End PBXBuildFile section */
@@ -72,8 +71,6 @@
 		733D7E1C17AC23FE00D80A63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		735F7DB0172004BD00E563BF /* HorizontalPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalPickerView.h; sourceTree = "<group>"; };
 		735F7DB1172004BD00E563BF /* HorizontalPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalPickerView.m; sourceTree = "<group>"; };
-		7360886617AFFD1A00F07F45 /* MathAdditions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MathAdditions.c; path = ../../../Helper/MathAdditions/MathAdditions/MathAdditions.c; sourceTree = "<group>"; };
-		7360886717AFFD1A00F07F45 /* MathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathAdditions.h; path = ../../../Helper/MathAdditions/MathAdditions/MathAdditions.h; sourceTree = "<group>"; };
 		73CB2CD917B0B21C00DA1A93 /* HPCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		73CB2CDA17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		73CB2CDD17B0C40200DA1A93 /* HorizontalPickerGlobal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HorizontalPickerGlobal.h; sourceTree = "<group>"; };
@@ -124,8 +121,6 @@
 		7323B3AD171FC56B00E882C8 /* HorizontalPicker */ = {
 			isa = PBXGroup;
 			children = (
-				7360886617AFFD1A00F07F45 /* MathAdditions.c */,
-				7360886717AFFD1A00F07F45 /* MathAdditions.h */,
 				733C615417ABE1FC002B67B8 /* CollectionView */,
 				73CB2CDD17B0C40200DA1A93 /* HorizontalPickerGlobal.h */,
 				7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */,
@@ -244,7 +239,6 @@
 				733C615A17ABE293002B67B8 /* HPCollectionViewCell.m in Sources */,
 				735F7DB2172004BD00E563BF /* HorizontalPickerView.m in Sources */,
 				733C615717ABE26E002B67B8 /* HPCollectionVC.m in Sources */,
-				7360886817AFFD1A00F07F45 /* MathAdditions.c in Sources */,
 				73CB2CDB17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

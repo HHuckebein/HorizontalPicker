@@ -18,6 +18,7 @@
 {
     [super viewDidLoad];
     [HorizontalPickerView class];
+    self.horizontalPicker.style = HPStyle_iOS7;
 }
 
 - (void)didReceiveMemoryWarning
@@ -30,11 +31,12 @@
 {
     [super viewDidAppear:animated];
     
+    self.selectedRowLabel.text = [NSString stringWithFormat:@"%d", self.horizontalPicker.selectedRow];
+
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        [self.horizontalPicker selectRow:10 animated:YES];
-        self.horizontalPicker.tintColor = [UIColor yellowColor];
+        [self.horizontalPicker selectRow:10 animated:YES];
     });
 }
 #pragma mark -  HPickerViewDataSource
@@ -53,7 +55,7 @@
 
 - (void)pickerView:(HorizontalPickerView *)pickerView didSelectRow:(NSInteger)row
 {
-    NSLog(@"Row %d", row);
+    self.selectedRowLabel.text = [NSString stringWithFormat:@"%d", row];
 }
 
 

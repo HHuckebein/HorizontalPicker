@@ -22,6 +22,11 @@
                                     <outlet property="delegate" destination="2" id="7no-Jq-rT9"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fw-a9-cuQ">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.63921568630000003" green="0.80000000000000004" blue="0.078431372550000003" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
@@ -29,11 +34,15 @@
                             <constraint firstItem="WLg-1A-j4D" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" type="default" id="AMB-hM-BlQ"/>
                             <constraint firstItem="WLg-1A-j4D" firstAttribute="top" secondItem="16" secondAttribute="top" constant="100" type="user" id="Fe1-70-J7U"/>
                             <constraint firstAttribute="bottom" secondItem="WLg-1A-j4D" secondAttribute="bottom" priority="750" constant="355" type="user" id="SZL-D0-WpY"/>
+                            <constraint firstItem="2fw-a9-cuQ" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="cZc-NQ-7Fg"/>
+                            <constraint firstAttribute="trailing" secondItem="2fw-a9-cuQ" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="iiM-WE-ell"/>
+                            <constraint firstAttribute="bottom" secondItem="2fw-a9-cuQ" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="j6j-Vx-pvl"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="7"/>
                     <connections>
                         <outlet property="horizontalPicker" destination="WLg-1A-j4D" id="Eoe-68-huG"/>
+                        <outlet property="selectedRowLabel" destination="2fw-a9-cuQ" id="3sK-7R-hyj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -58,18 +67,27 @@
                                     <outlet property="delegate" destination="3" id="lTU-zw-jIE"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NL4-hF-bhk">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.63921568630000003" green="0.80000000000000004" blue="0.078431372550000003" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="NL4-hF-bhk" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="2cZ-ct-MqP"/>
                             <constraint firstAttribute="bottom" secondItem="dlr-xc-Bda" secondAttribute="bottom" priority="750" constant="355" type="user" id="F5a-jV-Fve"/>
                             <constraint firstItem="dlr-xc-Bda" firstAttribute="top" secondItem="17" secondAttribute="top" constant="100" type="user" id="OrY-ff-pQC"/>
                             <constraint firstItem="dlr-xc-Bda" firstAttribute="leading" secondItem="17" secondAttribute="leading" type="default" id="UEp-S6-0DT"/>
+                            <constraint firstItem="NL4-hF-bhk" firstAttribute="leading" secondItem="17" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="d2B-nC-cGw"/>
                             <constraint firstItem="dlr-xc-Bda" firstAttribute="trailing" secondItem="17" secondAttribute="trailing" type="default" id="qwg-Gy-FM5"/>
+                            <constraint firstAttribute="bottom" secondItem="NL4-hF-bhk" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="vSp-mi-jJM"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="6"/>
                     <connections>
                         <outlet property="horizontalPicker" destination="dlr-xc-Bda" id="ygk-8H-dyh"/>
+                        <outlet property="selectedRowLabel" destination="NL4-hF-bhk" id="20w-cx-NNl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="12" sceneMemberID="firstResponder"/>

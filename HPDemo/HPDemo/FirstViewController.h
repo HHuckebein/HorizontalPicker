@@ -12,5 +12,6 @@
 
 @interface FirstViewController : UIViewController
 @property (weak, nonatomic) IBOutlet HorizontalPickerView *horizontalPicker;
+@property (weak, nonatomic) IBOutlet UILabel *selectedRowLabel;
 
 @end

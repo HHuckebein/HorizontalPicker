@@ -96,12 +96,17 @@
 
 - (NSInteger)indexForCenterCellFromCollectionView:(UICollectionView *)collectionView
 {
-    CGPoint point = collectionView.frame.origin;
-    point.x += collectionView.frame.size.width / 2;
-    point.y += collectionView.frame.size.height / 2;
-    point = [collectionView convertPoint:point fromView:collectionView.superview];
+    NSInteger index = 0;
     
-    NSInteger index = [collectionView indexPathForItemAtPoint:point].row;
+    // check if baseAdjustments where made in HorizontalPickerView
+    if (collectionView.contentOffset.x) {
+        CGPoint point = collectionView.frame.origin;
+        point.x += collectionView.frame.size.width / 2;
+        point.y += collectionView.frame.size.height / 2;
+        point = [collectionView convertPoint:point fromView:collectionView.superview];
+        
+        index = [collectionView indexPathForItemAtPoint:point].row;
+    }
     
     return index;
 }
@@ -137,16 +142,14 @@
 
 - (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated
 {
-    if (index < [self.collectionView numberOfItemsInSection:0]) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-        
-        UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-        
-        CGFloat halfWidth = lroundf(CGRectGetWidth(self.collectionView.bounds) / 2);
-        
-        CGPoint offset = CGPointMake(CGRectGetMidX(attributes.frame) - halfWidth, 0);
-        [self.collectionView setContentOffset:offset animated:animated];
-    }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+    
+    CGFloat halfWidth = lroundf(CGRectGetWidth(self.collectionView.bounds) / 2);
+    
+    CGPoint offset = CGPointMake(CGRectGetMidX(attributes.frame) - halfWidth, 0);
+    [self.collectionView setContentOffset:offset animated:animated];
 }
 
 #pragma mark - Reporting

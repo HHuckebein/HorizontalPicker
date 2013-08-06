@@ -232,7 +232,7 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 
 - (void)collectionViewController:(HPCollectionVC *)collectionVC didSelectRow:(NSInteger)row
 {
-    NSLog(@"%d", row);
+    [_delegate pickerView:self didSelectRow:row];
 }
 
 #pragma mark - External affairs
@@ -255,7 +255,11 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 {
     if (row < [_dataSource numberOfRowsInPickerView:self]) {
         [self.collectionController scrollToIndex:row animated:animated];
-        [self.collectionController changeSelectionInCollectionView:self.collectionController.collectionView indexPath:[NSIndexPath indexPathForItem:row inSection:0]];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:row inSection:0];
+        [self.collectionController changeSelectionInCollectionView:self.collectionController.collectionView indexPath:indexPath];
+        
+        [_delegate pickerView:self didSelectRow:row];
     }
 }
 
