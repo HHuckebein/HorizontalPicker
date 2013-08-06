@@ -1,6 +1,6 @@
 h2. HorizontalPicker
 
-HorizontalPicker is a lean variant of UIPickerView and meant to be used for small data sets and where picker space is limited.
+HorizontalPickerView is a lean variant of UIPickerView and meant to be used for small data sets and where picker space is limited.
 Though you can modify the width of the picker without restrictions the height should stay near 44px.
 
 h3. Usage
@@ -42,6 +42,8 @@ NOTE: Make sure you have the QuartzCore framework added to your project!
 h3. Versioning
 
 Versioning for HorizontalPicker follows the Semantic Version Specification found on http://semver.org.
+
+New in version
 
 h3. License
 
