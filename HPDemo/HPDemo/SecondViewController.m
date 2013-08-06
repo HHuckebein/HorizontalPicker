@@ -18,7 +18,6 @@
 {
     [super viewDidLoad];
     [HorizontalPickerView class];
-    self.horizontalPicker.style = HPStyle_iOS7;
 }
 
 - (void)didReceiveMemoryWarning
