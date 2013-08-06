@@ -9,19 +9,11 @@
 #import "HPCollectionViewCell.h"
 #import "HPickerDefinitions.h"
 
-#ifndef DefineContext
-#define DefineContext(_X_) static NSString * _X_ = @#_X_
-#endif
-
 DefineContext(TextChanged);
-DefineContext(TintColorChanged);
-
-#define TEXT_KEYPATH        @"text"
-#define TINT_COLOR_KEYPATH  @"text"
+#define TEXT_KEYPATH    @"text"
 
 @interface HPCollectionViewCell()
-@property (nonatomic, strong) UILabel   *label;
-@property (nonatomic, strong) UIFont    *font;
+@property (nonatomic, strong) UILabel *label;
 @end
 
 @implementation HPCollectionViewCell
@@ -30,7 +22,6 @@ DefineContext(TintColorChanged);
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _font = [UIFont boldSystemFontOfSize:14];
         self.backgroundColor = [UIColor clearColor];
         
         CATransform3D perspective = CATransform3DIdentity;
@@ -40,9 +31,8 @@ DefineContext(TintColorChanged);
         [self addSubview:self.label];
         [self collectionViewCellConstraints];
         
-        [self addObserver:self forKeyPath:TEXT_KEYPATH       options:NSKeyValueObservingOptionNew context:(__bridge void *)(TextChanged)];
-        [self addObserver:self forKeyPath:TINT_COLOR_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
-        
+        [self addObserver:self forKeyPath:TEXT_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TextChanged)];
+
         if (DEBUG_HP == 1) {
             self.layer.borderColor = [UIColor redColor].CGColor;
             self.layer.borderWidth = 0.5;
@@ -53,21 +43,27 @@ DefineContext(TintColorChanged);
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:TEXT_KEYPATH       context:(__bridge void *)(TextChanged)];
-    [self removeObserver:self forKeyPath:TINT_COLOR_KEYPATH context:(__bridge void *)(TintColorChanged)];
+    [self removeObserver:self forKeyPath:TEXT_KEYPATH context:(__bridge void *)(TextChanged)];
 }
+
+- (void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    self.label.textColor = self.selected && [self style] == HPStyleNormal ? [self tintColor] : [self baseColor];
+}
+
 
 - (UILabel *)label
 {
     if (nil == _label) {
         _label = [[UILabel alloc] initWithFrame:self.bounds];
-        _label.backgroundColor = [UIColor clearColor];
-        
-        _label.translatesAutoresizingMaskIntoConstraints = NO;
-        _label.textAlignment    = NSTextAlignmentCenter;
-        _label.lineBreakMode    = NSLineBreakByWordWrapping;
-        _label.adjustsFontSizeToFitWidth = YES;
-        _label.textColor        = _style == HPStyle_iOS7 ? [UIColor colorWithRed:142/255. green:142/255. blue:142/255. alpha:1.] : [UIColor blackColor];
+        _label.backgroundColor                              = [UIColor clearColor];
+        _label.translatesAutoresizingMaskIntoConstraints    = NO;
+        _label.textAlignment                                = NSTextAlignmentCenter;
+        _label.lineBreakMode                                = NSLineBreakByWordWrapping;
+        _label.adjustsFontSizeToFitWidth                    = YES;
+        _label.textColor                                    = [self baseColor];
+        _label.font                                         = [self font];
 
         if (DEBUG_HP == 1) {
             _label.layer.borderColor = [UIColor blueColor].CGColor;
@@ -86,15 +82,49 @@ DefineContext(TintColorChanged);
     [self addConstraints:horizontal];
 }
 
+- (void)setDelegate:(id<HPCollectionViewCellDelegate>)delegate
+{
+    if (_delegate != delegate) {
+        _delegate = delegate;
+        
+        if (_delegate) {
+            self.label.textColor = [self baseColor];
+            self.label.font      = [self font];
+        }
+    }
+}
+
+- (UIColor *)tintColor
+{
+    return [_delegate tintColorForCell:self];
+}
+
+- (UIColor *)baseColor
+{
+    return [self style] == HPStyle_iOS7 ? BASE_COLOR_iOS7 : [UIColor blackColor];
+}
+
+- (UIFont *)font
+{
+    return [_delegate fontForCell:self];
+}
+
+- (HPStyle)style
+{
+    return [_delegate styleForCell:self];
+}
+
+- (id)notificationObject
+{
+    return [_delegate notificationObjectForCell:self];
+}
+
 #pragma mark - KeyValue Observer
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == (__bridge void *)(TextChanged)) {
         self.label.text = self.text;
-    }
-    else if (context == (__bridge void *)(TintColorChanged)) {
-        self.label.textColor = self.tintColor;
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

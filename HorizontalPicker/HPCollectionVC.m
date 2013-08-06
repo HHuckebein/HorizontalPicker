@@ -10,28 +10,42 @@
 #import "HPickerDefinitions.h"
 #import "HPCollectionViewCell.h"
 
-@interface HPCollectionVC()
+@interface HPCollectionVC() <HPCollectionViewCellDelegate>
+@property (nonatomic, weak) id <HPCollectionVCProvider> provider;
+@property (nonatomic, weak) NSIndexPath  *selectedCellIndexPath;
 @end
 
 @implementation HPCollectionVC
+
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout collectionVCProvider:(id<HPCollectionVCProvider>)provider
+{
+    self = [super initWithCollectionViewLayout:layout];
+    if (self) {
+        _provider = provider;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTintColor:) name:TintColorChangedNotification object:provider];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - CollectionView Datasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
 {
-    return [_collectionViewProvider numberOfRowsInCollectionViewController:self];
+    return [_provider numberOfRowsInCollectionViewController:self];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     HPCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle forIndexPath:indexPath];
-    NSString *string = [_collectionViewProvider collectionViewController:self titleForRow:indexPath.row];
-    cell.text      = [self cropStringFromString:string maxWidth:CGRectGetWidth(cell.bounds)-16 font:self.font];
-    cell.style     = _style;
+    cell.delegate = self;
     
-    if (CGRectContainsPoint(cell.frame, collectionView.center)) {
-        cell.tintColor = self.tintColor;
-    }
+    NSString *string = [_provider collectionViewController:self titleForRow:indexPath.row];
+    cell.text        = [self cropStringFromString:string maxWidth:CGRectGetWidth(cell.bounds)-16 font:self.font];
     
     return cell;
 }
@@ -39,13 +53,16 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self scrollToIndex:indexPath.row animated:YES];
+    [self performSelector:@selector(reportDidSelectRowAtIndexPath:) withObject:indexPath afterDelay:0.1];
+    
+    [self changeSelectionInCollectionView:collectionView indexPath:indexPath];
 }
 
 #pragma mark - CollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *text = [_collectionViewProvider collectionViewController:self titleForRow:indexPath.row];
+    NSString *text = [_provider collectionViewController:self titleForRow:indexPath.row];
     CGSize size = CGSizeMake(MIN(_maxWidth, [text sizeWithFont:_font].width + 16 + 10), CGRectGetHeight(collectionView.bounds));
 
     return size;
@@ -55,13 +72,25 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self scrollToIndex:[self indexForCenterCellFromCollectionView:(UICollectionView *)scrollView] animated:YES];
+    NSInteger index = [self indexForCenterCellFromCollectionView:(UICollectionView *)scrollView];
+    [self scrollToIndex:index animated:YES];
+
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    [self performSelector:@selector(reportDidSelectRowAtIndexPath:) withObject:indexPath afterDelay:0.1];
+    
+    [self changeSelectionInCollectionView:(UICollectionView *)scrollView indexPath:indexPath];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate == FALSE) {
-        [self scrollToIndex:[self indexForCenterCellFromCollectionView:(UICollectionView *)scrollView] animated:YES];
+        NSInteger index = [self indexForCenterCellFromCollectionView:(UICollectionView *)scrollView];
+        [self scrollToIndex:index animated:YES];
+
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+        [self performSelector:@selector(reportDidSelectRowAtIndexPath:) withObject:indexPath afterDelay:0.1];
+        
+        [self changeSelectionInCollectionView:(UICollectionView *)scrollView indexPath:indexPath];
     }
 }
 
@@ -108,23 +137,72 @@
 
 - (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    HPCollectionViewCell *cell = (HPCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    cell.tintColor = self.tintColor;
-
-    CGFloat halfWidth = lroundf(CGRectGetWidth(self.collectionView.bounds) / 2);
-    
-    CGPoint offset = CGPointMake(cell.center.x - halfWidth, 0);
-    [self.collectionView setContentOffset:offset animated:animated];
-    
-    [self performSelector:@selector(reportDidSelectRowAtIndexPath:) withObject:indexPath afterDelay:0.1];
+    if (index < [self.collectionView numberOfItemsInSection:0]) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+        
+        UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+        
+        CGFloat halfWidth = lroundf(CGRectGetWidth(self.collectionView.bounds) / 2);
+        
+        CGPoint offset = CGPointMake(CGRectGetMidX(attributes.frame) - halfWidth, 0);
+        [self.collectionView setContentOffset:offset animated:animated];
+    }
 }
 
 #pragma mark - Reporting
 
 - (void)reportDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [_collectionViewProvider collectionViewController:self didSelectRow:indexPath.row];
+    [_provider collectionViewController:self didSelectRow:indexPath.row];
+}
+
+#pragma mark - Change Cell Selection
+
+- (void)changeSelectionInCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath
+{
+    if (_style == HPStyleNormal) {
+        [collectionView deselectItemAtIndexPath:self.selectedCellIndexPath animated:YES];
+        
+        self.selectedCellIndexPath = indexPath;
+        [self performSelector:@selector(selectItemAtIndexPath:) withObject:self.selectedCellIndexPath afterDelay:0.25];
+    }
+}
+
+- (void)selectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.collectionView selectItemAtIndexPath:self.selectedCellIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+}
+
+#pragma mark - Tint Color Changes
+
+- (void)changeTintColor:(NSNotification *)notification
+{
+    self.tintColor = [notification userInfo][TINT_COLOR];
+    if (_style == HPStyleNormal) {
+        [self.collectionView selectItemAtIndexPath:self.selectedCellIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+    }
+}
+
+#pragma mark - HPCollectionViewCellDelegate
+
+- (UIColor *)tintColorForCell:(HPCollectionViewCell *)cell
+{
+    return self.tintColor;
+}
+
+- (UIFont *)fontForCell:(HPCollectionViewCell *)cell
+{
+    return self.font;
+}
+
+- (HPStyle)styleForCell:(HPCollectionViewCell *)cell
+{
+    return _style;
+}
+
+- (id)notificationObjectForCell:(HPCollectionViewCell *)cell
+{
+    return _provider;
 }
 
 @end

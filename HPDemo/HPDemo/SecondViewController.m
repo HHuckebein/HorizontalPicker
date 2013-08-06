@@ -17,8 +17,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.horizontalPicker.style = HPStyle_iOS7;
-    
     [HorizontalPickerView class];
 }
 
@@ -28,6 +26,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [self.horizontalPicker selectRow:10 animated:YES];
+        self.horizontalPicker.tintColor = [UIColor yellowColor];
+    });
+}
 #pragma mark -  HPickerViewDataSource
 
 - (NSInteger)numberOfRowsInPickerView:(HorizontalPickerView *)pickerView

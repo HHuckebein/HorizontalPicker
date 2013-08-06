@@ -26,14 +26,8 @@
 #import "HPCollectionViewFlowLayout.h"
 #import "HPCollectionViewCell.h"
 
-#ifndef DefineContext
-#define DefineContext(_X_) static NSString * _X_ = @#_X_
-#endif
-
-#define kTopFrameXOffset     10. // defines the boundaries of the inner frame
-
 DefineContext(TintColorChanged);
-#define kTintColorKeyPath  @"tintColor"
+#define TINT_COLOR_KEYPATH  @"tintColor"
 
 typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     AdjustEdgeInsetLeft,
@@ -53,17 +47,19 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 - (UIBezierPath *)maskPath;
 @end
 
-@interface HorizontalPickerView() <UIScrollViewDelegate, HPCollectionViewProvider>
+@interface HorizontalPickerView() <HPCollectionVCProvider>
 
 @property (strong, nonatomic) HPTopFrameView *topFrameView;
 @property (nonatomic, strong) CAShapeLayer   *shapeLayer;
 @property (nonatomic, strong) HPCollectionVC *collectionController;
-
+@property (nonatomic, assign) BOOL           isInitialized;
 @end
+
+NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 
 @implementation HorizontalPickerView
 
-#pragma mark - system init
+#pragma mark - System Init
 
 - (void)setup
 {
@@ -71,30 +67,27 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     
     _tintColor = [UIColor blueColor];
     
-    [self addObserver:self forKeyPath:kTintColorKeyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
+    [self addObserver:self forKeyPath:TINT_COLOR_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
 }
 
 - (void)prepareForAppearance
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        
-        self.backgroundColor = _style == HPStyle_iOS7 ? [UIColor clearColor] : [UIColor blackColor];
-        
-        CGRect gradientRect = CGRectInset(self.bounds, kTopFrameXOffset, kTopFrameYOffset);
-        
-        if (_style == HPStyle_iOS7) {
-            [self.layer addSublayer:self.shapeLayer];
-            [self addSubview:self.collectionController.collectionView];
-        }
-        else {
-            [self addSubview:[[HPWhiteGradientView alloc] initWithFrame:gradientRect]];
-            [self addSubview:[[HPBlackGradientView alloc] initWithFrame:gradientRect]];
-            [self addSubview:self.collectionController.collectionView];
-            [self addSubview:self.topFrameView];
-        }
-        [self performSelector:@selector(makeBaseAdjustmentsForCollectionView:) withObject:self.collectionController.collectionView afterDelay:0];
-    });
+    self.backgroundColor = _style == HPStyle_iOS7 ? [UIColor clearColor] : [UIColor blackColor];
+    
+    CGRect gradientRect = CGRectInset(self.bounds, kTopFrameXOffset, kTopFrameYOffset);
+    
+    if (_style == HPStyle_iOS7) {
+        [self.layer addSublayer:self.shapeLayer];
+        [self addSubview:self.collectionController.collectionView];
+    }
+    else {
+        [self addSubview:[[HPWhiteGradientView alloc] initWithFrame:gradientRect]];
+        [self addSubview:[[HPBlackGradientView alloc] initWithFrame:gradientRect]];
+        [self addSubview:self.collectionController.collectionView];
+        [self addSubview:self.topFrameView];
+    }
+    
+    [self performSelector:@selector(makeBaseAdjustmentsForCollectionView:) withObject:self.collectionController.collectionView afterDelay:0];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -117,24 +110,37 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    [self prepareForAppearance];
+    
+    if (_isInitialized == FALSE) {
+        _isInitialized = TRUE;
+        [self prepareForAppearance];
+    }
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:kTintColorKeyPath context:(__bridge void *)(TintColorChanged)];
+    [self removeObserver:self forKeyPath:TINT_COLOR_KEYPATH context:(__bridge void *)(TintColorChanged)];
 }
+
+#pragma mark -  Setter
+
+- (void)setEnabled:(BOOL)enabled
+{
+    self.userInteractionEnabled = enabled;
+}
+
+#pragma mark - Getter
 
 - (CAShapeLayer *)shapeLayer
 {
     if (nil == _shapeLayer) {
-        _shapeLayer = [CAShapeLayer layer];
-        _shapeLayer.frame = CGRectInset(self.bounds, 0, 0);
-        _shapeLayer.contentsScale = [[UIScreen mainScreen] scale];
-        _shapeLayer.path = [UIBezierPath bezierPathWithRoundedRect:_shapeLayer.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(0, 0)].CGPath;
-        _shapeLayer.strokeColor = [UIColor colorWithRed:142/255. green:142/255. blue:147/255. alpha:1.].CGColor;
-        _shapeLayer.lineWidth = .5;
-        _shapeLayer.fillColor = nil;
+        _shapeLayer                 = [CAShapeLayer layer];
+        _shapeLayer.frame           = CGRectInset(self.bounds, 0, 0);
+        _shapeLayer.contentsScale   = [[UIScreen mainScreen] scale];
+        _shapeLayer.path            = [UIBezierPath bezierPathWithRoundedRect:_shapeLayer.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(0, 0)].CGPath;
+        _shapeLayer.strokeColor     = [STROKE_COLOR_iOS7 CGColor];
+        _shapeLayer.lineWidth       = .5;
+        _shapeLayer.fillColor       = nil;
     }
     return _shapeLayer;
 }
@@ -145,12 +151,12 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
         HPCollectionViewFlowLayout *layout = [[HPCollectionViewFlowLayout alloc] init];
         layout.style = _style;
         
-        _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout];
-        _collectionController.collectionViewProvider = self;
-        _collectionController.font = [UIFont boldSystemFontOfSize:14];
-        _collectionController.maxWidth = floorf(CGRectGetWidth(self.bounds) * kMaxLabelWidthFactor);
+        _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout collectionVCProvider:self];
         _collectionController.collectionView.showsHorizontalScrollIndicator = NO;
-        _collectionController.style = _style;
+        _collectionController.font                                          = [UIFont boldSystemFontOfSize:20];
+        _collectionController.maxWidth                                      = floorf(CGRectGetWidth(self.bounds) * kMaxLabelWidthFactor);
+        _collectionController.style                                         = _style;
+        _collectionController.tintColor                                     = self.tintColor;
         
         [_collectionController.collectionView registerClass:[HPCollectionViewCell class] forCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle];
         _collectionController.collectionView.backgroundColor = [UIColor clearColor];
@@ -161,6 +167,16 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     }
     return _collectionController;
 }
+
+- (HPTopFrameView *)topFrameView
+{
+    if (nil == _topFrameView) {
+        _topFrameView = [[HPTopFrameView alloc] initWithFrame:self.bounds];
+    }
+    return _topFrameView;
+}
+
+#pragma mark - Helper
 
 - (void)makeBaseAdjustmentsForCollectionView:(UICollectionView *)collectionView
 {
@@ -173,6 +189,7 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     [self adjustEdgeInsetForScrollView:collectionView forFrame:attributes.frame edgeInset:AdjustEdgeInsetLeft];
 
     [collectionView setContentOffset:CGPointMake(CGRectGetMidX(attributes.frame) - floorf(CGRectGetWidth(collectionView.bounds)/2), 0)];
+    [self.collectionController changeSelectionInCollectionView:collectionView indexPath:indexPath];
 
     // last cell
     indexPath = [NSIndexPath indexPathForItem:[_dataSource numberOfRowsInPickerView:self] - 1 inSection:0];
@@ -201,13 +218,6 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 }
 
 
-#pragma mark -  Setter
-
-- (void)setEnabled:(BOOL)enabled
-{
-    self.userInteractionEnabled = enabled;
-}
-
 #pragma mark - HPCollectionViewProvider
 
 - (NSInteger)numberOfRowsInCollectionViewController:(HPCollectionVC *)collectionVC
@@ -230,7 +240,7 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 - (UIView *)viewForRow:(NSInteger)row;
 {
     UIView *view = nil;
-    if (row < [self.collectionController.collectionView numberOfItemsInSection:0]) {
+    if (row < [_dataSource numberOfRowsInPickerView:self]) {
         view = [self.collectionController.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
     }
     return view;
@@ -243,7 +253,10 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 
 - (void)selectRow:(NSInteger)row animated:(BOOL)animated;
 {
-    [self.collectionController scrollToIndex:row animated:animated];
+    if (row < [_dataSource numberOfRowsInPickerView:self]) {
+        [self.collectionController scrollToIndex:row animated:animated];
+        [self.collectionController changeSelectionInCollectionView:self.collectionController.collectionView indexPath:[NSIndexPath indexPathForItem:row inSection:0]];
+    }
 }
 
 - (NSInteger)selectedRow;
@@ -251,20 +264,12 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     return [self.collectionController indexForCenterCellFromCollectionView:self.collectionController.collectionView];
 }
 
-- (HPTopFrameView *)topFrameView
-{
-    if (nil == _topFrameView) {
-        _topFrameView = [[HPTopFrameView alloc] initWithFrame:self.bounds];
-    }
-    return _topFrameView;
-}
-
 #pragma mark - KeyValue Observer
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == (__bridge void *)(TintColorChanged)) {
-        self.collectionController.tintColor = self.tintColor;
+        [[NSNotificationCenter defaultCenter] postNotificationName:TintColorChangedNotification object:self userInfo:@{TINT_COLOR : self.tintColor}];
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

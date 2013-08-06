@@ -29,4 +29,7 @@ typedef NS_ENUM(NSUInteger, HPStyle) {
 
 #define PICKER_HEIGHT        44
 
+#define BASE_COLOR_iOS7     [UIColor colorWithRed:142/255. green:142/255. blue:142/255. alpha:1.]
+#define STROKE_COLOR_iOS7   [UIColor colorWithRed:142/255. green:142/255. blue:147/255. alpha:1.]
+
 #endif

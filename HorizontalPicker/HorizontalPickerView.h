@@ -45,8 +45,8 @@
 @property (assign, nonatomic) BOOL      enabled;
 
 - (NSInteger)selectedRow;
-- (void)selectRow:(NSInteger)row animated:(BOOL)animated;
 - (UIView *)viewForRow:(NSInteger)row;
+- (void)selectRow:(NSInteger)row animated:(BOOL)animated;
 - (void)reloadAllComponents;
 
 @end

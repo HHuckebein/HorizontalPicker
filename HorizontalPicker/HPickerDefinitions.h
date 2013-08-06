@@ -22,6 +22,8 @@
 #ifndef __HorizontalPicker
 #define __HorizontalPicker
 
+#define DefineContext(_X_) static NSString * _X_ = @#_X_
+
 #define DEBUG_HP                            0   // forces some views layer to draw a border
 
 #define kTopFrameXOffset                    10. // defines the boundaries of the inner frame
@@ -31,5 +33,8 @@
 #define kMaxLabelWidthFactor                0.5 // a label will be cropped and filled with 3 dots at the end if it exceeds bounds.size.width * Factor
 
 #define kTVReuseID_HPCollectionViewStyle    @"HorizontalPickerStyle"
+
+#define TINT_COLOR                          @"tintColor"
+extern NSString * const TintColorChangedNotification;
 
 #endif

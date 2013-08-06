@@ -11,10 +11,19 @@
 #import "HPickerDefinitions.h"
 #import "HorizontalPickerGlobal.h"
 
+@protocol HPCollectionViewCellDelegate;
+
 @interface HPCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, weak) id <HPCollectionViewCellDelegate> delegate;
 @property (nonatomic, strong) NSString  *text;
-@property (nonatomic, assign) HPStyle   style;
-@property (nonatomic, strong) UIColor   *tintColor;             // center cell's text color when not HPStyle_iOS7
 
+@end
+
+@protocol HPCollectionViewCellDelegate <NSObject>
+@required
+- (UIColor *)tintColorForCell:(HPCollectionViewCell *)cell;
+- (HPStyle)styleForCell:(HPCollectionViewCell *)cell;
+- (UIFont *)fontForCell:(HPCollectionViewCell *)cell;
+- (id)notificationObjectForCell:(HPCollectionViewCell *)cell;
 @end

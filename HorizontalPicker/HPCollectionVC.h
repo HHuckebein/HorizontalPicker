@@ -10,20 +10,22 @@
 #import "HPickerDefinitions.h"
 #import "HorizontalPickerGlobal.h"
 
-@protocol HPCollectionViewProvider;
+@protocol HPCollectionVCProvider;
 
 @interface HPCollectionVC : UICollectionViewController
-@property (nonatomic, weak) id <HPCollectionViewProvider>   collectionViewProvider;
-@property (nonatomic, strong) UIFont                        *font;
-@property (nonatomic, assign) CGFloat                       maxWidth;               // max width of a single UICollectionViewCell
-@property (nonatomic, assign) HPStyle                       style;                  // HPStyle_iOS7 similar to UIPickerView in iOS7
-@property (nonatomic, strong) UIColor                       *tintColor;             // center cell's text color when not HPStyle_iOS7
+@property (nonatomic, strong) UIFont                    *font;
+@property (nonatomic, assign) CGFloat                   maxWidth;               // max width of a single UICollectionViewCell
+@property (nonatomic, assign) HPStyle                   style;                  // HPStyle_iOS7 similar to UIPickerView in iOS7
+@property (nonatomic, strong) UIColor                   *tintColor;             // center cell's text color when not HPStyle_iOS7
+
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout collectionVCProvider:(id <HPCollectionVCProvider>)provider;
 
 - (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated;
 - (NSInteger)indexForCenterCellFromCollectionView:(UICollectionView *)collectionView;
+- (void)changeSelectionInCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath;
 @end
 
-@protocol HPCollectionViewProvider <NSObject>
+@protocol HPCollectionVCProvider <NSObject>
 @required
 - (NSInteger)numberOfRowsInCollectionViewController:(HPCollectionVC *)collectionVC;
 - (NSString *)collectionViewController:(HPCollectionVC *)collectionVC titleForRow:(NSInteger)row;
