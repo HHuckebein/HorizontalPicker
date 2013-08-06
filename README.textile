@@ -45,7 +45,9 @@ h3. Versioning
 
 Versioning for HorizontalPicker follows the Semantic Version Specification found on http://semver.org.
 
-New in version
+New in version 1.1.0
+- support for cocoapods
+- choose iOS7 like style
 
 h3. License
 
