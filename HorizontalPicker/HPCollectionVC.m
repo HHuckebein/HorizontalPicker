@@ -26,7 +26,12 @@
 {
     HPCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle forIndexPath:indexPath];
     NSString *string = [_collectionViewProvider collectionViewController:self titleForRow:indexPath.row];
-    cell.text = [self cropStringFromString:string maxWidth:CGRectGetWidth(cell.bounds)-16 font:self.font];
+    cell.text      = [self cropStringFromString:string maxWidth:CGRectGetWidth(cell.bounds)-16 font:self.font];
+    cell.style     = _style;
+    
+    if (CGRectContainsPoint(cell.frame, collectionView.center)) {
+        cell.tintColor = self.tintColor;
+    }
     
     return cell;
 }
@@ -48,32 +53,29 @@
 
 #pragma mark - UIScrollViewDelegate
 
-//- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
-//{
-//    CGFloat unguidedOffsetX = targetContentOffset->x;
-//    CGFloat guidedOffsetX = unguidedOffsetX;
-//    
-//    if (ABS(unguidedOffsetX) > 0) {
-//        int remainder = lroundf(unguidedOffsetX) % lroundf(_cellHeight);
-//        if (remainder) {
-//            guidedOffsetY -= remainder;
-//            guidedOffsetY += (remainder < (_cellHeight / 2) ? _cellHeight : 0);
-//        }
-//    }
-//    
-//    targetContentOffset->y = guidedOffsetY;
-//
-//    
-//    CGFloat unguidedOffsetY = targetContentOffset->y;
-//    CGFloat guidedOffsetY = 0.;
-//    
-//    if (unguidedOffsetY > 0) {
-//        int remainder = lroundf(unguidedOffsetY) % lroundf(CGRectGetHeight(self.collectionView.bounds));
-//        guidedOffsetY = unguidedOffsetY - remainder + (remainder < (CGRectGetHeight(self.collectionView.bounds) / 2) ? CGRectGetHeight(self.collectionView.bounds) : 0);
-//    }
-//    
-//    targetContentOffset->y = guidedOffsetY;
-//}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self scrollToIndex:[self indexForCenterCellFromCollectionView:(UICollectionView *)scrollView] animated:YES];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (decelerate == FALSE) {
+        [self scrollToIndex:[self indexForCenterCellFromCollectionView:(UICollectionView *)scrollView] animated:YES];
+    }
+}
+
+- (NSInteger)indexForCenterCellFromCollectionView:(UICollectionView *)collectionView
+{
+    CGPoint point = collectionView.frame.origin;
+    point.x += collectionView.frame.size.width / 2;
+    point.y += collectionView.frame.size.height / 2;
+    point = [collectionView convertPoint:point fromView:collectionView.superview];
+    
+    NSInteger index = [collectionView indexPathForItemAtPoint:point].row;
+    
+    return index;
+}
 
 #pragma mark - Crop Label Text
 
@@ -106,12 +108,23 @@
 
 - (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated
 {
-    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
-    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    HPCollectionViewCell *cell = (HPCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    cell.tintColor = self.tintColor;
+
     CGFloat halfWidth = lroundf(CGRectGetWidth(self.collectionView.bounds) / 2);
     
     CGPoint offset = CGPointMake(cell.center.x - halfWidth, 0);
     [self.collectionView setContentOffset:offset animated:animated];
+    
+    [self performSelector:@selector(reportDidSelectRowAtIndexPath:) withObject:indexPath afterDelay:0.1];
+}
+
+#pragma mark - Reporting
+
+- (void)reportDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_collectionViewProvider collectionViewController:self didSelectRow:indexPath.row];
 }
 
 @end

@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "HPickerDefinitions.h"
+#import "HorizontalPickerGlobal.h"
 
 @interface HPCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong) NSString  *text;
+@property (nonatomic, assign) HPStyle   style;
+@property (nonatomic, strong) UIColor   *tintColor;             // center cell's text color when not HPStyle_iOS7
 
 @end

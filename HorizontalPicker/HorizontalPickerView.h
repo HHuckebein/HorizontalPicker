@@ -23,16 +23,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "HorizontalPickerGlobal.h"
 
-#ifndef __HorizontalPickerStyle
-#define __HorizontalPickerStyle
-
-typedef NS_ENUM(NSUInteger, HPStyle) {
-    HPStyleNormal,
-    HPStyle_iOS7
-};
-
-#endif
 @protocol HPickerViewDataSource, HPickerViewDelegate;
 
 @interface HorizontalPickerView : UIView
@@ -52,7 +44,6 @@ typedef NS_ENUM(NSUInteger, HPStyle) {
  */
 @property (assign, nonatomic) BOOL      enabled;
 
-- (NSInteger)numberOfRows;
 - (NSInteger)selectedRow;
 - (void)selectRow:(NSInteger)row animated:(BOOL)animated;
 - (UIView *)viewForRow:(NSInteger)row;

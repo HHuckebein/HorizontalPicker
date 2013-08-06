@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HorizontalPickerGlobal.h"
 
 @interface HPCollectionViewFlowLayout : UICollectionViewFlowLayout
+
+@property (nonatomic, assign) HPStyle style;
 
 @end

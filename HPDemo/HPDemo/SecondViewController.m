@@ -17,7 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.horizontalPicker.style = HPStyle_iOS7;
+//    self.horizontalPicker.style = HPStyle_iOS7;
     
     [HorizontalPickerView class];
 }

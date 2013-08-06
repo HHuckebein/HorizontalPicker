@@ -22,7 +22,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "HorizontalPickerView.h"
 #import "HPickerDefinitions.h"
-#import "HPLabel.h"
 #import "HPCollectionVC.h"
 #import "HPCollectionViewFlowLayout.h"
 #import "HPCollectionViewCell.h"
@@ -31,8 +30,9 @@
 #define DefineContext(_X_) static NSString * _X_ = @#_X_
 #endif
 
-DefineContext(TintColorChanged);
+#define kTopFrameXOffset     10. // defines the boundaries of the inner frame
 
+DefineContext(TintColorChanged);
 #define kTintColorKeyPath  @"tintColor"
 
 typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
@@ -48,19 +48,14 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 @end
 
 @interface HPTopFrameView : UIView
-@property(strong, nonatomic) CAShapeLayer                   *maskLayer;
+@property(strong, nonatomic) CAShapeLayer  *maskLayer;
 
 - (UIBezierPath *)maskPath;
 @end
 
 @interface HorizontalPickerView() <UIScrollViewDelegate, HPCollectionViewProvider>
 
-@property (strong, nonatomic) UIScrollView   *hpScrollView;
-@property (strong, nonatomic) NSMutableArray *tables;
-@property (strong, nonatomic) HPLabel        *centerLabel;
 @property (strong, nonatomic) HPTopFrameView *topFrameView;
-@property (assign, nonatomic) BOOL           configured;
-@property (assign, nonatomic) BOOL           is_iOS7;
 @property (nonatomic, strong) CAShapeLayer   *shapeLayer;
 @property (nonatomic, strong) HPCollectionVC *collectionController;
 
@@ -81,21 +76,25 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 
 - (void)prepareForAppearance
 {
-    // make the whiteGradient's height a bit smallerso that the background shines through
-    CGRect gradientRect = CGRectInset(self.bounds, kTopFrameXOffset, kTopFrameYOffset + kScrollViewPadding);
-    
-    if (_style == HPStyle_iOS7) {
-        [self.layer addSublayer:self.shapeLayer];
-        [self addSubview:self.collectionController.collectionView];
-        [self performSelector:@selector(adjustContentInsetsForCollectionView:) withObject:self.collectionController.collectionView afterDelay:0.2];
-        [self performSelector:@selector(scrollToBase) withObject:nil afterDelay:0.1];
-    }
-    else {
-        [self addSubview:[[HPWhiteGradientView alloc] initWithFrame:gradientRect]];
-        [self addSubview:[[HPBlackGradientView alloc] initWithFrame:gradientRect]];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         
-        [self addSubview:self.topFrameView];
-    }
+        self.backgroundColor = _style == HPStyle_iOS7 ? [UIColor clearColor] : [UIColor blackColor];
+        
+        CGRect gradientRect = CGRectInset(self.bounds, kTopFrameXOffset, kTopFrameYOffset);
+        
+        if (_style == HPStyle_iOS7) {
+            [self.layer addSublayer:self.shapeLayer];
+            [self addSubview:self.collectionController.collectionView];
+        }
+        else {
+            [self addSubview:[[HPWhiteGradientView alloc] initWithFrame:gradientRect]];
+            [self addSubview:[[HPBlackGradientView alloc] initWithFrame:gradientRect]];
+            [self addSubview:self.collectionController.collectionView];
+            [self addSubview:self.topFrameView];
+        }
+        [self performSelector:@selector(makeBaseAdjustmentsForCollectionView:) withObject:self.collectionController.collectionView afterDelay:0];
+    });
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -118,34 +117,12 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (_configured == FALSE) {
-        _configured = TRUE;
-        
-        [self prepareForAppearance];
-        //        [self configureHorizontalPickerWith:[_dataSource numberOfRowsInPickerView:self]];
-    }
-    
-    //    self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
-    //
-    //    HPLabel *label = _centerLabel ? self.centerLabel : [self findCenterLabel:self.hpScrollView];
-    //    [self centerLabel:label animated:YES];
+    [self prepareForAppearance];
 }
 
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:kTintColorKeyPath context:(__bridge void *)(TintColorChanged)];
-}
-
-- (void)setStyle:(HPStyle)style
-{
-    if (_style != style) {
-        _style = style;
-        
-        if (_style == HPStyle_iOS7) {
-            self.tintColor = [UIColor colorWithRed:142/255. green:142/255. blue:147/255. alpha:1.];
-        }
-        self.backgroundColor = style == HPStyle_iOS7 ? [UIColor clearColor] : [UIColor blackColor];
-    }
 }
 
 - (CAShapeLayer *)shapeLayer
@@ -166,11 +143,14 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 {
     if (nil == _collectionController) {
         HPCollectionViewFlowLayout *layout = [[HPCollectionViewFlowLayout alloc] init];
+        layout.style = _style;
+        
         _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout];
         _collectionController.collectionViewProvider = self;
         _collectionController.font = [UIFont boldSystemFontOfSize:14];
         _collectionController.maxWidth = floorf(CGRectGetWidth(self.bounds) * kMaxLabelWidthFactor);
         _collectionController.collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionController.style = _style;
         
         [_collectionController.collectionView registerClass:[HPCollectionViewCell class] forCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle];
         _collectionController.collectionView.backgroundColor = [UIColor clearColor];
@@ -182,19 +162,21 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     return _collectionController;
 }
 
-- (void)adjustContentInsetsForCollectionView:(UICollectionView *)collectionView
+- (void)makeBaseAdjustmentsForCollectionView:(UICollectionView *)collectionView
 {
     NSIndexPath *indexPath = nil;
     UICollectionViewLayoutAttributes *attributes = nil;
 
     // first cell
     indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    attributes = [self.collectionController.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    attributes = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
     [self adjustEdgeInsetForScrollView:collectionView forFrame:attributes.frame edgeInset:AdjustEdgeInsetLeft];
-    
+
+    [collectionView setContentOffset:CGPointMake(CGRectGetMidX(attributes.frame) - floorf(CGRectGetWidth(collectionView.bounds)/2), 0)];
+
     // last cell
     indexPath = [NSIndexPath indexPathForItem:[_dataSource numberOfRowsInPickerView:self] - 1 inSection:0];
-    attributes = [self.collectionController.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    attributes = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
     [self adjustEdgeInsetForScrollView:collectionView forFrame:attributes.frame edgeInset:AdjustEdgeInsetRight];
 }
 
@@ -218,11 +200,6 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     scrollView.contentInset = insets;
 }
 
-
-- (void)scrollToBase
-{
-    [self selectRow:0 animated:NO];
-}
 
 #pragma mark -  Setter
 
@@ -250,182 +227,28 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 
 #pragma mark - External affairs
 
-- (NSInteger)numberOfRows;
-{
-    if (self.tables.count == 1 && [(self.tables)[0] isEqualToString:@"???"]) {
-        return 0;
-    }
-    return self.tables.count;
-}
-
 - (UIView *)viewForRow:(NSInteger)row;
 {
-    return [self.hpScrollView viewWithTag:row + 1];
+    UIView *view = nil;
+    if (row < [self.collectionController.collectionView numberOfItemsInSection:0]) {
+        view = [self.collectionController.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
+    }
+    return view;
 }
 
 - (void)reloadAllComponents;
 {
-    for (UIView *view in self.hpScrollView.subviews) {
-        [view removeFromSuperview];
-    }
-    [self configureHorizontalPickerWith:[_dataSource numberOfRowsInPickerView:self]];
+    [self.collectionController.collectionView reloadData];
 }
 
 - (void)selectRow:(NSInteger)row animated:(BOOL)animated;
 {
-    if (_style == HPStyle_iOS7) {
-        [self.collectionController scrollToIndex:row animated:animated];
-    }
-    else {
-        [self centerLabel:(HPLabel *)[self.hpScrollView viewWithTag:row + 1] animated:animated];
-    }
+    [self.collectionController scrollToIndex:row animated:animated];
 }
 
 - (NSInteger)selectedRow;
 {
-    return [[self findCenterLabel:self.hpScrollView] tag] - 1;
-}
-
-#pragma mark - Crop Label Text
-
-- (NSString *)cropStringFromString:(NSString *)text width:(CGFloat)maxWidth font:(UIFont *)font
-{
-    NSMutableString *newText = [NSMutableString string];
-    [newText setString:text];
-    NSRange range = NSMakeRange(newText.length, 1);
-    
-    BOOL needsCut = NO;
-    
-    CGSize size = [newText sizeWithFont:font];
-    
-    while (size.width > maxWidth) {
-        range.location -= 1;
-        [newText deleteCharactersInRange:range];
-        needsCut = YES;
-        size = [newText sizeWithFont:font];
-    };
-    
-    if (needsCut == YES) {
-        range.location -= 3;
-        range.length    = 3;
-        [newText replaceCharactersInRange:range withString:@"..."];
-    }
-    return [newText copy];
-}
-
-#pragma mark - Init Picker
-
-- (void)configureHorizontalPickerWith:(NSInteger)numberOfRows
-{
-    UIFont *font = [UIFont boldSystemFontOfSize:20];
-    NSString *title = @"???";
-    
-    if (numberOfRows) {
-        CGFloat maxWidth = floorf(self.bounds.size.width * kMaxLabelWidthFactor);
-        CGRect frame = CGRectMake(0, 0, 0, self.frame.size.height - 2*(kTopFrameYOffset + kScrollViewPadding));
-        
-        for (int i = 0; i < numberOfRows; i++) {
-            
-            title = [_delegate pickerView:self titleForRow:i];
-            [self.tables addObject:title ? title : @"??"];
-            
-            CGFloat width = [title sizeWithFont:font].width;
-            frame.size.width = MIN(maxWidth, width) + kLabelPadding;
-            
-            if (width > maxWidth) {
-                title = [self cropStringFromString:title width:maxWidth font:font];
-            }
-            
-            [self.hpScrollView addSubview:[HPLabel labelWithFrame:frame title:title font:font tag:i + 1]];
-        }
-    }
-    else {
-        CGFloat width = [title sizeWithFont:font].width + kLabelPadding;
-        CGRect frame = CGRectMake(0, 0, width, self.frame.size.height - 2*(kTopFrameYOffset + kScrollViewPadding));
-        
-        [self.hpScrollView addSubview:[HPLabel labelWithFrame:frame title:title font:font tag:1]];
-    }
-    
-    [self layoutLabels];
-}
-
-- (void)centerLabel:(HPLabel *)label animated:(BOOL)animated
-{
-    self.centerLabel.textColor = [UIColor blackColor];
-    
-    self.centerLabel = label;
-    self.centerLabel.textColor = self.tintColor;
-    
-    CGPoint newOffset = CGPointMake(self.centerLabel.center.x - self.hpScrollView.center.x, 0.);
-    [self.hpScrollView setContentOffset:newOffset animated:animated];
-}
-
-- (void)findHitLabel:(UITapGestureRecognizer *)recognizer
-{
-    CGPoint location = [recognizer locationInView:self.hpScrollView];
-    
-    UILabel *hitLabel = nil;
-    for (UILabel *label in [self.hpScrollView subviews]) {
-        CGPoint point = [label convertPoint:location fromView:self.hpScrollView];
-        if ([label pointInside:point withEvent:nil]) {
-            hitLabel = label;
-            break;
-        }
-    }
-    
-    if ([hitLabel isKindOfClass:[HPLabel class]] && hitLabel != self.centerLabel) {
-        [self centerLabel:(HPLabel *)hitLabel animated:YES];
-        
-        [_delegate pickerView:self didSelectRow:hitLabel.tag - 1];
-    }
-}
-
-- (void)layoutLabels
-{
-	// reposition all label subviews in a horizontal serial fashion
-	CGFloat curXLoc = 0;
-	for (UILabel *label in [self.hpScrollView subviews])
-	{
-        CGRect frame = label.frame;
-        frame.origin = CGPointMake(curXLoc, 0);
-        label.frame = frame;
-        
-        curXLoc += frame.size.width;
-	}
-	
-	// set the content size so it can be scrollable
-	[self.hpScrollView setContentSize:CGSizeMake(curXLoc, self.hpScrollView.bounds.size.height)];
-    
-    CGFloat rightInset = self.hpScrollView.center.x - [self.hpScrollView viewWithTag:self.tables.count].bounds.size.width/2;
-    CGFloat leftInset  = self.hpScrollView.center.x - [self.hpScrollView viewWithTag:1].bounds.size.width/2;
-    self.hpScrollView.contentInset = UIEdgeInsetsMake(0, leftInset, 0, rightInset);
-    
-    HPLabel *label = (HPLabel *)[self.hpScrollView viewWithTag:1];
-    [self centerLabel:label animated:NO];
-}
-
-- (HPLabel *)findCenterLabel:(UIScrollView *)scrollView
-{
-    HPLabel *hitLabel = nil;
-    CGPoint offset = scrollView.contentOffset;
-    CGPoint labelPoint = CGPointMake(scrollView.center.x + offset.x, offset.y);
-    
-    for (HPLabel *label in [scrollView subviews]) {
-        CGPoint point = [label convertPoint:labelPoint fromView:scrollView];
-        if ([label pointInside:point withEvent:nil]) {
-            hitLabel = label;
-            break;
-        }
-    }
-    return [hitLabel isKindOfClass:[HPLabel class]] ? hitLabel : nil;
-}
-
-- (NSMutableArray *)tables
-{
-    if (nil == _tables) {
-        _tables = [NSMutableArray array];
-    }
-    return _tables;
+    return [self.collectionController indexForCenterCellFromCollectionView:self.collectionController.collectionView];
 }
 
 - (HPTopFrameView *)topFrameView
@@ -436,80 +259,12 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     return _topFrameView;
 }
 
-#pragma mark - Label
-
-- (UILabel *)labelWithFrame:(CGRect)frame title:(NSString *)title font:(UIFont *)font tag:(NSInteger)tag
-{
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    if (DEBUG_HP == 1) {
-        label.layer.borderColor = [UIColor greenColor].CGColor;
-        label.layer.borderWidth = 1.;
-    }
-    
-    label.backgroundColor = [UIColor clearColor];
-    label.font            = font;
-    label.text            = title;
-    label.tag             = tag;
-    label.textColor       = [UIColor blackColor];
-    label.textAlignment   = NSTextAlignmentCenter;
-    
-    return label;
-}
-
-#pragma mark - UIScrollView Creation
-
-- (UIScrollView *)hpScrollView
-{
-    if (nil == _hpScrollView) {
-        _hpScrollView = [[UIScrollView alloc] initWithFrame:CGRectInset(self.bounds, 0, kTopFrameYOffset + kScrollViewPadding)];
-        if (DEBUG_HP == 1) {
-            _hpScrollView.layer.borderWidth = 1.;
-            _hpScrollView.layer.borderColor = [UIColor redColor].CGColor;
-        }
-        _hpScrollView.backgroundColor = [UIColor clearColor];
-        _hpScrollView.showsVerticalScrollIndicator   = NO;
-        _hpScrollView.showsHorizontalScrollIndicator = NO;
-        _hpScrollView.delegate = self;
-        _hpScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(findHitLabel:)];
-        [_hpScrollView addGestureRecognizer:tapRecognizer];
-    }
-    return _hpScrollView;
-}
-
-#pragma mark - UIScrollView Delegate
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    HPLabel *label = [self findCenterLabel:scrollView];
-    if (label) {
-        [self centerLabel:label animated:YES];
-        if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:)]) {
-            [_delegate pickerView:self didSelectRow:label.tag - 1];
-        }
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (!decelerate) {
-        HPLabel *label = [self findCenterLabel:scrollView];
-        if (label) {
-            [self centerLabel:label animated:YES];
-            if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:)]) {
-                [_delegate pickerView:self didSelectRow:label.tag - 1];
-            }
-        }
-    }
-}
-
 #pragma mark - KeyValue Observer
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == (__bridge void *)(TintColorChanged)) {
-        [[self findCenterLabel:_hpScrollView] setTextColor:self.tintColor];
+        self.collectionController.tintColor = self.tintColor;
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

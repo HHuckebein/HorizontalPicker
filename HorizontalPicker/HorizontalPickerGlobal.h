@@ -12,20 +12,21 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //  IN THE SOFTWARE.
 //
-//
-//  HPLabel.h
+//  HorizontalPickerViewGlobal.h
 //  HorizontalPicker
 //
-//  Created by Bernd Rabe on 18.04.13.
-//  Copyright (c) 2011-2013 RABE_IT Services. All rights reserved.
+//  Created by Bernd Rabe on 02.05.11.
+//  Copyright 2011-2013 RABE_IT Services. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
+#ifndef HorizontalPickerView_Global_h
+#define HorizontalPickerView_Global_h
 
-@interface HPLabel : UILabel
-/** Creates a normal UILabel object with a gradient on the right side
- */
-+ (id)labelWithFrame:(CGRect)frame title:(NSString *)title font:(UIFont *)font tag:(NSInteger)tag;
+typedef NS_ENUM(NSUInteger, HPStyle) {
+    HPStyleNormal,
+    HPStyle_iOS7
+};
 
-@end
+#define PICKER_HEIGHT        44
+
+#endif

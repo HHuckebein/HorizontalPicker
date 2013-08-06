@@ -14,12 +14,14 @@
 #endif
 
 DefineContext(TextChanged);
+DefineContext(TintColorChanged);
 
-#define TEXT_KEYPATH  @"text"
+#define TEXT_KEYPATH        @"text"
+#define TINT_COLOR_KEYPATH  @"text"
 
 @interface HPCollectionViewCell()
-@property (nonatomic, strong) UILabel *label;
-@property (nonatomic, strong) UIFont *font;
+@property (nonatomic, strong) UILabel   *label;
+@property (nonatomic, strong) UIFont    *font;
 @end
 
 @implementation HPCollectionViewCell
@@ -38,7 +40,8 @@ DefineContext(TextChanged);
         [self addSubview:self.label];
         [self collectionViewCellConstraints];
         
-        [self addObserver:self forKeyPath:TEXT_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TextChanged)];
+        [self addObserver:self forKeyPath:TEXT_KEYPATH       options:NSKeyValueObservingOptionNew context:(__bridge void *)(TextChanged)];
+        [self addObserver:self forKeyPath:TINT_COLOR_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
         
         if (DEBUG_HP == 1) {
             self.layer.borderColor = [UIColor redColor].CGColor;
@@ -50,7 +53,8 @@ DefineContext(TextChanged);
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:TEXT_KEYPATH context:(__bridge void *)(TextChanged)];
+    [self removeObserver:self forKeyPath:TEXT_KEYPATH       context:(__bridge void *)(TextChanged)];
+    [self removeObserver:self forKeyPath:TINT_COLOR_KEYPATH context:(__bridge void *)(TintColorChanged)];
 }
 
 - (UILabel *)label
@@ -63,7 +67,7 @@ DefineContext(TextChanged);
         _label.textAlignment    = NSTextAlignmentCenter;
         _label.lineBreakMode    = NSLineBreakByWordWrapping;
         _label.adjustsFontSizeToFitWidth = YES;
-        _label.textColor        = [UIColor colorWithRed:142/255. green:142/255. blue:142/255. alpha:1.];
+        _label.textColor        = _style == HPStyle_iOS7 ? [UIColor colorWithRed:142/255. green:142/255. blue:142/255. alpha:1.] : [UIColor blackColor];
 
         if (DEBUG_HP == 1) {
             _label.layer.borderColor = [UIColor blueColor].CGColor;
@@ -88,6 +92,9 @@ DefineContext(TextChanged);
 {
     if (context == (__bridge void *)(TextChanged)) {
         self.label.text = self.text;
+    }
+    else if (context == (__bridge void *)(TintColorChanged)) {
+        self.label.textColor = self.tintColor;
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
