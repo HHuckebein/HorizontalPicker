@@ -57,7 +57,6 @@
 - (NSInteger)numberOfRowsInPickerView:(HorizontalPickerView *)pickerView;
 @end
 
-
 @protocol HPickerViewDelegate <NSObject>
 @optional
 - (NSString *)pickerView:(HorizontalPickerView *)pickerView titleForRow:(NSInteger)row;
