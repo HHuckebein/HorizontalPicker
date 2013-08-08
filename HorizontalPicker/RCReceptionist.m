@@ -44,9 +44,11 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [self.queue addOperationWithBlock:^{
-        if (self.task) self.task(keyPath, object, change);
-    }];
+    if (self.task) {
+        [self.queue addOperationWithBlock:^{
+            self.task(keyPath, object, change);
+        }];
+    }
 }
 
 @end
