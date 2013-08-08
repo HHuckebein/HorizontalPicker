@@ -8,9 +8,7 @@
 
 #import "HPCollectionViewCell.h"
 #import "HPickerDefinitions.h"
-
-DefineContext(TextChanged);
-#define TEXT_KEYPATH    @"text"
+#import "RCReceptionist.h"
 
 @interface HPCollectionViewCell()
 @property (nonatomic, strong) UILabel *label;
@@ -31,7 +29,9 @@ DefineContext(TextChanged);
         [self addSubview:self.label];
         [self collectionViewCellConstraints];
         
-        [self addObserver:self forKeyPath:TEXT_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TextChanged)];
+        [RCReceptionist receptionistForKeyPath:@"text" object:self queue:[NSOperationQueue mainQueue] task:^(NSString *keyPath, id object, NSDictionary *change) {
+            self.label.text = self.text;
+        }];
 
         if (DEBUG_HP == 1) {
             self.layer.borderColor = [UIColor redColor].CGColor;
@@ -39,11 +39,6 @@ DefineContext(TextChanged);
         }
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [self removeObserver:self forKeyPath:TEXT_KEYPATH context:(__bridge void *)(TextChanged)];
 }
 
 - (void)setSelected:(BOOL)selected
@@ -117,18 +112,6 @@ DefineContext(TextChanged);
 - (id)notificationObject
 {
     return [_delegate notificationObjectForCell:self];
-}
-
-#pragma mark - KeyValue Observer
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == (__bridge void *)(TextChanged)) {
-        self.label.text = self.text;
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
 }
 
 @end

@@ -17,6 +17,7 @@
 
 @property (nonatomic, weak) id <HPCollectionViewCellDelegate> delegate;
 @property (nonatomic, strong) NSString  *text;
+@property (nonatomic, strong) NSDate *date;
 
 @end
 
