@@ -32,6 +32,10 @@
 @property(nonatomic, weak) IBOutlet id <HPickerViewDataSource> dataSource;
 @property(nonatomic, weak) IBOutlet id <HPickerViewDelegate>   delegate;
 
+/** The corner radius
+ */
+@property (assign, nonatomic) CGFloat   cornerRadius;
+
 /** The used style.
  */
 @property (assign, nonatomic) HPStyle   style;

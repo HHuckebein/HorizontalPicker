@@ -130,6 +130,11 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
     self.userInteractionEnabled = enabled;
 }
 
+- (void)setCornerRadius:(CGFloat)radius
+{
+    self.layer.cornerRadius = radius;
+}
+
 #pragma mark - Getter
 
 - (CAShapeLayer *)shapeLayer
