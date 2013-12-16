@@ -168,7 +168,7 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
         _collectionController.collectionView.backgroundColor = [UIColor clearColor];
         
         CGRect frame = _collectionController.collectionView.frame;
-        frame.size.height = CGRectGetHeight(self.bounds);
+        frame.size = self.bounds.size;
         _collectionController.collectionView.frame = frame;
     }
     return _collectionController;
