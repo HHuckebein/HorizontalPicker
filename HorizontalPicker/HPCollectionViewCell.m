@@ -20,7 +20,9 @@
 
 #import "HPCollectionViewCell.h"
 #import "HPickerDefinitions.h"
-#import "RCReceptionist.h"
+
+static NSString * const TextChanged = @"TextChanged";
+#define TEXT_KEYPATH    @"text"
 
 @interface HPCollectionViewCell()
 @property (nonatomic, strong) UILabel *label;
@@ -41,10 +43,8 @@
         [self addSubview:self.label];
         [self collectionViewCellConstraints];
         
-        [RCReceptionist receptionistForKeyPath:@"text" object:self queue:[NSOperationQueue mainQueue] task:^(NSString *keyPath, id object, NSDictionary *change) {
-            self.label.text = self.text;
-        }];
-
+        [self addObserver:self forKeyPath:TEXT_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)TextChanged];
+        
         if (DEBUG_HP == 1) {
             self.layer.borderColor = [UIColor redColor].CGColor;
             self.layer.borderWidth = 0.5;
@@ -124,6 +124,16 @@
 - (id)notificationObject
 {
     return [_delegate notificationObjectForCell:self];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == (__bridge void *)TextChanged) {
+        self.label.text = self.text;
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end
