@@ -32,21 +32,11 @@
 @property(nonatomic, weak) IBOutlet id <HPickerViewDataSource> dataSource;
 @property(nonatomic, weak) IBOutlet id <HPickerViewDelegate>   delegate;
 
-/** The corner radius
- */
 @property (assign, nonatomic) CGFloat   cornerRadius;
-
-/** The used style.
- */
 @property (assign, nonatomic) HPStyle   style;
-
-/** The color of the selected element.
- */
-@property (strong, nonatomic) UIColor   *tintColor;
-
-/** Puts the picker in non-responsive mode.
- */
 @property (assign, nonatomic) BOOL      enabled;
+@property (strong, nonatomic) UIColor   *tintColor;
+@property (strong, nonatomic) UIFont    *font;
 
 - (NSInteger)selectedRow;
 - (UIView *)viewForRow:(NSInteger)row;

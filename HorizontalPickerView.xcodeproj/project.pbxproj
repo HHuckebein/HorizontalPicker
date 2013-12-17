@@ -40,6 +40,13 @@
 			remoteGlobalIDString = 7323B3A7171FC56B00E882C8;
 			remoteInfo = HorizontalPicker;
 		};
+		73E7F7F018602F840069424B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7323B3A0171FC56B00E882C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 735703A9171FD47B00F2BB7B;
+			remoteInfo = Framework;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -169,6 +176,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				73E7F7F118602F840069424B /* PBXTargetDependency */,
 			);
 			name = HorizontalPickerView;
 			productName = HorizontalPicker;
@@ -252,6 +260,11 @@
 			isa = PBXTargetDependency;
 			target = 7323B3A7171FC56B00E882C8 /* HorizontalPickerView */;
 			targetProxy = 735703AD171FD48300F2BB7B /* PBXContainerItemProxy */;
+		};
+		73E7F7F118602F840069424B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 735703A9171FD47B00F2BB7B /* Framework */;
+			targetProxy = 73E7F7F018602F840069424B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

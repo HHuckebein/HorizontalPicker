@@ -21,6 +21,7 @@
     [super viewDidLoad];
     self.horizontalPicker.style = HPStyle_iOS7;
     self.source = self.dataSource;
+    self.horizontalPicker.font = [UIFont boldSystemFontOfSize:10.f];
     
 	// Do any additional setup after loading the view, typically from a nib.
 }

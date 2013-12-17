@@ -27,7 +27,7 @@
 #import "HPCollectionViewCell.h"
 
 DefineContext(TintColorChanged);
-#define TINT_COLOR_KEYPATH  @"tintColor"
+DefineContext(FontChanged);
 
 typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     AdjustEdgeInsetLeft,
@@ -56,6 +56,7 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 @end
 
 NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
+NSString * const FontChangedNotification      = @"FontChangedNotification";
 
 @implementation HorizontalPickerView
 
@@ -66,12 +67,16 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     
     _tintColor = [UIColor blueColor];
+    _font      = [UIFont boldSystemFontOfSize:20.f];
     
     [self addObserver:self forKeyPath:TINT_COLOR_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
+    [self addObserver:self forKeyPath:FONT_KEYPATH       options:NSKeyValueObservingOptionNew context:(__bridge void *)(FontChanged)];
 }
 
 - (void)prepareForAppearance
 {
+    _isInitialized = TRUE;
+    
     self.backgroundColor = _style == HPStyle_iOS7 ? [UIColor clearColor] : [UIColor blackColor];
     
     CGRect gradientRect = CGRectInset(self.bounds, kTopFrameXOffset, kTopFrameYOffset);
@@ -92,6 +97,7 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 {
     if ((self = [super initWithCoder:aDecoder])) {
         [self setup];
+        [self prepareForAppearance];
     }
     return self;
 }
@@ -109,10 +115,6 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 {
     [super layoutSubviews];
     
-    if (_isInitialized == FALSE) {
-        _isInitialized = TRUE;
-        [self prepareForAppearance];
-    }
     self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
     self.shapeLayer.path = [self shapePathForFrame:self.bounds].CGPath;
     [self makeBaseAdjustmentsForCollectionView:self.collectionController.collectionView];
@@ -121,6 +123,7 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:TINT_COLOR_KEYPATH context:(__bridge void *)(TintColorChanged)];
+    [self removeObserver:self forKeyPath:FONT_KEYPATH       context:(__bridge void *)(FontChanged)];
 }
 
 #pragma mark -  Setter
@@ -159,7 +162,7 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
         
         _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout collectionVCProvider:self];
         _collectionController.collectionView.showsHorizontalScrollIndicator = NO;
-        _collectionController.font                                          = [UIFont boldSystemFontOfSize:20];
+        _collectionController.font                                          = self.font;
         _collectionController.maxWidth                                      = floorf(CGRectGetWidth(self.bounds) * kMaxLabelWidthFactor);
         _collectionController.style                                         = _style;
         _collectionController.tintColor                                     = self.tintColor;
@@ -284,7 +287,10 @@ NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == (__bridge void *)(TintColorChanged)) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:TintColorChangedNotification object:self userInfo:@{TINT_COLOR : self.tintColor}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:TintColorChangedNotification object:self userInfo:@{TINT_COLOR_KEYPATH : self.tintColor}];
+    }
+    else if (context == (__bridge void *)(FontChanged)) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:FontChangedNotification object:self userInfo:@{FONT_KEYPATH : self.font}];
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

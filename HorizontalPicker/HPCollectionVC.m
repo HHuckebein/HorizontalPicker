@@ -34,7 +34,9 @@
     self = [super initWithCollectionViewLayout:layout];
     if (self) {
         _provider = provider;
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTintColor:) name:TintColorChangedNotification object:provider];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeFont:)      name:FontChangedNotification      object:provider];
     }
     return self;
 }
@@ -202,10 +204,19 @@
 
 - (void)changeTintColor:(NSNotification *)notification
 {
-    self.tintColor = [notification userInfo][TINT_COLOR];
+    self.tintColor = [notification userInfo][TINT_COLOR_KEYPATH];
     if (_style == HPStyleNormal) {
         [self.collectionView selectItemAtIndexPath:self.selectedCellIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
+}
+
+- (void)changeFont:(NSNotification *)notification
+{
+    self.font = [notification userInfo][FONT_KEYPATH];
+    [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        HPCollectionViewCell *cell = obj;
+        cell.label.font = self.font;
+    }];
 }
 
 #pragma mark - HPCollectionViewCellDelegate

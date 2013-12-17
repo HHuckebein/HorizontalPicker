@@ -34,8 +34,11 @@
 
 #define kTVReuseID_HPCollectionViewStyle    @"HorizontalPickerStyle"
 
-#define TINT_COLOR                          @"tintColor"
+#define FONT_KEYPATH        @"font"
+#define TINT_COLOR_KEYPATH  @"tintColor"
+
 extern NSString * const TintColorChangedNotification;
+extern NSString * const FontChangedNotification;
 
 #define PICKER_HEIGHT                       44
 
