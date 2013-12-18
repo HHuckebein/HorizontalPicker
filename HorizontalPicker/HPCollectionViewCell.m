@@ -53,6 +53,11 @@ static NSString * const TextChanged = @"TextChanged";
     return self;
 }
 
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:TEXT_KEYPATH context:(__bridge void *)TextChanged];
+}
+
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
@@ -63,12 +68,16 @@ static NSString * const TextChanged = @"TextChanged";
 - (UILabel *)label
 {
     if (nil == _label) {
-        _label = [[UILabel alloc] initWithFrame:self.bounds];
+        _label                                              = [[UILabel alloc] initWithFrame:self.bounds];
         _label.backgroundColor                              = [UIColor clearColor];
         _label.translatesAutoresizingMaskIntoConstraints    = NO;
         _label.textAlignment                                = NSTextAlignmentCenter;
-        _label.lineBreakMode                                = NSLineBreakByWordWrapping;
-        _label.adjustsFontSizeToFitWidth                    = YES;
+        
+        if ([self cropStringIfNecessary] == NO) {
+            _label.lineBreakMode                             = NSLineBreakByWordWrapping;
+            _label.numberOfLines                             = 2;
+        }
+        
         _label.textColor                                    = [self baseColor];
         _label.font                                         = [self font];
 
@@ -82,11 +91,13 @@ static NSString * const TextChanged = @"TextChanged";
 
 - (void)collectionViewCellConstraints
 {
-    UILabel *label = self.label;
+    UILabel *label          = self.label;
     NSDictionary *viewsDict = NSDictionaryOfVariableBindings(label);
-    NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[label]-(8)-|" options:0 metrics:0 views:viewsDict];
+    NSArray *horizontal     = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[label]-(8)-|" options:0 metrics:0 views:viewsDict];
+    NSArray *vertical       = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(8)-[label]-(8)-|" options:0 metrics:0 views:viewsDict];
     
     [self addConstraints:horizontal];
+    [self addConstraints:vertical];
 }
 
 - (void)setDelegate:(id<HPCollectionViewCellDelegate>)delegate
@@ -95,39 +106,41 @@ static NSString * const TextChanged = @"TextChanged";
         _delegate = delegate;
         
         if (_delegate) {
-            self.label.textColor = [self baseColor];
-            self.label.font      = [self font];
+            self.label.textColor     = [self baseColor];
+            self.label.font          = [self font];
+            if ([self cropStringIfNecessary] == NO) {
+                self.label.lineBreakMode = NSLineBreakByWordWrapping;
+                self.label.numberOfLines = 2;
+            }
+            else {
+                self.label.numberOfLines = 1;
+                self.label.lineBreakMode = NSLineBreakByTruncatingTail;
+            }
         }
     }
 }
 
-- (UIColor *)tintColor
-{
+- (BOOL)cropStringIfNecessary {
+    return [_delegate cropStringIfNecessaryForCell:self];
+}
+
+- (UIColor *)tintColor {
     return [_delegate tintColorForCell:self];
 }
 
-- (UIColor *)baseColor
-{
-    return [self style] == HPStyle_iOS7 ? BASE_COLOR_iOS7 : [UIColor blackColor];
-}
-
-- (UIFont *)font
-{
+- (UIFont *)font {
     return [_delegate fontForCell:self];
 }
 
-- (HPStyle)style
-{
+- (HPStyle)style {
     return [_delegate styleForCell:self];
 }
 
-- (id)notificationObject
-{
-    return [_delegate notificationObjectForCell:self];
+- (UIColor *)baseColor {
+    return [self style] == HPStyle_iOS7 ? BASE_COLOR_iOS7 : [UIColor blackColor];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == (__bridge void *)TextChanged) {
         self.label.text = self.text;
     }

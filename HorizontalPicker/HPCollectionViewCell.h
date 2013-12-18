@@ -29,8 +29,8 @@
 
 @property (nonatomic, weak) id <HPCollectionViewCellDelegate> delegate;
 @property (nonatomic, strong, readonly) UILabel *label;
-@property (nonatomic, strong) NSString  *text;
-@property (nonatomic, strong) NSDate    *date;
+@property (nonatomic, strong) NSString          *text;
+@property (nonatomic, strong) NSDate            *date;
 
 @end
 
@@ -39,5 +39,6 @@
 - (UIColor *)tintColorForCell:(HPCollectionViewCell *)cell;
 - (HPStyle)styleForCell:(HPCollectionViewCell *)cell;
 - (UIFont *)fontForCell:(HPCollectionViewCell *)cell;
-- (id)notificationObjectForCell:(HPCollectionViewCell *)cell;
+@optional
+- (BOOL)cropStringIfNecessaryForCell:(HPCollectionViewCell *)cell;
 @end

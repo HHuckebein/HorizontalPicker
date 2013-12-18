@@ -40,7 +40,7 @@
     if (_style == HPStyle_iOS7) {
         CGRect visibleRect = CGRectZero;
         visibleRect.origin = self.collectionView.contentOffset;
-        visibleRect.size = self.collectionView.bounds.size;
+        visibleRect.size   = self.collectionView.bounds.size;
         
         CGFloat activeDistance = floorf(CGRectGetWidth(visibleRect) / 2);
         CGFloat midX = ceilf(CGRectGetMidX(visibleRect));

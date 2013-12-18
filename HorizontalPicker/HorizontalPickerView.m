@@ -28,6 +28,11 @@
 
 DefineContext(TintColorChanged);
 DefineContext(FontChanged);
+DefineContext(CropStringIfNecessaryChanged);
+
+#define FONT_KEYPATH                        @"font"
+#define TINT_COLOR_KEYPATH                  @"tintColor"
+#define CROP_STRING_IF_NECESSARY_KEYPATH    @"cropStringIfNecessary"
 
 typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     AdjustEdgeInsetLeft,
@@ -55,9 +60,6 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 @property (nonatomic, assign) BOOL           isInitialized;
 @end
 
-NSString * const TintColorChangedNotification = @"TintColorChangedNotification";
-NSString * const FontChangedNotification      = @"FontChangedNotification";
-
 @implementation HorizontalPickerView
 
 #pragma mark - System Init
@@ -66,11 +68,9 @@ NSString * const FontChangedNotification      = @"FontChangedNotification";
 {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     
-    _tintColor = [UIColor blueColor];
-    _font      = [UIFont boldSystemFontOfSize:20.f];
-    
-    [self addObserver:self forKeyPath:TINT_COLOR_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)(TintColorChanged)];
-    [self addObserver:self forKeyPath:FONT_KEYPATH       options:NSKeyValueObservingOptionNew context:(__bridge void *)(FontChanged)];
+    _tintColor             = [UIColor blueColor];
+    _font                  = [UIFont boldSystemFontOfSize:20.f];
+    _cropStringIfNecessary = YES;
 }
 
 - (void)prepareForAppearance
@@ -97,7 +97,6 @@ NSString * const FontChangedNotification      = @"FontChangedNotification";
 {
     if ((self = [super initWithCoder:aDecoder])) {
         [self setup];
-        [self prepareForAppearance];
     }
     return self;
 }
@@ -115,16 +114,23 @@ NSString * const FontChangedNotification      = @"FontChangedNotification";
 {
     [super layoutSubviews];
     
+    if (_isInitialized == FALSE) {
+        _isInitialized = TRUE;
+        [self prepareForAppearance];
+    }
+    
     self.topFrameView.maskLayer.path = [self.topFrameView maskPath].CGPath;
-    self.shapeLayer.path = [self shapePathForFrame:self.bounds].CGPath;
+    self.shapeLayer.path             = [self shapePathForFrame:self.bounds].CGPath;
     [self makeBaseAdjustmentsForCollectionView:self.collectionController.collectionView];
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:TINT_COLOR_KEYPATH context:(__bridge void *)(TintColorChanged)];
-    [self removeObserver:self forKeyPath:FONT_KEYPATH       context:(__bridge void *)(FontChanged)];
+//    [self removeObserver:self forKeyPath:TINT_COLOR_KEYPATH                 context:(__bridge void *)(TintColorChanged)];
+//    [self removeObserver:self forKeyPath:FONT_KEYPATH                       context:(__bridge void *)(FontChanged)];
+//    [self removeObserver:self forKeyPath:CROP_STRING_IF_NECESSARY_KEYPATH   context:(__bridge void *)(CropStringIfNecessaryChanged)];
 }
+
 
 #pragma mark -  Setter
 
@@ -158,20 +164,21 @@ NSString * const FontChangedNotification      = @"FontChangedNotification";
 {
     if (nil == _collectionController) {
         HPCollectionViewFlowLayout *layout = [[HPCollectionViewFlowLayout alloc] init];
-        layout.style = _style;
+        layout.style                       = _style;
         
         _collectionController = [[HPCollectionVC alloc] initWithCollectionViewLayout:layout collectionVCProvider:self];
         _collectionController.collectionView.showsHorizontalScrollIndicator = NO;
-        _collectionController.font                                          = self.font;
         _collectionController.maxWidth                                      = floorf(CGRectGetWidth(self.bounds) * kMaxLabelWidthFactor);
-        _collectionController.style                                         = _style;
+        _collectionController.font                                          = self.font;
         _collectionController.tintColor                                     = self.tintColor;
+        _collectionController.style                                         = _style;
+        _collectionController.cropStringIfNecessary                         = _cropStringIfNecessary;
         
         [_collectionController.collectionView registerClass:[HPCollectionViewCell class] forCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle];
         _collectionController.collectionView.backgroundColor = [UIColor clearColor];
         
-        CGRect frame = _collectionController.collectionView.frame;
-        frame.size = self.bounds.size;
+        CGRect frame = _collectionController.collectionView.bounds;
+        frame.size   = self.bounds.size;
         _collectionController.collectionView.frame = frame;
     }
     return _collectionController;
@@ -280,21 +287,6 @@ NSString * const FontChangedNotification      = @"FontChangedNotification";
 - (NSInteger)selectedRow;
 {
     return [self.collectionController selectedRow];
-}
-
-#pragma mark - KeyValue Observer
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == (__bridge void *)(TintColorChanged)) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:TintColorChangedNotification object:self userInfo:@{TINT_COLOR_KEYPATH : self.tintColor}];
-    }
-    else if (context == (__bridge void *)(FontChanged)) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:FontChangedNotification object:self userInfo:@{FONT_KEYPATH : self.font}];
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
 }
 
 @end

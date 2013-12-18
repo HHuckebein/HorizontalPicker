@@ -14,7 +14,7 @@
 				735703AF171FD49800F2BB7B /* ShellScript */,
 			);
 			dependencies = (
-				735703AE171FD48300F2BB7B /* PBXTargetDependency */,
+				73E308751860AAF3009B4B5C /* PBXTargetDependency */,
 			);
 			name = Framework;
 			productName = Framework;
@@ -33,19 +33,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		735703AD171FD48300F2BB7B /* PBXContainerItemProxy */ = {
+		73E308741860AAF3009B4B5C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7323B3A0171FC56B00E882C8 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 7323B3A7171FC56B00E882C8;
-			remoteInfo = HorizontalPicker;
-		};
-		73E7F7F018602F840069424B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7323B3A0171FC56B00E882C8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 735703A9171FD47B00F2BB7B;
-			remoteInfo = Framework;
+			remoteInfo = HorizontalPickerView;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -176,7 +169,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				73E7F7F118602F840069424B /* PBXTargetDependency */,
 			);
 			name = HorizontalPickerView;
 			productName = HorizontalPicker;
@@ -256,15 +248,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		735703AE171FD48300F2BB7B /* PBXTargetDependency */ = {
+		73E308751860AAF3009B4B5C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7323B3A7171FC56B00E882C8 /* HorizontalPickerView */;
-			targetProxy = 735703AD171FD48300F2BB7B /* PBXContainerItemProxy */;
-		};
-		73E7F7F118602F840069424B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 735703A9171FD47B00F2BB7B /* Framework */;
-			targetProxy = 73E7F7F018602F840069424B /* PBXContainerItemProxy */;
+			targetProxy = 73E308741860AAF3009B4B5C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

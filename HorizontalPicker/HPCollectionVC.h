@@ -25,10 +25,11 @@
 @protocol HPCollectionVCProvider;
 
 @interface HPCollectionVC : UICollectionViewController
-@property (nonatomic, strong) UIFont                    *font;
-@property (nonatomic, assign) CGFloat                   maxWidth;               // max width of a single UICollectionViewCell
-@property (nonatomic, assign) HPStyle                   style;                  // HPStyle_iOS7 similar to UIPickerView in iOS7
-@property (nonatomic, strong) UIColor                   *tintColor;             // center cell's text color when not HPStyle_iOS7
+@property (nonatomic, strong) UIFont   *font;
+@property (nonatomic, assign) CGFloat  maxWidth;               // max width of a single UICollectionViewCell
+@property (nonatomic, assign) HPStyle  style;                  // HPStyle_iOS7 similar to UIPickerView in iOS7
+@property (nonatomic, strong) UIColor  *tintColor;             // center cell's text color when not HPStyle_iOS7
+@property (assign, nonatomic) BOOL     cropStringIfNecessary;
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout collectionVCProvider:(id <HPCollectionVCProvider>)provider;
 

@@ -23,8 +23,8 @@
 #import "HPCollectionViewCell.h"
 
 @interface HPCollectionVC() <HPCollectionViewCellDelegate>
-@property (nonatomic, weak) id <HPCollectionVCProvider> provider;
-@property (nonatomic, strong) NSIndexPath  *selectedCellIndexPath;
+@property (nonatomic, weak  ) id <HPCollectionVCProvider>   provider;
+@property (nonatomic, strong) NSIndexPath                   *selectedCellIndexPath;
 @end
 
 @implementation HPCollectionVC
@@ -34,16 +34,8 @@
     self = [super initWithCollectionViewLayout:layout];
     if (self) {
         _provider = provider;
-
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTintColor:) name:TintColorChangedNotification object:provider];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeFont:)      name:FontChangedNotification      object:provider];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - CollectionView Datasource
@@ -57,9 +49,7 @@
 {
     HPCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTVReuseID_HPCollectionViewStyle forIndexPath:indexPath];
     cell.delegate = self;
-    
-    NSString *string = [_provider collectionViewController:self titleForRow:indexPath.row];
-    cell.text        = [self cropStringFromString:string maxWidth:CGRectGetWidth(cell.bounds)-16 font:self.font];
+    cell.text     = [_provider collectionViewController:self titleForRow:indexPath.row];
     
     return cell;
 }
@@ -77,9 +67,20 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = [_provider collectionViewController:self titleForRow:indexPath.row];
-    CGSize size = CGSizeMake(MIN(_maxWidth, [text sizeWithFont:_font].width + 16 + 10), CGRectGetHeight(collectionView.bounds));
+    CGSize size    = [self sizeForText:text maxSize:CGSizeMake(_maxWidth, CGRectGetHeight(collectionView.bounds))];
 
     return size;
+}
+
+- (CGSize)sizeForText:(NSString *)text maxSize:(CGSize)maxSize
+{
+    NSStringDrawingContext *ctx = [[NSStringDrawingContext alloc] init];
+    CGRect frame                = [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : self.font} context:ctx];
+    frame                       = CGRectIntegral(frame);
+    frame.size.height           = maxSize.height;
+    frame.size.width           += 16; // added layout constraints (|-(8)-..-(8)-|)
+    
+    return frame.size;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -123,33 +124,6 @@
     }
     
     return index;
-}
-
-#pragma mark - Crop Label Text
-
-- (NSString *)cropStringFromString:(NSString *)text maxWidth:(CGFloat)maxWidth font:(UIFont *)font
-{
-    NSMutableString *newText = [NSMutableString string];
-    [newText setString:text];
-    NSRange range = NSMakeRange(newText.length, 1);
-    
-    BOOL needsCut = NO;
-    
-    CGSize size = [newText sizeWithFont:font];
-    
-    while (size.width > maxWidth) {
-        range.location -= 1;
-        [newText deleteCharactersInRange:range];
-        needsCut = YES;
-        size = [newText sizeWithFont:font];
-    };
-    
-    if (needsCut == YES) {
-        range.location -= 3;
-        range.length    = 3;
-        [newText replaceCharactersInRange:range withString:@"..."];
-    }
-    return [newText copy];
 }
 
 #pragma mark - Scrolling
@@ -200,25 +174,6 @@
     [self.collectionView selectItemAtIndexPath:self.selectedCellIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
 }
 
-#pragma mark - Tint Color Changes
-
-- (void)changeTintColor:(NSNotification *)notification
-{
-    self.tintColor = [notification userInfo][TINT_COLOR_KEYPATH];
-    if (_style == HPStyleNormal) {
-        [self.collectionView selectItemAtIndexPath:self.selectedCellIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-    }
-}
-
-- (void)changeFont:(NSNotification *)notification
-{
-    self.font = [notification userInfo][FONT_KEYPATH];
-    [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        HPCollectionViewCell *cell = obj;
-        cell.label.font = self.font;
-    }];
-}
-
 #pragma mark - HPCollectionViewCellDelegate
 
 - (UIColor *)tintColorForCell:(HPCollectionViewCell *)cell
@@ -236,9 +191,9 @@
     return _style;
 }
 
-- (id)notificationObjectForCell:(HPCollectionViewCell *)cell
+- (BOOL)cropStringIfNecessaryForCell:(HPCollectionViewCell *)cell
 {
-    return _provider;
+    return _cropStringIfNecessary;
 }
 
 @end

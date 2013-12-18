@@ -35,6 +35,7 @@
 @property (assign, nonatomic) CGFloat   cornerRadius;
 @property (assign, nonatomic) HPStyle   style;
 @property (assign, nonatomic) BOOL      enabled;
+@property (assign, nonatomic) BOOL      cropStringIfNecessary; /** if YES use numberOfLines 1 otherwise 2. NOTE: change font */
 @property (strong, nonatomic) UIColor   *tintColor;
 @property (strong, nonatomic) UIFont    *font;
 

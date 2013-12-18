@@ -18,23 +18,17 @@
 {
     [super viewDidLoad];
     [HorizontalPickerView class];
+    
+    
+    self.horizontalPicker.tintColor = [UIColor colorWithRed:253/255. green:154/255. blue:9/255. alpha:1.];
+    self.horizontalPicker.font = [UIFont boldSystemFontOfSize:10.f];
+    self.horizontalPicker.cropStringIfNecessary = NO;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    double delayInSeconds = 2.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        self.horizontalPicker.tintColor = [UIColor colorWithRed:253/255. green:154/255. blue:9/255. alpha:1.];
-    });
 }
 
 #pragma mark -  HPickerViewDataSource
@@ -62,7 +56,7 @@
 - (NSArray *)dataSource
 {
     if (nil == _dataSource) {
-        _dataSource = @[@"Zero", @"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine", @"Ten", @"One Billion Billion", @"Five Hundred"];
+        _dataSource = @[@"Zero", @"One", @"Two", @"Three", @"Four", @"Five", @"Six", @"Seven", @"Eight", @"Nine", @"Ten", @"One Billion Billion", @"Six Thousand Five Hundred Forty Six"];
     }
     return _dataSource;
 }

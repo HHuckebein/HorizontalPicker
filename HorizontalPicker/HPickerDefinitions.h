@@ -34,12 +34,6 @@
 
 #define kTVReuseID_HPCollectionViewStyle    @"HorizontalPickerStyle"
 
-#define FONT_KEYPATH        @"font"
-#define TINT_COLOR_KEYPATH  @"tintColor"
-
-extern NSString * const TintColorChangedNotification;
-extern NSString * const FontChangedNotification;
-
 #define PICKER_HEIGHT                       44
 
 #define BASE_COLOR_iOS7                     [UIColor colorWithRed:100/255. green:100/255. blue:100/255. alpha:1.]
