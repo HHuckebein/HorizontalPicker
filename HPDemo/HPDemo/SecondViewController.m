@@ -47,7 +47,7 @@
 
 - (void)pickerView:(HorizontalPickerView *)pickerView didSelectRow:(NSInteger)row
 {
-    self.selectedRowLabel.text = [NSString stringWithFormat:@"%d", row];
+    self.selectedRowLabel.text = [NSString stringWithFormat:@"%@", @(row)];
 }
 
 

@@ -304,6 +304,7 @@
 		73CDE7A61721138D00404A09 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"~/Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos\"",
@@ -319,6 +320,7 @@
 		73CDE7A71721138D00404A09 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"~/Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos\"",

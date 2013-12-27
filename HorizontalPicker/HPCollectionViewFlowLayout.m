@@ -58,7 +58,7 @@
             attributes.zIndex = ABS(distance)/activeDistance * 200;
             
             if (DEBUG_HP == 1) {
-                NSLog(@"%d (%@) alpha = %2.2f, zIndex = %d", attributes.indexPath.row, NSStringFromCGRect(attributes.frame), attributes.alpha, attributes.zIndex);
+                NSLog(@"%@ (%@) alpha = %2.2f, zIndex = %@", @(attributes.indexPath.row), NSStringFromCGRect(attributes.frame), attributes.alpha, @(attributes.zIndex));
             }
         }
     }

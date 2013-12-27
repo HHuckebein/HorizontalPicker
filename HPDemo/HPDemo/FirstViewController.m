@@ -36,7 +36,7 @@
 {
     [super viewDidAppear:animated];
     
-    self.selectedRowLabel.text = [NSString stringWithFormat:@"%d", self.horizontalPicker.selectedRow];
+    self.selectedRowLabel.text = [NSString stringWithFormat:@"%@", @(self.horizontalPicker.selectedRow)];
 }
 
 #pragma mark -  HPickerViewDataSource
@@ -55,7 +55,7 @@
 
 - (void)pickerView:(HorizontalPickerView *)pickerView didSelectRow:(NSInteger)row
 {
-    self.selectedRowLabel.text = [NSString stringWithFormat:@"%d", row];
+    self.selectedRowLabel.text = [NSString stringWithFormat:@"%@", @(row)];
 }
 
 
