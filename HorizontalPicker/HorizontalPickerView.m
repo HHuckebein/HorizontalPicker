@@ -302,7 +302,8 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 
 - (id)initWithFrame:(CGRect)frame
 {
-    if (([super initWithFrame:frame])) {
+    self = [super initWithFrame:frame];
+    if (self) {
         self.userInteractionEnabled = NO;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
