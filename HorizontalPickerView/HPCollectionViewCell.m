@@ -140,7 +140,7 @@ DefineContext(TextChanged);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == (__bridge void *)TextChanged) {
+    if (context == TextChanged) {
         self.label.text = self.text;
     }
     else {
