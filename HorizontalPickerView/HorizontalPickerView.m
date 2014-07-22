@@ -26,10 +26,6 @@
 #import "HPCollectionViewFlowLayout.h"
 #import "HPCollectionViewCell.h"
 
-DefineContext(TintColorChanged);
-DefineContext(FontChanged);
-DefineContext(CropStringIfNecessaryChanged);
-
 #define FONT_KEYPATH                        @"font"
 #define TINT_COLOR_KEYPATH                  @"tintColor"
 #define CROP_STRING_IF_NECESSARY_KEYPATH    @"cropStringIfNecessary"
@@ -123,14 +119,6 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
     self.shapeLayer.path             = [self shapePathForFrame:self.bounds].CGPath;
     [self makeBaseAdjustmentsForCollectionView:self.collectionController.collectionView];
 }
-
-- (void)dealloc
-{
-//    [self removeObserver:self forKeyPath:TINT_COLOR_KEYPATH                 context:(__bridge void *)(TintColorChanged)];
-//    [self removeObserver:self forKeyPath:FONT_KEYPATH                       context:(__bridge void *)(FontChanged)];
-//    [self removeObserver:self forKeyPath:CROP_STRING_IF_NECESSARY_KEYPATH   context:(__bridge void *)(CropStringIfNecessaryChanged)];
-}
-
 
 #pragma mark -  Setter
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		73B0463717B10AA3003F27A0 /* HorizontalPickerView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B0463617B10AA3003F27A0 /* HorizontalPickerView.framework */; };
+		5D941801197EE24900CCFFCB /* libHorizontalPickerView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D9417CA197EDF1F00CCFFCB /* libHorizontalPickerView.a */; };
 		73CDE7781721138D00404A09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7771721138D00404A09 /* UIKit.framework */; };
 		73CDE77A1721138D00404A09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7791721138D00404A09 /* Foundation.framework */; };
 		73CDE77C1721138D00404A09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE77B1721138D00404A09 /* CoreGraphics.framework */; };
@@ -28,8 +28,32 @@
 		73CDE7B1172118C400404A09 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDE7B0172118C400404A09 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5D9417C9197EDF1F00CCFFCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D9417C4197EDF1E00CCFFCB /* HorizontalPickerView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7323B3A8171FC56B00E882C8;
+			remoteInfo = HorizontalPickerView;
+		};
+		5D9417F9197EDFF800CCFFCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D9417C4197EDF1E00CCFFCB /* HorizontalPickerView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D9417DE197EDFA200CCFFCB;
+			remoteInfo = HorizontalPickerTests;
+		};
+		5D9417FF197EE24000CCFFCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D9417C4197EDF1E00CCFFCB /* HorizontalPickerView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7323B3A7171FC56B00E882C8;
+			remoteInfo = HorizontalPickerView;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		73B0463617B10AA3003F27A0 /* HorizontalPickerView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HorizontalPickerView.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos/HorizontalPickerView.framework"; sourceTree = "<group>"; };
+		5D9417C4197EDF1E00CCFFCB /* HorizontalPickerView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HorizontalPickerView.xcodeproj; path = ../HorizontalPickerView.xcodeproj; sourceTree = "<group>"; };
 		73CDE7741721138D00404A09 /* HPDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HPDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73CDE7771721138D00404A09 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		73CDE7791721138D00404A09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -61,20 +85,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D941801197EE24900CCFFCB /* libHorizontalPickerView.a in Frameworks */,
 				73CDE7B1172118C400404A09 /* QuartzCore.framework in Frameworks */,
 				73CDE7781721138D00404A09 /* UIKit.framework in Frameworks */,
 				73CDE77A1721138D00404A09 /* Foundation.framework in Frameworks */,
 				73CDE77C1721138D00404A09 /* CoreGraphics.framework in Frameworks */,
-				73B0463717B10AA3003F27A0 /* HorizontalPickerView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D9417C5197EDF1E00CCFFCB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D9417CA197EDF1F00CCFFCB /* libHorizontalPickerView.a */,
+				5D9417FA197EDFF800CCFFCB /* HorizontalPickerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		73CDE76B1721138D00404A09 = {
 			isa = PBXGroup;
 			children = (
+				5D9417C4197EDF1E00CCFFCB /* HorizontalPickerView.xcodeproj */,
 				73CDE77D1721138D00404A09 /* HPDemo */,
 				73CDE7761721138D00404A09 /* Frameworks */,
 				73CDE7751721138D00404A09 /* Products */,
@@ -92,7 +126,6 @@
 		73CDE7761721138D00404A09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				73B0463617B10AA3003F27A0 /* HorizontalPickerView.framework */,
 				73CDE7B0172118C400404A09 /* QuartzCore.framework */,
 				73CDE7771721138D00404A09 /* UIKit.framework */,
 				73CDE7791721138D00404A09 /* Foundation.framework */,
@@ -149,6 +182,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5D941800197EE24000CCFFCB /* PBXTargetDependency */,
 			);
 			name = HPDemo;
 			productName = HPDemo;
@@ -161,7 +195,7 @@
 		73CDE76C1721138D00404A09 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "RABE_IT Services";
 			};
 			buildConfigurationList = 73CDE76F1721138D00404A09 /* Build configuration list for PBXProject "HPDemo" */;
@@ -174,12 +208,35 @@
 			mainGroup = 73CDE76B1721138D00404A09;
 			productRefGroup = 73CDE7751721138D00404A09 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 5D9417C5197EDF1E00CCFFCB /* Products */;
+					ProjectRef = 5D9417C4197EDF1E00CCFFCB /* HorizontalPickerView.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				73CDE7731721138D00404A09 /* HPDemo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		5D9417CA197EDF1F00CCFFCB /* libHorizontalPickerView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libHorizontalPickerView.a;
+			remoteRef = 5D9417C9197EDF1F00CCFFCB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D9417FA197EDFF800CCFFCB /* HorizontalPickerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HorizontalPickerTests.xctest;
+			remoteRef = 5D9417F9197EDFF800CCFFCB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		73CDE7721721138D00404A09 /* Resources */ = {
@@ -214,6 +271,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5D941800197EE24000CCFFCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HorizontalPickerView;
+			targetProxy = 5D9417FF197EE24000CCFFCB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		73CDE7801721138D00404A09 /* InfoPlist.strings */ = {
@@ -304,13 +369,15 @@
 		73CDE7A61721138D00404A09 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"~/Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos\"",
-				);
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HPDemo/HPDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				INFOPLIST_FILE = "HPDemo/HPDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -320,13 +387,15 @@
 		73CDE7A71721138D00404A09 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"~/Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos\"",
-				);
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HPDemo/HPDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				INFOPLIST_FILE = "HPDemo/HPDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

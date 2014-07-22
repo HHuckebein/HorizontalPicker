@@ -22,8 +22,8 @@
 /** \brief A horizontal picker suitable where only a view number of items are present.
  */
 
-#import <UIKit/UIKit.h>
-#import "HorizontalPickerGlobal.h"
+@import UIKit;
+#import "HPickerDefinitions.h"
 
 @protocol HPickerViewDataSource, HPickerViewDelegate;
 

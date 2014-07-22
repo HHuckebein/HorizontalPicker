@@ -20,7 +20,6 @@
 
 #import <UIKit/UIKit.h>
 #import "HPickerDefinitions.h"
-#import "HorizontalPickerGlobal.h"
 
 @protocol HPCollectionVCProvider;
 

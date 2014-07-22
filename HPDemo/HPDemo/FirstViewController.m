@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import <HorizontalPickerView/HorizontalPickerView.h>
 
 @interface FirstViewController ()
 @property (weak  , nonatomic) NSArray *source;

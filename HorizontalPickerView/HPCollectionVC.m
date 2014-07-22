@@ -19,7 +19,6 @@
 //
 
 #import "HPCollectionVC.h"
-#import "HPickerDefinitions.h"
 #import "HPCollectionViewCell.h"
 
 @interface HPCollectionVC() <HPCollectionViewCellDelegate>

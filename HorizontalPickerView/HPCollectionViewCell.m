@@ -19,9 +19,8 @@
 //
 
 #import "HPCollectionViewCell.h"
-#import "HPickerDefinitions.h"
 
-static NSString * const TextChanged = @"TextChanged";
+DefineContext(TextChanged);
 #define TEXT_KEYPATH    @"text"
 
 @interface HPCollectionViewCell()
@@ -43,7 +42,7 @@ static NSString * const TextChanged = @"TextChanged";
         [self addSubview:self.label];
         [self collectionViewCellConstraints];
         
-        [self addObserver:self forKeyPath:TEXT_KEYPATH options:NSKeyValueObservingOptionNew context:(__bridge void *)TextChanged];
+        [self addObserver:self forKeyPath:TEXT_KEYPATH options:NSKeyValueObservingOptionNew context:TextChanged];
         
         if (DEBUG_HP == 1) {
             self.layer.borderColor = [UIColor redColor].CGColor;
@@ -55,7 +54,7 @@ static NSString * const TextChanged = @"TextChanged";
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:TEXT_KEYPATH context:(__bridge void *)TextChanged];
+    [self removeObserver:self forKeyPath:TEXT_KEYPATH context:TextChanged];
 }
 
 - (void)setSelected:(BOOL)selected

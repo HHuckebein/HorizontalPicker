@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#import <HorizontalPickerView/HorizontalPickerView.h>
 
 @interface SecondViewController ()
 @property (strong, nonatomic) NSArray *dataSource;
@@ -19,10 +20,9 @@
     [super viewDidLoad];
     [HorizontalPickerView class];
     
-    
     self.horizontalPicker.tintColor = [UIColor colorWithRed:253/255. green:154/255. blue:9/255. alpha:1.];
     self.horizontalPicker.font = [UIFont boldSystemFontOfSize:10.f];
-    self.horizontalPicker.cropStringIfNecessary = NO;
+    self.horizontalPicker.cropStringIfNecessary = YES;
 }
 
 - (void)didReceiveMemoryWarning

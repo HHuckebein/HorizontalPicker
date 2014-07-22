@@ -19,8 +19,6 @@
 //
 
 #import "HPCollectionViewFlowLayout.h"
-#import "HPickerDefinitions.h"
-#import "HorizontalPickerGlobal.h"
 
 @implementation HPCollectionViewFlowLayout
 

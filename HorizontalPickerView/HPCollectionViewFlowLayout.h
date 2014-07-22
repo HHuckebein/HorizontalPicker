@@ -14,31 +14,15 @@
 //
 //
 //
-//  HPCollectionViewCell.h
+//  HPCollectionViewFlowLayout.h
 //  HorizontalPicker
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
+@import UIKit;
 #import "HPickerDefinitions.h"
-#import "HorizontalPickerGlobal.h"
 
-@protocol HPCollectionViewCellDelegate;
+@interface HPCollectionViewFlowLayout : UICollectionViewFlowLayout
 
-@interface HPCollectionViewCell : UICollectionViewCell
+@property (nonatomic) HPStyle style;
 
-@property (nonatomic, weak) id <HPCollectionViewCellDelegate> delegate;
-@property (nonatomic, strong, readonly) UILabel *label;
-@property (nonatomic, strong) NSString          *text;
-@property (nonatomic, strong) NSDate            *date;
-
-@end
-
-@protocol HPCollectionViewCellDelegate <NSObject>
-@required
-- (UIColor *)tintColorForCell:(HPCollectionViewCell *)cell;
-- (HPStyle)styleForCell:(HPCollectionViewCell *)cell;
-- (UIFont *)fontForCell:(HPCollectionViewCell *)cell;
-@optional
-- (BOOL)cropStringIfNecessaryForCell:(HPCollectionViewCell *)cell;
 @end

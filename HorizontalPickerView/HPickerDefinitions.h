@@ -22,7 +22,12 @@
 #ifndef __HorizontalPicker
 #define __HorizontalPicker
 
-#define DefineContext(_X_) static NSString * _X_ = @#_X_
+typedef NS_ENUM(NSUInteger, HPStyle) {
+    HPStyleNormal,
+    HPStyle_iOS7
+};
+
+#define DefineContext(_X_) static void * _X_ = @#_X_
 
 #define DEBUG_HP                            0   // forces some views layer to draw a border
 
