@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author       = { "RABE_IT Services" => "info@berndrabe.de" }
   s.source       = { :git => "https://github.com/HHuckebein/HorizontalPicker.git", :tag => s.version.to_s }
   s.platform     = :ios, '6.1'
-  s.source_files = 'HorizontalPicker/**/*.{h,m}'
+  s.source_files = 'HorizontalPickerView/**/*.{h,m}'
   s.frameworks   =  'Foundation', 'QuartzCore'
   s.requires_arc = true
 end
