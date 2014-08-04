@@ -55,20 +55,20 @@
 		5D941822197EE79000CCFFCB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5D941824197EE79000CCFFCB /* HorizontalPickerViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HorizontalPickerViewTests.m; sourceTree = "<group>"; };
 		7323B3AB171FC56B00E882C8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		7323B3AF171FC56B00E882C8 /* HorizontalPickerView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "HorizontalPickerView-Prefix.pch"; path = "../HorizontalPickerView/HorizontalPickerView-Prefix.pch"; sourceTree = "<group>"; };
+		7323B3AF171FC56B00E882C8 /* HorizontalPickerView */ = {isa = PBXFileReference; lastKnownFileType = text; path = HorizontalPickerView; sourceTree = "<group>"; };
 		7323B3B9171FC5CA00E882C8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPickerDefinitions.h; path = ../HorizontalPickerView/HPickerDefinitions.h; sourceTree = "<group>"; };
+		7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPickerDefinitions.h; path = HorizontalPickerView/HPickerDefinitions.h; sourceTree = "<group>"; };
 		7323B3BF171FC71100E882C8 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7323B3C0171FC71100E882C8 /* README.textile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.textile; sourceTree = "<group>"; };
-		733C615517ABE26E002B67B8 /* HPCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCollectionVC.h; path = ../HorizontalPickerView/HPCollectionVC.h; sourceTree = "<group>"; };
-		733C615617ABE26E002B67B8 /* HPCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCollectionVC.m; path = ../HorizontalPickerView/HPCollectionVC.m; sourceTree = "<group>"; };
-		733C615817ABE293002B67B8 /* HPCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCollectionViewCell.h; path = ../HorizontalPickerView/HPCollectionViewCell.h; sourceTree = "<group>"; };
-		733C615917ABE293002B67B8 /* HPCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCollectionViewCell.m; path = ../HorizontalPickerView/HPCollectionViewCell.m; sourceTree = "<group>"; };
+		733C615517ABE26E002B67B8 /* HPCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCollectionVC.h; path = HorizontalPickerView/HPCollectionVC.h; sourceTree = "<group>"; };
+		733C615617ABE26E002B67B8 /* HPCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCollectionVC.m; path = HorizontalPickerView/HPCollectionVC.m; sourceTree = "<group>"; };
+		733C615817ABE293002B67B8 /* HPCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCollectionViewCell.h; path = HorizontalPickerView/HPCollectionViewCell.h; sourceTree = "<group>"; };
+		733C615917ABE293002B67B8 /* HPCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCollectionViewCell.m; path = HorizontalPickerView/HPCollectionViewCell.m; sourceTree = "<group>"; };
 		733D7E1C17AC23FE00D80A63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		735F7DB0172004BD00E563BF /* HorizontalPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HorizontalPickerView.h; path = ../HorizontalPickerView/HorizontalPickerView.h; sourceTree = "<group>"; };
-		735F7DB1172004BD00E563BF /* HorizontalPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HorizontalPickerView.m; path = ../HorizontalPickerView/HorizontalPickerView.m; sourceTree = "<group>"; };
-		73CB2CD917B0B21C00DA1A93 /* HPCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCollectionViewFlowLayout.h; path = ../HorizontalPickerView/HPCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		73CB2CDA17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCollectionViewFlowLayout.m; path = ../HorizontalPickerView/HPCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		735F7DB0172004BD00E563BF /* HorizontalPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HorizontalPickerView.h; path = HorizontalPickerView/HorizontalPickerView.h; sourceTree = "<group>"; };
+		735F7DB1172004BD00E563BF /* HorizontalPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HorizontalPickerView.m; path = HorizontalPickerView/HorizontalPickerView.m; sourceTree = "<group>"; };
+		73CB2CD917B0B21C00DA1A93 /* HPCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCollectionViewFlowLayout.h; path = HorizontalPickerView/HPCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		73CB2CDA17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCollectionViewFlowLayout.m; path = HorizontalPickerView/HPCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		73CB2CDF17B0FA9000DA1A93 /* HorizontalPicker.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HorizontalPicker.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,7 +163,7 @@
 		7323B3AE171FC56B00E882C8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7323B3AF171FC56B00E882C8 /* HorizontalPickerView-Prefix.pch */,
+				7323B3AF171FC56B00E882C8 /* HorizontalPickerView */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
