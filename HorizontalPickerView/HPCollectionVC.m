@@ -120,14 +120,12 @@
     
     // check if baseAdjustments where made in HorizontalPickerView
     if (collectionView.contentOffset.x) {
-        CGPoint point = collectionView.frame.origin;
+        CGPoint point = collectionView.contentOffset;
         point.x += collectionView.frame.size.width / 2;
+        point.x  = MIN(collectionView.contentSize.width - .5f, point.x);
         point.y += collectionView.frame.size.height / 2;
-        point = [collectionView convertPoint:point fromView:collectionView.superview];
-        
         index = [collectionView indexPathForItemAtPoint:point].row;
     }
-    
     return index;
 }
 

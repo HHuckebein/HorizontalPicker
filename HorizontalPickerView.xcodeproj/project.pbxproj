@@ -47,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		42CA275319EF909F0026A347 /* HorizontalPickerView-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HorizontalPickerView-Prefix.pch"; path = "HorizontalPickerView/HorizontalPickerView-Prefix.pch"; sourceTree = "<group>"; };
 		5D9417DF197EDFA200CCFFCB /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5D9417E2197EDFA200CCFFCB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		5D94180A197EE79000CCFFCB /* libHorizontalPickerView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHorizontalPickerView.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,7 +56,6 @@
 		5D941822197EE79000CCFFCB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5D941824197EE79000CCFFCB /* HorizontalPickerViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HorizontalPickerViewTests.m; sourceTree = "<group>"; };
 		7323B3AB171FC56B00E882C8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		7323B3AF171FC56B00E882C8 /* HorizontalPickerView */ = {isa = PBXFileReference; lastKnownFileType = text; path = HorizontalPickerView; sourceTree = "<group>"; };
 		7323B3B9171FC5CA00E882C8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPickerDefinitions.h; path = HorizontalPickerView/HPickerDefinitions.h; sourceTree = "<group>"; };
 		7323B3BF171FC71100E882C8 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -95,6 +95,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42CA275019EF90630026A347 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				733C615517ABE26E002B67B8 /* HPCollectionVC.h */,
+				733C615617ABE26E002B67B8 /* HPCollectionVC.m */,
+				733C615817ABE293002B67B8 /* HPCollectionViewCell.h */,
+				733C615917ABE293002B67B8 /* HPCollectionViewCell.m */,
+				73CB2CD917B0B21C00DA1A93 /* HPCollectionViewFlowLayout.h */,
+				73CB2CDA17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m */,
+			);
+			name = CollectionView;
+			sourceTree = "<group>";
+		};
+		42CA275119EF907F0026A347 /* HorizontalPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */,
+				735F7DB0172004BD00E563BF /* HorizontalPickerView.h */,
+				735F7DB1172004BD00E563BF /* HorizontalPickerView.m */,
+				42CA275019EF90630026A347 /* CollectionView */,
+				42CA275219EF90900026A347 /* Supporting Files */,
+			);
+			name = HorizontalPickerView;
+			sourceTree = "<group>";
+		};
+		42CA275219EF90900026A347 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				42CA275319EF909F0026A347 /* HorizontalPickerView-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5D94181E197EE79000CCFFCB /* HorizontalPickerViewTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,7 +152,7 @@
 				73CB2CDF17B0FA9000DA1A93 /* HorizontalPicker.podspec */,
 				7323B3BF171FC71100E882C8 /* LICENSE.txt */,
 				7323B3C0171FC71100E882C8 /* README.textile */,
-				7323B3AD171FC56B00E882C8 /* HorizontalPickerView */,
+				42CA275119EF907F0026A347 /* HorizontalPickerView */,
 				5D94181E197EE79000CCFFCB /* HorizontalPickerViewTests */,
 				7323B3AA171FC56B00E882C8 /* Frameworks */,
 				7323B3A9171FC56B00E882C8 /* Products */,
@@ -145,40 +178,6 @@
 				5D9417E2197EDFA200CCFFCB /* UIKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		7323B3AD171FC56B00E882C8 /* HorizontalPickerView */ = {
-			isa = PBXGroup;
-			children = (
-				733C615417ABE1FC002B67B8 /* CollectionView */,
-				7323B3BB171FC6FE00E882C8 /* HPickerDefinitions.h */,
-				735F7DB0172004BD00E563BF /* HorizontalPickerView.h */,
-				735F7DB1172004BD00E563BF /* HorizontalPickerView.m */,
-				7323B3AE171FC56B00E882C8 /* Supporting Files */,
-			);
-			name = HorizontalPickerView;
-			path = HorizontalPicker;
-			sourceTree = "<group>";
-		};
-		7323B3AE171FC56B00E882C8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7323B3AF171FC56B00E882C8 /* HorizontalPickerView */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		733C615417ABE1FC002B67B8 /* CollectionView */ = {
-			isa = PBXGroup;
-			children = (
-				733C615517ABE26E002B67B8 /* HPCollectionVC.h */,
-				733C615617ABE26E002B67B8 /* HPCollectionVC.m */,
-				733C615817ABE293002B67B8 /* HPCollectionViewCell.h */,
-				733C615917ABE293002B67B8 /* HPCollectionViewCell.m */,
-				73CB2CD917B0B21C00DA1A93 /* HPCollectionViewFlowLayout.h */,
-				73CB2CDA17B0B21C00DA1A93 /* HPCollectionViewFlowLayout.m */,
-			);
-			name = CollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
