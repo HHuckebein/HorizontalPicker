@@ -25,6 +25,13 @@
     self.horizontalPicker.cropStringIfNecessary = YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.selectedRowLabel.text = self.dataSource[self.horizontalPicker.selectedRow];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -47,7 +54,7 @@
 
 - (void)pickerView:(HorizontalPickerView *)pickerView didSelectRow:(NSInteger)row
 {
-    self.selectedRowLabel.text = [NSString stringWithFormat:@"%@", @(row)];
+    self.selectedRowLabel.text = self.dataSource[row];
 }
 
 

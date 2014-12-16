@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--First View Controller - First-->
+        <!--First-->
         <scene sceneID="11">
             <objects>
                 <viewController title="First" id="2" customClass="FirstViewController" sceneMemberID="viewController">
@@ -27,8 +27,8 @@
                                     <outlet property="delegate" destination="2" id="7no-Jq-rT9"/>
                                 </connections>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fw-a9-cuQ">
-                                <rect key="frame" x="20" y="527" width="280" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fw-a9-cuQ">
+                                <rect key="frame" x="20" y="490" width="280" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -39,10 +39,8 @@
                             <constraint firstItem="WLg-1A-j4D" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="4ej-J1-AAS"/>
                             <constraint firstItem="WLg-1A-j4D" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" id="AMB-hM-BlQ"/>
                             <constraint firstItem="WLg-1A-j4D" firstAttribute="top" secondItem="16" secondAttribute="top" constant="100" id="Fe1-70-J7U"/>
-                            <constraint firstAttribute="bottom" secondItem="WLg-1A-j4D" secondAttribute="bottom" priority="750" constant="355" id="SZL-D0-WpY"/>
-                            <constraint firstItem="2fw-a9-cuQ" firstAttribute="leading" secondItem="16" secondAttribute="leading" constant="20" symbolic="YES" id="cZc-NQ-7Fg"/>
-                            <constraint firstAttribute="trailing" secondItem="2fw-a9-cuQ" secondAttribute="trailing" constant="20" symbolic="YES" id="iiM-WE-ell"/>
-                            <constraint firstAttribute="bottom" secondItem="2fw-a9-cuQ" secondAttribute="bottom" constant="20" symbolic="YES" id="j6j-Vx-pvl"/>
+                            <constraint firstItem="gDT-DY-aem" firstAttribute="top" secondItem="2fw-a9-cuQ" secondAttribute="bottom" constant="8" id="aSp-W9-3QV"/>
+                            <constraint firstAttribute="centerX" secondItem="2fw-a9-cuQ" secondAttribute="centerX" id="bIk-O0-6Fe"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="7"/>
@@ -55,7 +53,7 @@
             </objects>
             <point key="canvasLocation" x="653" y="-138"/>
         </scene>
-        <!--Second View Controller - Second-->
+        <!--Second-->
         <scene sceneID="13">
             <objects>
                 <viewController title="Second" id="3" customClass="SecondViewController" sceneMemberID="viewController">
@@ -78,8 +76,8 @@
                                     <outlet property="delegate" destination="3" id="lTU-zw-jIE"/>
                                 </connections>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NL4-hF-bhk">
-                                <rect key="frame" x="20" y="527" width="280" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NL4-hF-bhk">
+                                <rect key="frame" x="20" y="490" width="280" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -87,13 +85,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.63921568630000003" green="0.80000000000000004" blue="0.078431372550000003" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="NL4-hF-bhk" secondAttribute="trailing" constant="20" symbolic="YES" id="2cZ-ct-MqP"/>
-                            <constraint firstAttribute="bottom" secondItem="dlr-xc-Bda" secondAttribute="bottom" priority="750" constant="355" id="F5a-jV-Fve"/>
+                            <constraint firstAttribute="centerX" secondItem="NL4-hF-bhk" secondAttribute="centerX" id="1ra-tT-Da4"/>
                             <constraint firstItem="dlr-xc-Bda" firstAttribute="top" secondItem="17" secondAttribute="top" constant="100" id="OrY-ff-pQC"/>
                             <constraint firstItem="dlr-xc-Bda" firstAttribute="leading" secondItem="17" secondAttribute="leading" id="UEp-S6-0DT"/>
-                            <constraint firstItem="NL4-hF-bhk" firstAttribute="leading" secondItem="17" secondAttribute="leading" constant="20" symbolic="YES" id="d2B-nC-cGw"/>
+                            <constraint firstItem="4g2-uW-eKc" firstAttribute="top" secondItem="NL4-hF-bhk" secondAttribute="bottom" constant="8" id="qNJ-DK-VLz"/>
                             <constraint firstItem="dlr-xc-Bda" firstAttribute="trailing" secondItem="17" secondAttribute="trailing" id="qwg-Gy-FM5"/>
-                            <constraint firstAttribute="bottom" secondItem="NL4-hF-bhk" secondAttribute="bottom" constant="20" symbolic="YES" id="vSp-mi-jJM"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="6"/>
