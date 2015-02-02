@@ -236,12 +236,15 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 
 - (NSString *)collectionViewController:(HPCollectionVC *)collectionVC titleForRow:(NSInteger)row
 {
-    return [_delegate pickerView:self titleForRow:row];
+    if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:)])
+        return [_delegate pickerView:self titleForRow:row];
+    return @"";
 }
 
 - (void)collectionViewController:(HPCollectionVC *)collectionVC didSelectRow:(NSInteger)row
 {
-    [_delegate pickerView:self didSelectRow:row];
+    if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:)])
+        [_delegate pickerView:self didSelectRow:row];
 }
 
 #pragma mark - External affairs
@@ -268,7 +271,8 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:row inSection:0];
         [self.collectionController changeSelectionInCollectionView:self.collectionController.collectionView indexPath:indexPath];
         
-        [_delegate pickerView:self didSelectRow:row];
+        if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:)])
+            [_delegate pickerView:self didSelectRow:row];
     }
 }
 
@@ -375,7 +379,7 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
         self.autoresizingMask       = UIViewAutoresizingFlexibleWidth;
 		self.backgroundColor        = [UIColor clearColor];
         
-		CAGradientLayer *gradientLayer = (CAGradientLayer *)self.layer;
+        CAGradientLayer *gradientLayer = (CAGradientLayer *)self.layer;
         gradientLayer.locations = @[@0.0f, @0.015f, @0.025f, @0.5f, @0.5f, @1.0f];
         
         gradientLayer.colors =
