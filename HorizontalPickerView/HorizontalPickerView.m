@@ -236,7 +236,7 @@ typedef NS_ENUM(NSUInteger, AdjustEdgeInset) {
 
 - (NSString *)collectionViewController:(HPCollectionVC *)collectionVC titleForRow:(NSInteger)row
 {
-    if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:)])
+    if ([_delegate respondsToSelector:@selector(pickerView:titleForRow:)])
         return [_delegate pickerView:self titleForRow:row];
     return @"";
 }
