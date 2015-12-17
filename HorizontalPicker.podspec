@@ -1,13 +1,19 @@
 Pod::Spec.new do |s|
-  s.name         = "HorizontalPicker"
-  s.version      = "1.1.10"
-  s.summary      = "A similar to UIPickerView but horizontal picker view."
-  s.homepage     = "https://github.com/HHuckebein/HorizontalPicker"
-  s.license      = { :type => 'MIT', :file => 'LICENSE.txt' }
-  s.author       = { "RABE_IT Services" => "info@berndrabe.de" }
-  s.source       = { :git => "https://github.com/HHuckebein/HorizontalPicker.git", :tag => s.version.to_s }
-  s.platform     = :ios, '6.1'
-  s.source_files = 'HorizontalPickerView/**/*.{h,m}'
-  s.frameworks   =  'Foundation', 'QuartzCore'
+  s.name             = "HorizontalPicker"
+  s.version          = "2.0.0"
+  s.summary          = "A similar to UIPickerView but horizontal picker view."
+  s.description      = <<-DESC
+  A horizontal picker which adapts for different element width, occupying only the space needed.
+  Datasource/Delegate as UIPickerView + support for tintColor, two text lines, font and text color.
+                       DESC
+
+  s.homepage         = "https://github.com/HHuckebein/HorizontalPicker"
+  s.license          = 'MIT'
+  s.author           = { "RABE_IT Services" => "development@berndrabe.de" }
+  s.source           = { :git => "https://github.com/HHuckebein/HorizontalPicker.git", :tag => s.version.to_s }
+
+  s.platform     = :ios, '9.0'
   s.requires_arc = true
+
+  s.source_files = 'HorizontalPicker/Classes/**/*'
 end

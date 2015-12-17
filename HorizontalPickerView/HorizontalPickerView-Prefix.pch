@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'HorizontalPicker' target in the 'HorizontalPicker' project
-//
-
-#ifdef __OBJC__
-#import <Foundation/Foundation.h>
-#endif
