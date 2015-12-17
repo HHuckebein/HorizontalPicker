@@ -4,8 +4,8 @@ notifications:
     on_success: always
     on_failure: change
     rooms:
-      secure: "CaaQlGGs6L4wpPSdwzC7Nc+WYFS4kANNnlJlNhZi8LWAvpmOCzyDIta+MyaZESAYgLbY2MODvQf9nIP8Y1CEW6HHIzi5BO8gKr+PDhnZC/D+vSthbuxDyJO/ims1z4QB4KNeL/Fb7wnudfbEUnQPIGWbROqMX9KYVG+v5rbdN4cgYFdh2Jis06pgFvvZz85YTt2ywWh2WT6YVONtp0wEJ8R2fusvYzNy4Y8whDjScF3hO4w49hYVa8pNwoiH0y/upUjbIvgmcLl5usZOcgaRxRS6PKcbtueoAqOg3JJCP7djg2jbJJZ05CF37PrQgaF6K7K9LG70X7qD9TOan/MqsNbIzHMUjUt1xjn3ZN4mYWAVMfttmw4EG+ZTG/pRldCDmJcHMkq4Mp2Lkb6fvQbkts6WYmjTcmmrCpVg9WbPUyFq29zD0hI3OSj+Mbl5q7Ga6wfFLcZP9ivsb7jTrGLZNGxdwZYBmoJVr+IysI40lJ3OICg7CXblBjt7lqtYZFxS7PnylJNZhTAU36NyXXOhn/Q3FkKNPLvAiBYoUhgl47lE/MjSuFmUb95IeizrfId8VzLlix1DucpX0jfPQrPWpvPn0K8r/IBppgOxLNiNx+AguqjaPh6tC2Ssc6Pv0rWAFQ4Mh8U3GmaaKDxrMpmCRYnOuljHqumzUH699jlNVmo="
-      
+      secure: b/iKKSvXRK+ihrGjbeww9vX321IkbZVeRWTG2UlTsEs36oL/e1ge7bH57jPBhEhtLgHkXutq2ZGwz67YxgYj6dc5Hx+NfISdyrJIqVmt+5T7Yyv/yI7uTa/g9WP/RalkYXMbUdtEtjlCQcXntdzGBsbDvn2nxpX4cqYowA4golo=
+
 xcode_project: HorizontalPickerDemo.xcodeproj
 xcode_scheme: HorizontalPicker
 osx_image: xcode7.2
