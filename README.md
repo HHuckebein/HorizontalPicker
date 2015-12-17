@@ -8,7 +8,15 @@
 
 ## Usage
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+1. Just drop a normal UIView into your Storyboard and change the class to HorizontalPickerView. Make sure the module is set to HorizontalPicker.
+
+2. import HorizontalPicker module
+
+3. Add IBOutlets to the newly created view and set the dataSource and delegate attributes.
+
+4. Make your class compatible with HorizontalPickerViewDataSource and HorizontalPickerViewDelegate protocol.
+
+5. Implement the required methods and you are good to go.
 
 ## Installation
 
