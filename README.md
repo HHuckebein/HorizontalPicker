@@ -1,7 +1,7 @@
 # HorizontalPicker
 
-[![CI Status](http://img.shields.io/travis/RABE_IT Services/HorizontalPicker.svg?style=flat)](https://travis-ci.org/RABE_IT Services/HorizontalPicker)
-[![Version](https://img.shields.io/cocoapods/v/HorizontalPicker.svg?style=flat)](http://cocoapods.org/pods/HorizontalPicker)
+[![Build Status](https://travis-ci.org/HHuckebein/HorizontalPicker.svg?branch=master)](https://travis-ci.org/HHuckebein/HorizontalPicker)
+![Version](https://img.shields.io/cocoapods/v/HorizontalPicker.svg?style=flat)](http://cocoapods.org/pods/HorizontalPicker)
 [![License](https://img.shields.io/cocoapods/l/HorizontalPicker.svg?style=flat)](http://cocoapods.org/pods/HorizontalPicker)
 [![Platform](https://img.shields.io/cocoapods/p/HorizontalPicker.svg?style=flat)](http://cocoapods.org/pods/HorizontalPicker)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
