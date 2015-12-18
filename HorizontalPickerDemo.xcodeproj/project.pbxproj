@@ -109,6 +109,7 @@
 		73DB9E8E1C23EB1B00ABA038 /* HorizontalPicker.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HorizontalPicker.podspec; sourceTree = "<group>"; };
 		73DB9E8F1C23EB1B00ABA038 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		73DB9E901C23EB1B00ABA038 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		73FCEA281C23ED170075B709 /* CHANGELOG.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.MD; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +254,7 @@
 				73DB9E8E1C23EB1B00ABA038 /* HorizontalPicker.podspec */,
 				73DB9E8F1C23EB1B00ABA038 /* LICENSE.txt */,
 				73DB9E901C23EB1B00ABA038 /* README.md */,
+				73FCEA281C23ED170075B709 /* CHANGELOG.MD */,
 			);
 			name = Metadata;
 			sourceTree = "<group>";

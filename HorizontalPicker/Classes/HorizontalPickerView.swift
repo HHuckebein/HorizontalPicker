@@ -8,12 +8,12 @@
 import UIKit
 
 /** Constants
- strokeColor: The color use for the shapeLayers' strokeColor
- maxLabelWidthFactor: Defines the max width of one entry as percentage of the picker views width.
+ - pathCornerRadii: The corner radii used for the mask shape.
+ - strokeColor: The color use for the shapeLayers' strokeColor
+ - maxLabelWidthFactor: Defines the max width of one entry as percentage of the picker views width.
  */
 struct HorizontalPickerViewConstants {
     static let pathCornerRadii              = CGSize(width: 10, height: 5)
-    
     static let maxLabelWidthFactor: CGFloat = 0.5    // defines how man width space a single element can occupy as portion of the total width
     static let maxRotationAngle: Float      = -60.0  // elements are rotated around the y axis depending on the distance from the center
 }
@@ -31,7 +31,8 @@ public protocol HorizontalPickerViewDataSource {
     optional func useTwoLineModeForHorizontalPickerView (pickerView: HorizontalPickerView) -> Bool
 }
 
-
+/** A similar to UIPicker but horizontal picker view.
+*/
 public class HorizontalPickerView: UIView {
     
     // MARK: - Public API
@@ -84,6 +85,8 @@ public class HorizontalPickerView: UIView {
             shapeLayer.path = shapePathForFrame(bounds).CGPath
         }
     }
+    
+    // MARK:
     
     public func selectedRow () -> Int {
         return collectionController.selectedCellIndexPath.row
