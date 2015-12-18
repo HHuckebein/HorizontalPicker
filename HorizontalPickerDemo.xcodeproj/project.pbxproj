@@ -24,6 +24,9 @@
 		7332D53A1C1DB22B008EEFCD /* HPCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7332D5391C1DB22B008EEFCD /* HPCollectionVC.swift */; };
 		7332D53D1C1DB278008EEFCD /* HPCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7332D53C1C1DB278008EEFCD /* HPCollectionViewCell.swift */; };
 		7332D53F1C1DB28A008EEFCD /* HPCollectionViewFlowlayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7332D53E1C1DB28A008EEFCD /* HPCollectionViewFlowlayout.swift */; };
+		73DB9E911C23EB1B00ABA038 /* HorizontalPicker.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 73DB9E8E1C23EB1B00ABA038 /* HorizontalPicker.podspec */; };
+		73DB9E921C23EB1B00ABA038 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 73DB9E8F1C23EB1B00ABA038 /* LICENSE.txt */; };
+		73DB9E931C23EB1B00ABA038 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 73DB9E901C23EB1B00ABA038 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +106,9 @@
 		7332D5391C1DB22B008EEFCD /* HPCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HPCollectionVC.swift; path = Classes/CollectionView/HPCollectionVC.swift; sourceTree = "<group>"; };
 		7332D53C1C1DB278008EEFCD /* HPCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HPCollectionViewCell.swift; path = Classes/CollectionView/HPCollectionViewCell.swift; sourceTree = "<group>"; };
 		7332D53E1C1DB28A008EEFCD /* HPCollectionViewFlowlayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HPCollectionViewFlowlayout.swift; path = Classes/CollectionView/HPCollectionViewFlowlayout.swift; sourceTree = "<group>"; };
+		73DB9E8E1C23EB1B00ABA038 /* HorizontalPicker.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HorizontalPicker.podspec; sourceTree = "<group>"; };
+		73DB9E8F1C23EB1B00ABA038 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		73DB9E901C23EB1B00ABA038 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +155,7 @@
 		730642FA1C1DA78900A423A6 = {
 			isa = PBXGroup;
 			children = (
+				73DB9E8D1C23EB0D00ABA038 /* Metadata */,
 				730643051C1DA78900A423A6 /* HorizontalPickerDemo */,
 				7306431C1C1DA78900A423A6 /* HorizontalPickerDemoTests */,
 				730643271C1DA78900A423A6 /* HorizontalPickerDemoUITests */,
@@ -238,6 +245,16 @@
 				7332D53E1C1DB28A008EEFCD /* HPCollectionViewFlowlayout.swift */,
 			);
 			name = CollectionView;
+			sourceTree = "<group>";
+		};
+		73DB9E8D1C23EB0D00ABA038 /* Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				73DB9E8E1C23EB1B00ABA038 /* HorizontalPicker.podspec */,
+				73DB9E8F1C23EB1B00ABA038 /* LICENSE.txt */,
+				73DB9E901C23EB1B00ABA038 /* README.md */,
+			);
+			name = Metadata;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,8 +420,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73DB9E911C23EB1B00ABA038 /* HorizontalPicker.podspec in Resources */,
 				730643131C1DA78900A423A6 /* LaunchScreen.storyboard in Resources */,
 				730643101C1DA78900A423A6 /* Assets.xcassets in Resources */,
+				73DB9E921C23EB1B00ABA038 /* LICENSE.txt in Resources */,
 				7306430E1C1DA78900A423A6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,6 +465,7 @@
 			files = (
 				7306430B1C1DA78900A423A6 /* SecondViewController.swift in Sources */,
 				730643071C1DA78900A423A6 /* AppDelegate.swift in Sources */,
+				73DB9E931C23EB1B00ABA038 /* README.md in Sources */,
 				730643091C1DA78900A423A6 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

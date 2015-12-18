@@ -29,7 +29,7 @@ it, simply add the following line to your Podfile:
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 
-pod "HorizontalPicker" ~> 2.0
+pod 'HorizontalPicker', ~> '2.0'
 ```
 
 ### Installation with Carthage
