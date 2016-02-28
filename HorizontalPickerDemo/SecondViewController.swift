@@ -51,6 +51,10 @@ class SecondViewController: UIViewController, HorizontalPickerViewDataSource, Ho
     func textColorForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIColor {
         return UIColor.darkTextColor()
     }
+    
+    func pickerViewShouldMask(pickerView: HorizontalPickerView) -> Bool {
+        return true
+    }
 
 }
 

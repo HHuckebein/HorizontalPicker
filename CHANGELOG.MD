@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 --- 
 
+## [2.0.1](https://github.com/HHuckebein/HorizontalPicker/releases/tag/2.0.1) (02/28/2015) )
+* changed deployment target to 9.0
+* added optiona protocol method to switch off masking
+
 ## [2.0.0](https://github.com/HHuckebein/HorizontalPicker/releases/tag/2.0.0) (12/17/2015) )
 Released on Wednesday, December 17, 2015.
 

@@ -29,6 +29,7 @@ public protocol HorizontalPickerViewDataSource {
     optional func textFontForHorizontalPickerView (pickerView: HorizontalPickerView) -> UIFont
     optional func textColorForHorizontalPickerView (pickerView: HorizontalPickerView) -> UIColor
     optional func useTwoLineModeForHorizontalPickerView (pickerView: HorizontalPickerView) -> Bool
+    optional func pickerViewShouldMask (pickerView: HorizontalPickerView) -> Bool
 }
 
 /** A similar to UIPicker but horizontal picker view.
@@ -56,7 +57,6 @@ public class HorizontalPickerView: UIView {
         if dataSource != nil && delegate != nil {
             if isInitialized == false {
                 isInitialized = true
-                layer.mask = shapeLayer
                 if let view = collectionController.collectionView {
                     view.frame = self.bounds
                     addSubview(view)
@@ -81,8 +81,10 @@ public class HorizontalPickerView: UIView {
                     view.selectItemAtIndexPath(self.collectionController.selectedCellIndexPath, animated: false, scrollPosition: .CenteredHorizontally)
                 })
             }
-            
-            shapeLayer.path = shapePathForFrame(bounds).CGPath
+            if delegate?.pickerViewShouldMask?(self) ?? false {
+                layer.mask = shapeLayer
+                shapeLayer.path = shapePathForFrame(bounds).CGPath
+            }
         }
     }
     

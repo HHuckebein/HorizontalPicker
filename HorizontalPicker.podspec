@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "HorizontalPicker"
-  s.version          = "2.0.0"
+  s.version          = "2.0.1"
   s.summary          = "A similar to UIPickerView but horizontal picker view."
   s.description      = <<-DESC
   A horizontal picker which adapts for different element width, occupying only the space needed.
