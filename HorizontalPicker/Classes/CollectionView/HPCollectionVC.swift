@@ -89,7 +89,8 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func indexPathForCenterCellFromCollectionview (collectionView: UICollectionView) -> NSIndexPath? {
         let point = collectionView.convertPoint(collectionView.center, fromView: collectionView.superview)
-        return collectionView.indexPathForItemAtPoint(point)
+        guard let indexPath = collectionView.indexPathForItemAtPoint(point) else { return collectionView.indexPathsForVisibleItems().first }
+        return indexPath
     }
     
     // MARK: - Helper
