@@ -20,7 +20,7 @@ protocol HPCollectionViewCellDelegate {
 
 class HPCollectionViewCell: UICollectionViewCell {
     
-    private var textColor: UIColor = UIColor.lightGrayColor()
+    private var textColor: UIColor = .lightGray
     
     var text: String? {
         didSet {
@@ -28,9 +28,9 @@ class HPCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    override var selected: Bool {
+    override var isSelected: Bool {
         didSet {
-            label.textColor = selected ? tintColor : textColor
+            label.textColor = isSelected ? tintColor : textColor
         }
     }
     
@@ -40,28 +40,28 @@ class HPCollectionViewCell: UICollectionViewCell {
                 return
             }
             
-            label.font          = delegate.fontForCollectionViewCell(self)
-            textColor           = delegate.textColorForCollectionViewCell(self)
+            label.font          = delegate.fontForCollectionViewCell(cvCell: self)
+            textColor           = delegate.textColorForCollectionViewCell(cvCell: self)
             label.textColor     = textColor
             
-            let useTwoLineMode  = delegate.useTwolineModeForCollectionViewCell(self)
+            let useTwoLineMode  = delegate.useTwolineModeForCollectionViewCell(cvCell: self)
             label.numberOfLines = useTwoLineMode ? 2 : 1
-            label.lineBreakMode = useTwoLineMode ? .ByWordWrapping : .ByTruncatingTail
+            label.lineBreakMode = useTwoLineMode ? .byWordWrapping : .byTruncatingTail
         }
     }
     
     lazy var label: UILabel = {
         let label = UILabel(frame: self.bounds)
-        label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        label.backgroundColor  = UIColor.clearColor()
-        label.textAlignment    = .Center
+        label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        label.backgroundColor  = .clear
+        label.textAlignment    = .center
         
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor         = UIColor.clearColor()
+        backgroundColor         = .clear
         
         var perspective         = CATransform3DIdentity
         perspective.m34         = -1.0 / 750.0

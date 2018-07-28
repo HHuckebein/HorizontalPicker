@@ -21,12 +21,12 @@ class FirstViewController: UIViewController, HorizontalPickerViewDataSource, Hor
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.tintColor = UIColor.redColor()
+        view.tintColor = .red
         horizontalPicker.dataSource = self
         horizontalPicker.delegate = self
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         label.text = "\(horizontalPicker.selectedRow())"
     }
@@ -46,11 +46,11 @@ class FirstViewController: UIViewController, HorizontalPickerViewDataSource, Hor
     }
     
     func textColorForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIColor {
-        return UIColor.lightGrayColor()
+        return .lightGray
     }
     
     func textFontForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIFont {
-        return UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
+        return UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1)
     }
 }
 

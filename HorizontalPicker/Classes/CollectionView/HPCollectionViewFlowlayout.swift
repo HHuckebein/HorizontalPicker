@@ -16,13 +16,13 @@ class HPCollectionViewFlowlayout: UICollectionViewFlowLayout {
     var lastElementIndex        = 0
     let maxAngle                = CGFloat(GLKMathDegreesToRadians(HorizontalPickerViewConstants.maxRotationAngle))
     
-    override func prepareLayout () {
+    override func prepare () {
         minimumInteritemSpacing = 0.0
-        scrollDirection         = .Horizontal
+        scrollDirection         = .horizontal
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let array = super.layoutAttributesForElementsInRect(rect) , let cv = collectionView else {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        guard let array = super.layoutAttributesForElements(in: rect) , let cv = collectionView else {
             return nil
         }
         
@@ -31,7 +31,7 @@ class HPCollectionViewFlowlayout: UICollectionViewFlowLayout {
         
         for itemAttributes in array {
             let itemAttributesCopy = itemAttributes.copy() as! UICollectionViewLayoutAttributes
-            let distance        = CGRectGetMidX(visibleRect) - itemAttributesCopy.center.x
+            let distance        = visibleRect.midX - itemAttributesCopy.center.x
             let normalizedDistance = distance / activeDistance
             if abs(distance) < activeDistance {
                 itemAttributesCopy.alpha = 1.0 - abs(normalizedDistance)
@@ -47,7 +47,7 @@ class HPCollectionViewFlowlayout: UICollectionViewFlowLayout {
         return attributesCopy
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
     

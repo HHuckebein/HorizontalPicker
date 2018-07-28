@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 `HorizontalPicker` adheres to [Semantic Versioning](http://semver.org/).
 
 --- 
+## [2.1.](https://github.com/HHuckebein/HorizontalPicker/releases/tag/2.0.2) (07/28/2018) )
+* update for swift 4.1
+
 ## [2.0.2](https://github.com/HHuckebein/HorizontalPicker/releases/tag/2.0.2) (05/04/2016) )
 * podfile type corrected (kudos to [tripolev](https://github.com/tripolev))
 * overcome a problem when index can't be derived (kudos to [tripolev](https://github.com/tripolev))'
