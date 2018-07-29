@@ -54,7 +54,8 @@ public class HorizontalPickerView: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
 
-        if dataSource != nil && delegate != nil {
+        if dataSource != nil && delegate != nil && isInitialized == false {
+            isInitialized = true
             if let view = collectionView, let layout = collectionViewLayout {
                 layout.activeDistance   = floor(view.bounds.width / 2.0)
                 layout.midX             = ceil(view.bounds.midX)
