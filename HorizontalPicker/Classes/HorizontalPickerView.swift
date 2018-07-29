@@ -53,17 +53,9 @@ public class HorizontalPickerView: UIView {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         if dataSource != nil && delegate != nil {
-            if isInitialized == false {
-                isInitialized = true
-                if let view = collectionController.collectionView {
-                    view.frame = self.bounds
-                    addSubview(view)
-                }
-            }
-            
-            if let view = collectionController.collectionView, let layout = collectionController.collectionViewLayout as? HPCollectionViewFlowlayout {
+            if let view = collectionView, let layout = collectionViewLayout {
                 layout.activeDistance   = floor(view.bounds.width / 2.0)
                 layout.midX             = ceil(view.bounds.midX)
                 if let numberOfElements = self.dataSource?.numberOfRowsInHorizontalPickerView(pickerView: self) {
@@ -82,6 +74,7 @@ public class HorizontalPickerView: UIView {
                     view.selectItem(at: self.collectionController.selectedCellIndexPath, animated: false, scrollPosition: .centeredHorizontally)
                 })
             }
+            
             if delegate?.pickerViewShouldMask?(pickerView: self) ?? false {
                 layer.mask = shapeLayer
                 shapeLayer.path = shapePathForFrame(frame: bounds).cgPath
@@ -96,7 +89,7 @@ public class HorizontalPickerView: UIView {
     }
     
     public func selectRow(rowIndex: Int, animated: Bool) {
-        collectionController.selectRowAtIndex(index: rowIndex, animated: animated)
+        collectionController.selectRowAtIndex(at: rowIndex, animated: animated)
     }
     
     public func reloadAll() {
@@ -109,10 +102,16 @@ public class HorizontalPickerView: UIView {
     
     private lazy var shapeLayer: CAShapeLayer = {
         let shapeLayer           = CAShapeLayer()
-        shapeLayer.frame         = self.bounds
+        shapeLayer.frame         = bounds
         shapeLayer.contentsScale = UIScreen.main.scale
         
         return shapeLayer
+    }()
+    
+    private var collectionView: UICollectionView!
+    
+    private lazy var collectionViewLayout: HPCollectionViewFlowlayout? = {
+        return collectionController.collectionViewLayout as? HPCollectionViewFlowlayout
     }()
     
     private lazy var collectionController: HPCollectionVC = {
@@ -132,7 +131,16 @@ public class HorizontalPickerView: UIView {
     }()
     
     private func setUp () {
-        autoresizingMask = [.flexibleWidth, .flexibleLeftMargin, .flexibleRightMargin]
+        translatesAutoresizingMaskIntoConstraints = false
+        if let collectionView = collectionController.collectionView {
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(collectionView)
+            self.collectionView = collectionView
+            collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        }
     }
     
     private func shapePathForFrame(frame: CGRect) -> UIBezierPath {

@@ -11,9 +11,9 @@ import HorizontalPicker
 
 class SecondViewController: UIViewController, HorizontalPickerViewDataSource, HorizontalPickerViewDelegate {
 
-    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var horizontalPicker: HorizontalPickerView!
-    
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+
     lazy var dataSource: Array<String> = {
         let dataSource = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "The quick brown fox jumps over the lazy dog", "Twelve", "Thirteen", "Fourteen"]
         return dataSource
@@ -28,7 +28,10 @@ class SecondViewController: UIViewController, HorizontalPickerViewDataSource, Ho
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        label.text = "\(horizontalPicker.selectedRow())"
+        topConstraint.constant = 100
+        UIView.animate(withDuration: CATransaction.animationDuration()) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     // MARK: - HorizontalPickerViewProvider
@@ -42,7 +45,6 @@ class SecondViewController: UIViewController, HorizontalPickerViewDataSource, Ho
     }
     
     func horizontalPickerView(pickerView: HorizontalPickerView, didSelectRow row: Int) {
-        label.text = "\(row)"
     }
     
     func useTwoLineModeForHorizontalPickerView(pickerView: HorizontalPickerView) -> Bool {

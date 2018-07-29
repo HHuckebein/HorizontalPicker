@@ -37,11 +37,11 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     // MARK: - Public API
     
-    func selectedRow () -> Int {
+    var selectedRow: Int {
         return selectedCellIndexPath.row
     }
     
-    func selectRowAtIndex (index: Int, animated: Bool) {
+    func selectRowAtIndex(at index: Int, animated: Bool) {
         if let collectionView = collectionView {
             programmaticallySet = true
             scrollToIndex(index, animated: animated)
@@ -157,5 +157,3 @@ extension HPCollectionVC: HPCollectionViewCellDelegate {
         return textColor
     }
 }
-
-
