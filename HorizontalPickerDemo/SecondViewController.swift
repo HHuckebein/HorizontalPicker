@@ -23,6 +23,7 @@ class SecondViewController: UIViewController, HorizontalPickerViewDataSource, Ho
         super.viewDidLoad()
         horizontalPicker.dataSource = self
         horizontalPicker.delegate = self
+        horizontalPicker.selectRow(rowIndex: 5, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
