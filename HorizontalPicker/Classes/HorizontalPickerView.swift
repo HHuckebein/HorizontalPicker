@@ -38,8 +38,13 @@ public class HorizontalPickerView: UIView {
     
     // MARK: - Public API
     
-    public var dataSource: HorizontalPickerViewDataSource?
-    public var delegate: HorizontalPickerViewDelegate?
+    public var dataSource: HorizontalPickerViewDataSource? {
+        didSet { adjust(with: delegate, dataSource: dataSource) }
+    }
+
+    public var delegate: HorizontalPickerViewDelegate? {
+        didSet { adjust(with: delegate, dataSource: dataSource) }
+    }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,32 +59,9 @@ public class HorizontalPickerView: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
 
-        if dataSource != nil && delegate != nil && isInitialized == false {
-            isInitialized = true
-            if let view = collectionView, let layout = collectionViewLayout {
-                layout.activeDistance   = floor(view.bounds.width / 2.0)
-                layout.midX             = ceil(view.bounds.midX)
-                if let numberOfElements = self.dataSource?.numberOfRowsInHorizontalPickerView(pickerView: self) {
-                    layout.lastElementIndex = numberOfElements - 1
-                }
-                
-                collectionController.maxElementWidth = self.bounds.width * HorizontalPickerViewConstants.maxLabelWidthFactor
-                
-                if let firstElement = delegate?.horizontalPickerView(pickerView: self, titleForRow: 0),
-                    let lastElement = delegate?.horizontalPickerView(pickerView: self, titleForRow: layout.lastElementIndex) {
-                    layout.sectionInset.left  = layout.midX - collectionController.sizeForText(firstElement, maxSize: view.bounds.size).width / CGFloat(2)
-                    layout.sectionInset.right = layout.midX - collectionController.sizeForText(lastElement,  maxSize: view.bounds.size).width / CGFloat(2)
-                }
-                
-                delay(inSeconds: 0.1, closure: {
-                    view.selectItem(at: self.collectionController.selectedCellIndexPath, animated: false, scrollPosition: .centeredHorizontally)
-                })
-            }
-            
-            if delegate?.pickerViewShouldMask?(pickerView: self) ?? false {
-                layer.mask = shapeLayer
-                shapeLayer.path = shapePathForFrame(frame: bounds).cgPath
-            }
+        if delegate?.pickerViewShouldMask?(pickerView: self) ?? false {
+            layer.mask = shapeLayer
+            shapeLayer.path = shapePathForFrame(frame: bounds).cgPath
         }
     }
     
@@ -151,6 +133,31 @@ public class HorizontalPickerView: UIView {
     private func delay(inSeconds delay:TimeInterval, closure:  @escaping ()->()) {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             closure()
+        }
+    }
+
+    private func adjust(with delegate: HorizontalPickerViewDelegate?, dataSource: HorizontalPickerViewDataSource?) {
+        guard let delegate = delegate, let dataSource = dataSource, isInitialized == false else { return }
+        isInitialized = true
+        if let view = collectionView, let layout = collectionViewLayout {
+            layout.activeDistance = floor(view.bounds.width / 2.0)
+            layout.midX = ceil(view.bounds.midX)
+            let numberOfElements = dataSource.numberOfRowsInHorizontalPickerView(pickerView: self)
+            layout.lastElementIndex = numberOfElements - 1
+
+            collectionController.maxElementWidth = self.bounds.width * HorizontalPickerViewConstants.maxLabelWidthFactor
+
+            let firstElement = delegate.horizontalPickerView(pickerView: self, titleForRow: 0)
+            let lastElement = delegate.horizontalPickerView(pickerView: self, titleForRow: layout.lastElementIndex)
+
+            let firstSize = collectionController.sizeForText(firstElement, maxSize: view.bounds.size).width / CGFloat(2)
+            let lastSize = collectionController.sizeForText(lastElement, maxSize: view.bounds.size).width / CGFloat(2)
+            layout.sectionInset.left = layout.midX - firstSize
+            layout.sectionInset.right = layout.midX - lastSize
+
+            delay(inSeconds: 0.1, closure: {
+                view.selectItem(at: self.collectionController.selectedCellIndexPath, animated: false, scrollPosition: .centeredHorizontally)
+            })
         }
     }
 }
