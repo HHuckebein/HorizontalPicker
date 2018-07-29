@@ -124,12 +124,17 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     private func changeSelectionForCell(at indexPath: IndexPath, collectionView: UICollectionView) {
-        HorizontalPickerView.delay(inSeconds: 0.1) { [weak self] in
+        delay(inSeconds: 0.1) { [weak self] in
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             self?.selectedCellIndexPath = indexPath
         }
     }
     
+    private func delay(inSeconds delay:TimeInterval, closure:  @escaping ()->()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            closure()
+        }
+    }
 }
 
 extension HPCollectionVC: HPCollectionViewCellDelegate {
