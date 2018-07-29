@@ -16,6 +16,8 @@ protocol HPCollectionVCProvider {
 
 class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    private var programmaticallySet: Bool = false
+    
     var provider: HPCollectionVCProvider?
     
     var maxElementWidth: CGFloat = 0.0
@@ -24,7 +26,11 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     var textColor                = UIColor.lightGray
     var selectedCellIndexPath    = IndexPath(item: 0, section: 0) {
         didSet {
-            provider?.collectionViewController(controller: self, didSelectRow: selectedCellIndexPath.row)
+            if programmaticallySet == false {
+                provider?.collectionViewController(controller: self, didSelectRow: selectedCellIndexPath.row)
+            } else {
+                programmaticallySet = false
+            }
         }
     }
     
@@ -37,6 +43,7 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func selectRowAtIndex (index: Int, animated: Bool) {
         if let collectionView = collectionView {
+            programmaticallySet = true
             scrollToIndex(index, animated: animated)
             changeSelectionForCell(at: IndexPath(item: index, section: 0), collectionView: collectionView)
         }
