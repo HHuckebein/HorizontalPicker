@@ -3,6 +3,7 @@ xcode_scheme: HorizontalPicker
 osx_image: xcode9.2
 xcode_sdk: iphonesimulator11.2
 
+
 language: objective-c
 notifications:
   slack:
@@ -10,5 +11,8 @@ notifications:
     on_failure: change
     rooms:
       secure: b/iKKSvXRK+ihrGjbeww9vX321IkbZVeRWTG2UlTsEs36oL/e1ge7bH57jPBhEhtLgHkXutq2ZGwz67YxgYj6dc5Hx+NfISdyrJIqVmt+5T7Yyv/yI7uTa/g9WP/RalkYXMbUdtEtjlCQcXntdzGBsbDvn2nxpX4cqYowA4golo=
+
+script:
+- set -o pipefail
 
 xcodebuild build analyze -project "$xcode_project" -scheme "$xcode_scheme" -sdk "$xcode_sdk" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO -verbose | xcpretty -c
