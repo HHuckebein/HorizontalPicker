@@ -24,6 +24,7 @@
 		7332D53A1C1DB22B008EEFCD /* HPCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7332D5391C1DB22B008EEFCD /* HPCollectionVC.swift */; };
 		7332D53D1C1DB278008EEFCD /* HPCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7332D53C1C1DB278008EEFCD /* HPCollectionViewCell.swift */; };
 		7332D53F1C1DB28A008EEFCD /* HPCollectionViewFlowlayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7332D53E1C1DB28A008EEFCD /* HPCollectionViewFlowlayout.swift */; };
+		73408D65210E54C20010770F /* HorizontalPickerView.swift in Headers */ = {isa = PBXBuildFile; fileRef = 7306435A1C1DA7FF00A423A6 /* HorizontalPickerView.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		73DB9E911C23EB1B00ABA038 /* HorizontalPicker.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 73DB9E8E1C23EB1B00ABA038 /* HorizontalPicker.podspec */; };
 /* End PBXBuildFile section */
 
@@ -265,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7306433E1C1DA79B00A423A6 /* HorizontalPicker.h in Headers */,
+				73408D65210E54C20010770F /* HorizontalPickerView.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
