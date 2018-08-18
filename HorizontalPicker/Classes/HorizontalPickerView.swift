@@ -43,7 +43,14 @@ public class HorizontalPickerView: UIView {
     }
 
     public var delegate: HorizontalPickerViewDelegate? {
-        didSet { adjust(with: delegate, dataSource: dataSource) }
+        didSet {
+            if let delegate = delegate {
+                collectionController.font = delegate.textFontForHorizontalPickerView?(pickerView: self) ?? UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+                collectionController.textColor = delegate.textColorForHorizontalPickerView?(pickerView: self) ?? UIColor.lightGray
+                collectionController.useTwoLineMode = delegate.useTwoLineModeForHorizontalPickerView?(pickerView: self) ?? false
+                adjust(with: delegate, dataSource: dataSource)
+            }
+        }
     }
     
     override public init(frame: CGRect) {
@@ -100,11 +107,11 @@ public class HorizontalPickerView: UIView {
     private lazy var collectionController: HPCollectionVC = {
         let layout = HPCollectionViewFlowlayout()
         let collectionController = HPCollectionVC(collectionViewLayout: layout)
-        collectionController.provider               = self
-        collectionController.maxElementWidth        = bounds.width * HorizontalPickerViewConstants.maxLabelWidthFactor
-        collectionController.font                   = delegate?.textFontForHorizontalPickerView?(pickerView: self) ?? UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
-        collectionController.textColor              = delegate?.textColorForHorizontalPickerView?(pickerView: self) ?? UIColor.lightGray
-        collectionController.useTwoLineMode         = delegate?.useTwoLineModeForHorizontalPickerView?(pickerView: self) ?? false
+        collectionController.provider = self
+        collectionController.maxElementWidth = bounds.width * HorizontalPickerViewConstants.maxLabelWidthFactor
+        collectionController.font = delegate?.textFontForHorizontalPickerView?(pickerView: self) ?? UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        collectionController.textColor = delegate?.textColorForHorizontalPickerView?(pickerView: self) ?? UIColor.lightGray
+        collectionController.useTwoLineMode = delegate?.useTwoLineModeForHorizontalPickerView?(pickerView: self) ?? false
         collectionController.collectionView?.register(HPCollectionViewCell.self, forCellWithReuseIdentifier: HPCollectionViewCellConstants.reuseIdentifier)
         collectionController.collectionView?.backgroundColor = .clear
         collectionController.collectionView?.showsHorizontalScrollIndicator = false
