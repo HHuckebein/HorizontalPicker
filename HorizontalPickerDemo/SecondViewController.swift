@@ -12,7 +12,6 @@ import HorizontalPicker
 class SecondViewController: UIViewController, HorizontalPickerViewDataSource, HorizontalPickerViewDelegate {
 
     @IBOutlet weak var horizontalPicker: HorizontalPickerView!
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
 
     lazy var dataSource: Array<String> = {
         let dataSource = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "The quick brown fox jumps over the lazy dog", "Twelve", "Thirteen", "Fourteen"]
@@ -21,17 +20,14 @@ class SecondViewController: UIViewController, HorizontalPickerViewDataSource, Ho
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.tintColor = .red
         horizontalPicker.dataSource = self
         horizontalPicker.delegate = self
-        horizontalPicker.selectRow(rowIndex: 5, animated: true)
-    }
+   }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        topConstraint.constant = 100
-        UIView.animate(withDuration: CATransaction.animationDuration()) {
-            self.view.layoutIfNeeded()
-        }
+        horizontalPicker.selectRow(rowIndex: 5, animated: true)
     }
     
     // MARK: - HorizontalPickerViewProvider
