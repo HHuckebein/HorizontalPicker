@@ -27,7 +27,7 @@ class SecondViewController: UIViewController, HorizontalPickerViewDataSource, Ho
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        horizontalPicker.selectRow(rowIndex: 5, animated: true)
+        horizontalPicker.selectRow(rowIndex: 5, animated: false)
     }
     
     // MARK: - HorizontalPickerViewProvider

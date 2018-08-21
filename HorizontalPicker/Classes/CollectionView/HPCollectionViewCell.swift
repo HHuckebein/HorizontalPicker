@@ -12,7 +12,7 @@ struct HPCollectionViewCellConstants {
     static let reuseIdentifier = "HPCollectionViewCell"
 }
 
-protocol HPCollectionViewCellDelegate {
+protocol HPCollectionViewCellDelegate: class {
     func fontForCollectionViewCell (cvCell: HPCollectionViewCell) -> UIFont
     func textColorForCollectionViewCell (cvCell: HPCollectionViewCell) -> UIColor
     func useTwolineModeForCollectionViewCell (cvCell: HPCollectionViewCell) -> Bool
@@ -34,17 +34,15 @@ class HPCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var delegate: HPCollectionViewCellDelegate? {
+    weak var delegate: HPCollectionViewCellDelegate? {
         didSet {
-            guard let delegate = self.delegate else {
-                return
-            }
+            guard let delegate = delegate else { return }
             
-            label.font          = delegate.fontForCollectionViewCell(cvCell: self)
-            textColor           = delegate.textColorForCollectionViewCell(cvCell: self)
-            label.textColor     = textColor
+            label.font = delegate.fontForCollectionViewCell(cvCell: self)
+            textColor = delegate.textColorForCollectionViewCell(cvCell: self)
+            label.textColor = textColor
             
-            let useTwoLineMode  = delegate.useTwolineModeForCollectionViewCell(cvCell: self)
+            let useTwoLineMode = delegate.useTwolineModeForCollectionViewCell(cvCell: self)
             label.numberOfLines = useTwoLineMode ? 2 : 1
             label.lineBreakMode = useTwoLineMode ? .byWordWrapping : .byTruncatingTail
         }

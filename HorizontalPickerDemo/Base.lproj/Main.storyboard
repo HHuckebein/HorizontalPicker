@@ -85,7 +85,6 @@
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="horizontalPicker" destination="3Il-zI-ouC" id="5jS-iK-7eq"/>
-                        <outlet property="topConstraint" destination="Fkb-nV-Mrg" id="Obc-l9-Crf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

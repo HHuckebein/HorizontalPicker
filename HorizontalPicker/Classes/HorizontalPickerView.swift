@@ -44,12 +44,7 @@ public class HorizontalPickerView: UIView {
 
     public var delegate: HorizontalPickerViewDelegate? {
         didSet {
-            if let delegate = delegate {
-                collectionController.font = delegate.textFontForHorizontalPickerView?(pickerView: self) ?? UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
-                collectionController.textColor = delegate.textColorForHorizontalPickerView?(pickerView: self) ?? UIColor.lightGray
-                collectionController.useTwoLineMode = delegate.useTwoLineModeForHorizontalPickerView?(pickerView: self) ?? false
-                adjust(with: delegate, dataSource: dataSource)
-            }
+            adjust(with: delegate, dataSource: dataSource)
         }
     }
     
@@ -79,7 +74,8 @@ public class HorizontalPickerView: UIView {
     }
     
     public func selectRow(rowIndex: Int, animated: Bool) {
-        collectionController.selectRowAtIndex(at: rowIndex, animated: animated)
+        let indexPath = IndexPath(item: rowIndex, section: 0)
+        collectionController.selectRow(at: indexPath, animated: animated)
     }
     
     public func reloadAll() {
@@ -109,20 +105,18 @@ public class HorizontalPickerView: UIView {
         let collectionController = HPCollectionVC(collectionViewLayout: layout)
         collectionController.provider = self
         collectionController.maxElementWidth = bounds.width * HorizontalPickerViewConstants.maxLabelWidthFactor
-        collectionController.font = delegate?.textFontForHorizontalPickerView?(pickerView: self) ?? UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
-        collectionController.textColor = delegate?.textColorForHorizontalPickerView?(pickerView: self) ?? UIColor.lightGray
-        collectionController.useTwoLineMode = delegate?.useTwoLineModeForHorizontalPickerView?(pickerView: self) ?? false
         collectionController.collectionView?.register(HPCollectionViewCell.self, forCellWithReuseIdentifier: HPCollectionViewCellConstants.reuseIdentifier)
         collectionController.collectionView?.backgroundColor = .clear
         collectionController.collectionView?.showsHorizontalScrollIndicator = false
         collectionController.clearsSelectionOnViewWillAppear = false
-        
+
         return collectionController
     }()
     
     private func setUp () {
         translatesAutoresizingMaskIntoConstraints = false
         if let collectionView = collectionController.collectionView {
+            collectionView.allowsMultipleSelection = false
             collectionView.translatesAutoresizingMaskIntoConstraints = false
             addSubview(collectionView)
             self.collectionView = collectionView
@@ -145,6 +139,11 @@ public class HorizontalPickerView: UIView {
 
     private func adjust(with delegate: HorizontalPickerViewDelegate?, dataSource: HorizontalPickerViewDataSource?) {
         guard let delegate = delegate, let dataSource = dataSource, isInitialized == false else { return }
+
+        collectionController.font = delegate.textFontForHorizontalPickerView?(pickerView: self) ?? UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        collectionController.textColor = delegate.textColorForHorizontalPickerView?(pickerView: self) ?? UIColor.lightGray
+        collectionController.useTwoLineMode = delegate.useTwoLineModeForHorizontalPickerView?(pickerView: self) ?? false
+
         isInitialized = true
         if let view = collectionView, let layout = collectionViewLayout {
             layout.activeDistance = floor(view.bounds.width / 2.0)
@@ -162,7 +161,7 @@ public class HorizontalPickerView: UIView {
             layout.sectionInset.left = layout.midX - firstSize
             layout.sectionInset.right = layout.midX - lastSize
 
-            delay(inSeconds: 0.1, closure: {
+            delay(inSeconds: 0.25, closure: {
                 view.selectItem(at: self.collectionController.selectedCellIndexPath, animated: false, scrollPosition: .centeredHorizontally)
             })
         }

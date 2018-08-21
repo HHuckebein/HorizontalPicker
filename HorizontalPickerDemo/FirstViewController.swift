@@ -50,7 +50,7 @@ class FirstViewController: UIViewController, HorizontalPickerViewDataSource, Hor
     }
     
     func textFontForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIFont {
-        return UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1)
+        return UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)
     }
 }
 

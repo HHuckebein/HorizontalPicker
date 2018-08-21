@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol HPCollectionVCProvider {
+protocol HPCollectionVCProvider: class {
     func numberOfRowsInCollectionViewController (controller: HPCollectionVC) -> Int
     func collectionViewController (controller: HPCollectionVC, titleForRow row: Int) -> String
     func collectionViewController (controller: HPCollectionVC, didSelectRow row: Int)
@@ -16,36 +16,25 @@ protocol HPCollectionVCProvider {
 
 class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    private var programmaticallySet: Bool = false
-    
-    var provider: HPCollectionVCProvider?
+    weak var provider: HPCollectionVCProvider?
     
     var maxElementWidth: CGFloat = 0.0
-    var font: UIFont             = UIFont.preferredFont(forTextStyle: .title1)
-    var useTwoLineMode           = true
-    var textColor                = UIColor.lightGray
-    var selectedCellIndexPath    = IndexPath(item: 0, section: 0) {
-        didSet {
-            if programmaticallySet == false {
-                provider?.collectionViewController(controller: self, didSelectRow: selectedCellIndexPath.row)
-            } else {
-                programmaticallySet = false
-            }
-        }
-    }
-    
-    
+    var font: UIFont = UIFont.preferredFont(forTextStyle: .title1)
+    var useTwoLineMode = true
+    var textColor = UIColor.lightGray
+    var selectedCellIndexPath = IndexPath(item: 0, section: 0)
+
     // MARK: - Public API
     
     var selectedRow: Int {
         return selectedCellIndexPath.row
     }
     
-    func selectRowAtIndex(at index: Int, animated: Bool) {
+    func selectRow(at indexPath: IndexPath, animated: Bool) {
         if let collectionView = collectionView {
-            programmaticallySet = true
-            scrollToIndex(index, animated: animated)
-            changeSelectionForCell(at: IndexPath(item: index, section: 0), collectionView: collectionView)
+            selectedCellIndexPath = indexPath
+            scrollToIndex(indexPath.item, animated: animated)
+            changeSelectionForCell(at: indexPath, collectionView: collectionView, animated: animated)
         }
     }
     
@@ -64,8 +53,7 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        scrollToIndex(indexPath.row, animated: true)
-        selectedCellIndexPath = indexPath
+        selectRow(at: indexPath, animated: true)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
@@ -90,7 +78,7 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     func scrollToPosition(scrollView: UIScrollView) {
         if let collectionView = scrollView as? UICollectionView, let item = indexPathForCenterCellFromCollectionview(collectionView: collectionView) {
             scrollToIndex(item.row, animated: true)
-            changeSelectionForCell(at: item, collectionView: collectionView)
+            changeSelectionForCell(at: item, collectionView: collectionView, animated: true)
         }
     }
     
@@ -107,7 +95,8 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
         var frame = (text as NSString).boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: attr, context: NSStringDrawingContext())
         frame = frame.integral
         frame.size.width += 16.0 // give it some room at both ends
-        
+        frame.size.height = maxSize.height
+
         return frame.size
     }
     
@@ -130,10 +119,9 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
         cv.setContentOffset(offset, animated: animated)
     }
     
-    private func changeSelectionForCell(at indexPath: IndexPath, collectionView: UICollectionView) {
-        delay(inSeconds: 0.1) { [weak self] in
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-            self?.selectedCellIndexPath = indexPath
+    private func changeSelectionForCell(at indexPath: IndexPath, collectionView: UICollectionView, animated: Bool) {
+        delay(inSeconds: 0.25) {
+            collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: .centeredHorizontally)
         }
     }
     
