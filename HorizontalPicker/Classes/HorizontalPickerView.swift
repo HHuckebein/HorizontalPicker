@@ -26,10 +26,10 @@ public protocol HorizontalPickerViewDataSource {
     func horizontalPickerView(pickerView: HorizontalPickerView, titleForRow row: Int) -> String
     func horizontalPickerView(pickerView: HorizontalPickerView, didSelectRow row: Int)
     
-    @objc optional func textFontForHorizontalPickerView (pickerView: HorizontalPickerView) -> UIFont
-    @objc optional func textColorForHorizontalPickerView (pickerView: HorizontalPickerView) -> UIColor
-    @objc optional func useTwoLineModeForHorizontalPickerView (pickerView: HorizontalPickerView) -> Bool
-    @objc optional func pickerViewShouldMask (pickerView: HorizontalPickerView) -> Bool
+    @objc optional func textFontForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIFont
+    @objc optional func textColorForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIColor
+    @objc optional func useTwoLineModeForHorizontalPickerView(pickerView: HorizontalPickerView) -> Bool
+    @objc optional func pickerViewShouldMask(pickerView: HorizontalPickerView) -> Bool
 }
 
 /** A similar to UIPicker but horizontal picker view.
@@ -75,6 +75,7 @@ public class HorizontalPickerView: UIView {
     
     public func selectRow(rowIndex: Int, animated: Bool) {
         let indexPath = IndexPath(item: rowIndex, section: 0)
+        collectionController.programmaticallySet = true
         collectionController.selectRow(at: indexPath, animated: animated)
     }
     

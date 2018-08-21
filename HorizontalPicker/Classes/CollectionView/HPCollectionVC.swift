@@ -15,7 +15,7 @@ protocol HPCollectionVCProvider: class {
 }
 
 class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
+
     weak var provider: HPCollectionVCProvider?
     
     var maxElementWidth: CGFloat = 0.0
@@ -23,6 +23,7 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     var useTwoLineMode = true
     var textColor = UIColor.lightGray
     var selectedCellIndexPath = IndexPath(item: 0, section: 0)
+    var programmaticallySet: Bool = false
 
     // MARK: - Public API
     
@@ -122,6 +123,12 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     private func changeSelectionForCell(at indexPath: IndexPath, collectionView: UICollectionView, animated: Bool) {
         delay(inSeconds: 0.25) {
             collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: .centeredHorizontally)
+        }
+        
+        if programmaticallySet == false {
+            provider?.collectionViewController(controller: self, didSelectRow: indexPath.item)
+        } else {
+            programmaticallySet = false
         }
     }
     
