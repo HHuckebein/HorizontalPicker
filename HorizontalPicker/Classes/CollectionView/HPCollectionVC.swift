@@ -123,6 +123,8 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     private func changeSelectionForCell(at indexPath: IndexPath, collectionView: UICollectionView, animated: Bool) {
+        print("\(#function) - \(indexPath)")
+
         delay(inSeconds: 0.25) {
             collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: .centeredHorizontally)
         }
