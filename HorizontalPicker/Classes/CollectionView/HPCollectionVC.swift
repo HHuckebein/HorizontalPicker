@@ -61,7 +61,8 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let text = provider?.collectionViewController(controller: self, titleForRow: indexPath.row) ?? " "
-        return sizeForText(text, maxSize: CGSize(width: maxElementWidth, height: collectionView.bounds.height))
+        let maxHeight = collectionView.bounds.height - collectionView.contentInset.top - collectionView.contentInset.bottom
+        return sizeForText(text, maxSize: CGSize(width: maxElementWidth, height: maxHeight))
     }
     
     // MARK: - UIScrollviewDelegate
@@ -95,7 +96,8 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
         let attr: [NSAttributedStringKey: Any] = [.font : font]
         var frame = (text as NSString).boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: attr, context: NSStringDrawingContext())
         frame = frame.integral
-        frame.size.width += 16.0 // give it some room at both ends
+        frame.size.width += 10
+        frame.size.width = max(frame.width, 30)
         frame.size.height = maxSize.height
 
         return frame.size
