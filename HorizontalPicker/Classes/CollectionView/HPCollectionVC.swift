@@ -106,6 +106,9 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     private func configureCollectionViewCell(_ cell: HPCollectionViewCell, at indexPath: IndexPath) {
         if let provider = provider {
             cell.text = provider.collectionViewController(controller: self, titleForRow: indexPath.row)
+            if selectedCellIndexPath == indexPath {
+                print(indexPath)
+            }
             cell.isSelected = selectedCellIndexPath == indexPath
             cell.delegate = self
         }
@@ -123,8 +126,6 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     private func changeSelectionForCell(at indexPath: IndexPath, collectionView: UICollectionView, animated: Bool) {
-        print("\(#function) - \(indexPath)")
-
         delay(inSeconds: 0.25) {
             collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: .centeredHorizontally)
         }
