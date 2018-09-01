@@ -30,9 +30,6 @@ class HPCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                print("\(#function) - isSelected = \(isSelected) ? \(tintColor) : \(textColor)")
-            }
             label.textColor = isSelected ? tintColor : textColor
         }
     }
